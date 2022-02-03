@@ -1,6 +1,7 @@
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[letterpaper, total={6in, 9in}]{geometry}
+\usepackage[table,xcdraw]{xcolor}
 
 \usepackage{booktabs}
 \usepackage{tabularx}
@@ -21,7 +22,7 @@
 
 \maketitle
 
-Put your introductory blurb here.
+ As avid Sudoku lovers and software engineers, we seek to implement an accessible platform capable of providing and validating solutions using minimal manual input such as an uploaded photograph of a puzzle. This document highlights all necessary information for the control of the project. Furthermore, this document states guidelines and roles for each member so that they understand their due dates and deliverable.
 
 \section{Team Meeting Plan}
 All team members are expected to meet twice a week during the specified 3XA3 lab sessions on Monday and Thursday for 2 hours, totalling 4 hours a week. These meetings will be held either in-person at the Information Technology Building in room 236 or virtually through Discord, given the circumstances that week. Any additional work required will be done individually outside of meeting times. During these meetings, discussions regarding project design, implementation, as well as any necessary documentation will occur. Rashad will be responsible for chairing the meetings while Kai and Stanley will be responsible for updating the agenda and taking meeting minutes. Should a member be unable to attend a meeting, they must notify all other members as soon as possible. 
@@ -30,6 +31,23 @@ All team members are expected to meet twice a week during the specified 3XA3 lab
 Communication will be done through a combination of Discord and Microsoft Teams. Each member is expected to respond in a timely manner. Microsoft Teams will be used for formal communication with TAs and the professor while in-team communication will be done through Discord. Git issues will also be used to keep track of current workflow within the project and staying updated on what needs to be done.
 
 \section{Team Member Roles}
+Rashad will be responsible for GitLab organization and chairing the meetings. Kai will be responsible for resolving Git conflicts and updating the agenda. Stanley will be in charge of meeting minutes and initial documentation. All members will be responsible for thorough documentation and development.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|
+>{\columncolor[HTML]{FFFFFF}}l |
+>{\columncolor[HTML]{FFFFFF}}l |}
+\hline
+\multicolumn{1}{|c|}{\cellcolor[HTML]{FFFFFF}\textbf{Technology}} & \multicolumn{1}{c|}{\cellcolor[HTML]{FFFFFF}\textbf{Expert}} \\ \hline
+Documentation                                       & Stanley                                              \\ \hline
+\multicolumn{1}{|c|}{\cellcolor[HTML]{FFFFFF}Git}   & \multicolumn{1}{c|}{\cellcolor[HTML]{FFFFFF}Rashad}  \\ \hline
+\multicolumn{1}{|c|}{\cellcolor[HTML]{FFFFFF}LaTeX} & \multicolumn{1}{c|}{\cellcolor[HTML]{FFFFFF}Stanley} \\ \hline
+Flask                                               & Rashad                                               \\ \hline
+OpenCV                                              & Kai                                                  \\ \hline
+JavaScript                                          & Kai                                                  \\ \hline
+\end{tabular}
+\end{table}
 
 \section{Git Workflow Plan}
 
