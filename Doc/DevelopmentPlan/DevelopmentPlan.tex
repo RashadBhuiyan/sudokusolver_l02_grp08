@@ -2,13 +2,14 @@
 \usepackage[utf8]{inputenc}
 \usepackage[letterpaper, total={6in, 9in}]{geometry}
 \usepackage[table,xcdraw]{xcolor}
+\usepackage{hyperref}
 
 \usepackage{booktabs}
 \usepackage{tabularx}
 
 \title{SE 3XA3: Development Plan\\Sudoku Solver}
 
-\author{Team 08, Sudo-Crew
+\author{Team 08, SudoCrew
 		\\ Rashad Bhuiyan (bhuiyr2)
 		\\ Stanley Chan (chans67)
 		\\ Kai Zhu (zhuk2)
@@ -50,8 +51,13 @@ JavaScript                                          & Kai                       
 \end{table}
 
 \section{Git Workflow Plan}
+The team will be using GitLab for version control. Every team member will work on their own separate branches. Once testing is done and there are no errors, it will be merged to the main branch when it is approved by a pull request. Once the repository is ready to be marked for a deliverable, it will be tagged using the appropriate convention mentioned in class and a final commit will be done in order to push for submission.
 
 \section{Proof of Concept Demonstration Plan}
+
+Implementing an effective Sudoku board interpreter using OpenCV will be the biggest hurdle of this project, as much of the interpretation is dependent on how the Sudoku boards being solved are drawn. For example, the differences in Sudoku boards found in newspapers from Sudoku boards found in dedicated Sudoku books could result in the program only recognizing the Sudoku board from one medium and not the other. In order to make the application as user friendly as possible, the solver must be able to interpret Sudoku boards from varying mediums. Our group is experienced in regards to the other technologies being used in this project, so implementation in those areas should not be as big of a challenge. \\
+
+In addition to using Pytest as the main test framework, we will also be using sample Sudoku boards to test both the solver's functionality as well as the application's ability to interpret Sudoku boards.
 
 \section{Technology}
 
@@ -63,7 +69,7 @@ Sudoku Solver will be using the PEP-8 coding style. Information for the coding s
 
 \section{Project Schedule}
 
-Provide a pointer to your Gantt Chart.
+Here is the link to our  \href{https://gitlab.cas.mcmaster.ca/bhuiyr2/sudokusolver_l02_grp08/-/blob/main/ProjectSchedule/Gantt_Sudoku.gan}{Gantt Chart}.
 
 \section{Project Review}
 
