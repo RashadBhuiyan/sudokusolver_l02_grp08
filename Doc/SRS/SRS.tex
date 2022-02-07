@@ -1,4 +1,8 @@
-\documentclass[12pt, titlepage]{article}
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[letterpaper, total={6in, 9in}]{geometry}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{hyperref}
 
 \usepackage{booktabs}
 \usepackage{tabularx}
@@ -12,17 +16,15 @@
 }
 \usepackage[round]{natbib}
 
-\title{SE 3XA3: Software Requirements Specification\\Title of Project}
+\title{SE 3XA3: Software Requirements Specification\\Sudoku Solver}
 
-\author{Team \#, Team Name
-		\\ Student 1 name and macid
-		\\ Student 2 name and macid
-		\\ Student 3 name and macid
+\author{Team 08, Sudo-Crew
+		\\ Rashad A. Bhuiyan (bhuiyr2)
+		\\ Kai Zhu (zhuk2)
+		\\ Stanley Chan (chans67)
 }
 
 \date{\today}
-
-\input{../Comments}
 
 \begin{document}
 
@@ -38,7 +40,7 @@
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-Date 1 & 1.0 & Notes\\
+2022-02-07 & 1.0 & Initalized document with SRS structure\\
 Date 2 & 1.1 & Notes\\
 \bottomrule
 \end{tabularx}
@@ -48,7 +50,7 @@ Date 2 & 1.1 & Notes\\
 
 \pagenumbering{arabic}
 
-This document describes the requirements for ....  The template for the Software
+This document describes the requirements for a Sudoku Solver.  The template for the Software
 Requirements Specification (SRS) is a subset of the Volere
 template~\citep{RobertsonAndRobertson2012}.  If you make further modifications
 to the template, you should explicity state what modifications were made.
