@@ -3,8 +3,10 @@
 \usepackage[letterpaper, total={6in, 9in}]{geometry}
 \usepackage[table,xcdraw]{xcolor}
 \usepackage{hyperref}
+\usepackage{adjustbox,lipsum}
 
 \usepackage{booktabs}
+\usepackage{float}
 \usepackage{tabularx}
 \usepackage{hyperref}
 \hypersetup{
@@ -16,9 +18,11 @@
 }
 \usepackage[round]{natbib}
 
+\graphicspath{ {Assets/} }
+
 \title{SE 3XA3: Software Requirements Specification\\Sudoku Solver}
 
-\author{Team 08, Sudo-Crew
+\author{Team 08, SudoCrew
 		\\ Rashad A. Bhuiyan (bhuiyr2)
 		\\ Kai Zhu (zhuk2)
 		\\ Stanley Chan (chans67)
@@ -58,22 +62,87 @@ to the template, you should explicity state what modifications were made.
 \section{Project Drivers}
 
 \subsection{The Purpose of the Project}
+The purpose of this software application is to provide a comprehensive suite of tools for generating, recognizing, and solving Sudoku puzzles. The application will provide a web-based front-end with an intuitive interface to cater to users of different technical abilities on most modern hardware. Computer vision is also utilized to improve ease of use, by directly interfacing puzzles from print-media to the application.
 
 \subsection{The Stakeholders}
-
 \subsubsection{The Client}
+The client of the project are the instructor, Dr. Asghar Bokhari, and teaching assistants of SFWRENG 3XA3. The clients stipulate the content and deadlines of the deliverables.
 
 \subsubsection{The Customers}
+The customers are any individuals with an interest in Sudoku. These includes hobbyists who seek to play the game or verify their solutions. The application is suitable for all demographics who can operate a web browser.
 
 \subsubsection{Other Stakeholders}
+Other stakeholders of the project include math teachers who may print generated puzzles from the application to use in educational setting. Tim Ruscica, the original developer of the open source Sudoku GUI Solver upon which this project is based on, also has a stake in seeing the expansion of features that stem from his work. Additionally, members of the SudoCrew development team are also stakeholders responsible for implementing and testing the application.
 
 \subsection{Mandated Constraints}
+\subsubsection{Solution Design Constraints}
+\textbf{Description}: The game must operate on any browser with JavaScript enabled.
+\\
+\textbf{Rationale}: Potential users of the game will have access to a browser that can render JavaScript elements.
+\\
+\textbf{Fit Criterion}: The game will be made to operate on any browser with JavaScript enabled.
+
+\subsubsection{Implementation Environment of the Current System}
+N/A
+
+\subsubsection{Partner or Collaborative Applications}
+There are two main libraries used in the program; Flask and OpenCV. OpenCV is an API that allows for image recognition while Flask is a web framework that allows developers to build web applications.
+
+\subsubsection{Off-the-Shelf Software}
+N/A
+
+\subsubsection{Anticipated Workplace Environment}
+The Internet with PC, laptop, mobile device, or tablet as a browsing device.
+
+\subsubsection{Schedule Constraints}
+\textbf{Description}: The project must follow the project schedule shown in the Tasks section.
+\\
+\textbf{Rationale}: The project must follow a predetermined plan in order to meet deliverable due dates on time.
+\\
+\textbf{Fit Criterion}: The project will follow the project schedule shown in the Tasks section.
+
+\subsubsection{Budget Constraints}
+N/A
+
+\subsubsection{Enterprise Constraints}
+N/A
 
 \subsection{Naming Conventions and Terminology}
-
+\begin{table}[H]
+\caption{\bf Table of Naming Conventions and Terminology}
+\centering
+\begin{tabularx}{\textwidth}{p{3cm}X}
+\toprule
+Terminology     & Meaning \\
+\midrule
+UI     & User interface, the interface that allows for user interaction with the system. \\
+Python & Language used for backend and frontend implementation through Flask.\\
+HTML & Hypertext markup language, used to build websheets for the frontend part of the web application.\\
+CSS & Cascading style sheets, used to style HTML files to make the application look more appealing.\\
+JavaScript & Primary language used for scripting and functionality of the web application. \\
+Git & The primary system for version control and code collaboration.\\
+OpenCV & An open source computer vision library, and serves as the main Python library that will be used to detect Sudoku boards. \\
+Pytest & A Python library designed to help create tests for Python code. \\
+Pydoc & A Python library used to generate documentation for Python code. \\
+Flask & A micro web framework for Python, and will mainly be used to create our web application and handle requests from the web.\\
+\bottomrule
+\end{tabularx}
+\end{table}
 \subsection{Relevant Facts and Assumptions}
 
-User characteristics should go under assumptions.
+\subsubsection{Facts}
+
+\begin{enumerate}
+    \item The original repository for the existing Sudoku solver has approximately 400 lines of code spread across 3 Python files.
+    \item The existing Sudoku solver solves hardcoded Sudoku boards and displays the solution in the command line.
+\end{enumerate}
+
+\subsubsection{Assumptions}
+
+\begin{enumerate}
+    \item The user has a stable Internet connection to use the web application.
+    \item The Sudoku board uploaded is a 9x9 Sudoku board.
+\end{enumerate}
 
 \section{Functional Requirements}
 
