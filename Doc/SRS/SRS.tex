@@ -149,12 +149,62 @@ Flask & A micro web framework for Python, and will mainly be used to create our 
 \subsection{The Scope of the Work and the Product}
 
 \subsubsection{The Context of the Work}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{sudoku_scope}
+    \caption{Work Context Diagram: The user either uploads a manually inputted or photographed Sudoku to receive feedback on a valid solution, or plays the game on a randomly generated puzzle grid. The Web front-end handles user input and interactive game-play while passing and receiving solution data to the back-end solver application.}
+    \label{fig:my_label}
+\end{figure}
 
 \subsubsection{Work Partitioning}
+\begin{table}[H]
+\caption{\bf Table of Work Partitioning Events}
+\label{tab:my-table}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|c|l|l|l|}
+\hline
+\textbf{Event Number} & \multicolumn{1}{c|}{\textbf{Event Name}} & \multicolumn{1}{c|}{\textbf{Input}} & \multicolumn{1}{c|}{\textbf{Output}} \\ \hline
+1 & Arrives at Homepage     & Mouse          & Webpage Generation   \\ \hline
+2 & Uploading a sudoku board through an image     & Mouse          & Sudoku Board Solution   \\ \hline
+3 & Uploading a sudoku board through manual input & Keyboard/Mouse & Sudoku Board Solution   \\ \hline
+4 & Start a game of Sudoku                        & Mouse          & Sudoku Board Generation \\ \hline
+\end{tabular}%
+}
+\end{table}
 
 \subsubsection{Individual Product Use Cases}
 
 \subsection{Functional Requirements}
+
+\begin{enumerate}
+    \item [BE1.] The user arrives at the main application portal (homepage)
+    \begin{enumerate}
+        \item [FR1.] The system must display links to play or get solution for a Sudoku game.
+        \item [FR2.] The system shall display options for manual input or photo upload for the Sudoku solver.
+        \item [FR3.] The system shall display an error if user browser is incompatible with the application.
+    \end{enumerate}
+    \item [BE2.] The user uploads a Sudoku board through an image
+    \begin{enumerate}
+        \item [FR4.] The system shall display a loading indicator to the user to show that their picture is being uploaded and solved.
+        \item [FR5.] The system shall attempt to interpret the uploaded picture as a 9x9 Sudoku board modelled as an array.
+        \item [FR6.] If the system fails to interpret a 9x9 Sudoku board from the uploaded image, the system shall inform the user that the picture could not be interpreted.
+        \item [FR7.] The system shall input the 9x9 array into the Sudoku solver algorithm to solve the Sudoku board.
+        \item [FR8.] If the system finds a solution to the Sudoku board, the system shall display the solution in the user interface.
+        \item [FR9.] If the system does not find a solution, the system shall notify the user that the Sudoku board is invalid.
+    \end{enumerate}
+    \item [BE3.] The user uploads a Sudoku board through manual input
+    \begin{enumerate}
+        \item [FR10.] The system should display a loading indicator to inform the user that the Sudoku board is being solved.
+        \item [FR11.] The system should use the Sudoku solver algorithm to solve the inputted Sudoku board.
+        \item [FR12.] If the system fails to find a solution to the Sudoku board, the system should inform the user that the Sudoku board is invalid.
+        \item [FR13.] If the system finds a solution, the system should display the solution to the user through the user interface.
+    \end{enumerate}
+    \item [BE4.] The user starts a game of Sudoku
+    \begin{enumerate}
+        \item [FR14.] The system should generate a random valid Sudoku board.
+        \item [FR15.] The system should output the generated Sudoku board to the user through the user interface.
+    \end{enumerate}
+\end{enumerate}
 
 \section{Non-functional Requirements}
 
