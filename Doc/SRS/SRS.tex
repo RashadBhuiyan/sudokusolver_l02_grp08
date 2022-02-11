@@ -36,17 +36,20 @@
 
 \pagenumbering{roman}
 \tableofcontents
+\newpage
 \listoftables
 \listoffigures
 
-\begin{table}[bp]
+\newpage
+
+\begin{table}[H]
 \caption{\bf Revision History}
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
 2022-02-07 & 0.0 & Drafted section 1\\
 2022-02-09 & 0.1 & Completed sections 1, 2, and 4\\
-2022-02-10 & 0.2 & Completed section 3\\
+2022-02-10 & 0.2 & Completed section 3 and Appendix\\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -57,8 +60,7 @@
 
 This document describes the requirements for a Sudoku Solver.  The template for the Software
 Requirements Specification (SRS) is a subset of the Volere
-template~\citep{RobertsonAndRobertson2012}.  If you make further modifications
-to the template, you should explicity state what modifications were made.
+template~\citep{RobertsonAndRobertson2012}.
 
 \section{Project Drivers}
 
@@ -117,8 +119,8 @@ N/A
 Terminology     & Meaning \\
 \midrule
 UI     & User interface, the interface that allows for user interaction with the system. \\
-Python & Language used for backend and frontend implementation through Flask.\\
-HTML & Hypertext markup language, used to build websheets for the frontend part of the web application.\\
+Python & Language used for back-end and front-end implementation through Flask.\\
+HTML & Hypertext markup language, used to build websheets for the front-end part of the web application.\\
 CSS & Cascading style sheets, used to style HTML files to make the application look more appealing.\\
 JavaScript & Primary language used for scripting and functionality of the web application. \\
 Git & The primary system for version control and code collaboration.\\
@@ -160,20 +162,33 @@ Flask & A micro web framework for Python, and will mainly be used to create our 
 
 The user either uploads a manually inputted or photographed Sudoku to receive feedback on a valid solution, or plays the game on a randomly generated puzzle grid. The Web front-end handles user input and interactive game-play while passing and receiving solution data to the back-end solver application.
 
+\newpage
+
 \subsubsection{Work Partitioning}
 \begin{table}[H]
 \caption{\bf Table of Work Partitioning Events}
 \label{tab:my-table}
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{|c|l|l|l|}
+\begin{tabular}{p{0.2\linewidth} | p{0.25\linewidth} | p{0.2\linewidth} | p{0.25\linewidth}}
 \hline
-\textbf{Event Number} & \multicolumn{1}{c|}{\textbf{Event Name}} & \multicolumn{1}{c|}{\textbf{Input}} & \multicolumn{1}{c|}{\textbf{Output}} \\ \hline
-1 & Arrives at Homepage     & Mouse          & Webpage Generation   \\ \hline
-2 & Uploading a sudoku board through an image     & Mouse          & Sudoku Board Solution   \\ \hline
-3 & Uploading a sudoku board through manual input & Keyboard/Mouse & Sudoku Board Solution   \\ \hline
+\textbf{Event Number} & \textbf{Event Name} & \textbf{Input} & \textbf{Output} \\ \hline
+1 & Arrives at Homepage     & Mouse          & Web-page Generation   \\ \hline
+2 & Uploading a Sudoku board through an image     & Mouse          & Sudoku Board Solution   \\ \hline
+3 & Uploading a Sudoku board through manual input & Keyboard/Mouse & Sudoku Board Solution   \\ \hline
 4 & Start a game of Sudoku                        & Mouse          & Sudoku Board Generation \\ \hline
 \end{tabular}%
-}
+\end{table}
+
+\begin{table}[H]
+\caption{\bf Table of Work Partitioning Summaries}
+\label{tab:my-table}
+\begin{tabular}{p{0.35\linewidth} | p{0.6\linewidth}}
+\hline
+\textbf{Event Number} & \textbf{Summary}  \\ \hline
+1 & The user, through a mouse input, arrives at the web-application. The output shown is the generated web-page with every important feature.  \\ \hline
+2 & The user, through a mouse input, selects a file containing a Sudoku board and uploads it. The output is the solution of the given Sudoku board.    \\ \hline
+3 & The user, through mouse input and keyboard strokes, manually inputs a Sudoku board. The output is the solution of the given Sudoku board.  \\ \hline
+4 & The user, through mouse input, starts a game of Sudoku. The output shown is a Sudoku board where the user can now play a game of Sudoku.\\ \hline
+\end{tabular}%
 \end{table}
 
 \newpage
@@ -185,7 +200,8 @@ The user either uploads a manually inputted or photographed Sudoku to receive fe
     \caption{Use Case Diagram}
     \label{fig:my_label}
 \end{figure}
-The use case diagram above shows the various ways a user can interact with our web application. Since Starting a Sudoku game involves multiple game-play actions itself, it has a lot of included use cases. Furthermore, there are multiple levels of extends cases when verifying and sudoku board solutions as each complex use case is broken into simpler cases.
+The use case diagram above shows the various ways a user can interact with our web application. Since Starting a Sudoku game involves multiple game-play actions itself, it has a lot of included use cases. Furthermore, there are multiple levels of extends cases when verifying and Sudoku board solutions as each complex use case is broken into simpler cases.
+
 \newpage
 
 \subsection{Functional Requirements}
@@ -235,14 +251,15 @@ The use case diagram above shows the various ways a user can interact with our w
 \subsubsection{Look Requirements}
 
 \begin{enumerate} % fill in the look/feel requirement number (LF#.)
-    \item [LF1.] The system should display to the user an option to choose between uploading a Sudoku board, manually inputting a Sudoku board, or generating a random Sudoku board.
+    \item [LF1.] The system shall have distinct buttons for uploading a Sudoku board, manually typing in a Sudoku board, or playing a game of Sudoku.
+    \item [LF2.] The system shall scale appropriately based on browser window size.
 \end{enumerate}
 
 \subsubsection{Feel Requirements}
 
 \begin{enumerate} % fill in the look/feel requirement number (LF#.)
-    \item [LF2.] The system should have a sleek and non-cluttered user interface.
-    \item [LF3.] The user interface should have colours that are appealing and is accessible to people with potential colour blindness.
+    \item [LF3.] The system shall have a sleek and non-cluttered user interface.
+    \item [LF4.] The user interface shall have colours that are appealing and are accessible to people with potential colour blindness.
 \end{enumerate}
 
 \subsection{Usability and Humanity Requirements}
@@ -250,17 +267,24 @@ The use case diagram above shows the various ways a user can interact with our w
 \subsubsection{Ease of Use Requirements}
 
 \begin{enumerate}
-    \item [UH1.] The system should be able to accept Sudoku boards from a variety of different mediums.
+    \item [UH1.] The system shall accept Sudoku boards through images or manual input with guided help.
+    
+    \item [UH2.] The system shall allow game-play through both a keyboard and a mouse.
 \end{enumerate}
 
 \subsubsection{Ease of Learning Requirements}
-
-N/A
+\begin{enumerate}
+    \item [UH3.] The system shall provide instructions on how to play a game of Sudoku.
+    
+    \item [UH4.] Users shall be able to play a game fairly quickly without prior experience.
+\end{enumerate}
 
 \subsubsection{Accessibility Requirements}
 
 \begin{enumerate}
-    \item [UH2.] The colour palette must be accessible to users with colour blindness.
+    \item [UH5.] The colour palette must be accessible to users with colour blindness.
+    
+    \item [UH6.] The game instructions shall be written in the English language using the British English standard.
 \end{enumerate}
 
 \subsection{Performance Requirements}
@@ -268,8 +292,8 @@ N/A
 \subsubsection{Speed Requirements}
 
 \begin{enumerate}
-    \item [PR1.] Upload of pictures to the system should take a maximum of \emph{MAX\_UPLOAD\_TIME} seconds. % feel free to alter
-    \item [PR2.] The system should be able to solve a given Sudoku board within a timeframe of \emph{MAX\_SOLUTION\_TIME} seconds. % feel free to alter
+    \item [PR1.] Upload of pictures to the system shall take a maximum of \emph{MAX\_UPLOAD\_TIME} seconds. % feel free to alter
+    \item [PR2.] The system shall solve a given Sudoku board within a time-frame of \emph{MAX\_SOLUTION\_TIME} seconds. % feel free to alter
 \end{enumerate}
 
 \subsubsection{Safety-Critical Requirements}
@@ -279,8 +303,8 @@ N/A
 \subsubsection{Precision Requirements}
 
 \begin{enumerate}
-    \item [PR3.] The system should output the proper solution to the inputted Sudoku board.
-    \item [PR4.] The system should accurately determine whether or not a given Sudoku board is valid.
+    \item [PR3.] The system shall output the proper solution to the inputted Sudoku board.
+    \item [PR4.] The system shall accurately determine whether or not a given Sudoku board is valid.
 \end{enumerate}
 
 \subsubsection{Reliability and Availability Requirements} % don't think we will be hosting it on a web server?
@@ -289,32 +313,46 @@ N/A
 
 \subsubsection{Capacity Requirements} % don't need storage or anything
 
-N/A
+\begin{enumerate}
+    \item [PR5.] The system shall not store any images uploaded by the user.
+\end{enumerate}
 
 \subsection{Operational and Environmental Requirements}
 
-N/A
+\begin{enumerate}
+    \item [PR6.] The system shall be able to operate on any browser capable of running JavaScript.
+\end{enumerate}
 
 \subsection{Maintainability and Support Requirements} % don't need to maintain anything
 
-N/A
+\begin{enumerate}
+    \item [MA1.] All source code must be fully documented, via rigorous commenting.
+    
+    \item [MA2.] All source code must adhere to the same standard style.
+    
+    \item [MA3.] The project's main repository shall be made public to allow the stakeholders view access to the project.
+\end{enumerate}
 
 \subsection{Security Requirements}
 
 \subsubsection{File Integrity Requirements}
 
 \begin{enumerate}
-    \item [SR1.] Uploaded pictures should be deleted by the system after used by the Sudoku Solver.
+    \item [SR1.] Uploaded pictures shall be deleted by the system after used by the Sudoku Solver.
+    
+    \item [SR2.] The system shall have a strict file size limit.
 \end{enumerate}
 
 \subsubsection{Access Requirements}
 
-N/A
+\begin{enumerate}
+    \item [SR3.] The user must have read-only access to provided solutions for Sudoku boards.
+\end{enumerate}
 
 \subsubsection{Privacy Requirements}
 
 \begin{enumerate}
-    \item [SR2.] Uploaded pictures should not be accessible to any user other than the system itself.
+    \item [SR4.] Uploaded pictures shall not be accessible to any user other than the system itself.
 \end{enumerate}
 
 \subsubsection{Audit Requirements}
@@ -323,12 +361,14 @@ N/A
 
 \subsubsection{Immunity}
 
-N/A
+\begin{enumerate}
+    \item [SR5.] The system must not be vulnerable to attacks from intruders.
+\end{enumerate}
 
 \subsection{Cultural Requirements}
 
 \begin{enumerate}
-    \item [CR1.] The user interface should not display any culturally insensitive imagery.
+    \item [CR1.] The user interface shall not display any culturally insensitive imagery.
 \end{enumerate}
 
 \subsection{Legal Requirements}
@@ -389,9 +429,6 @@ N/A
 \newpage
 
 \section{Appendix}
-
-This section has been added to the Volere template.  This is where you can place
-additional information.
 
 \subsection{Symbolic Parameters}
 
