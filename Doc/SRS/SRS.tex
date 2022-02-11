@@ -44,8 +44,9 @@
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-2022-02-07 & 1.0 & Initalized document with SRS structure\\
-Date 2 & 1.1 & Notes\\
+2022-02-07 & 0.0 & Drafted section 1\\
+2022-02-09 & 0.1 & Completed sections 1, 2, and 4\\
+2022-02-10 & 0.2 & Completed section 3\\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -86,7 +87,7 @@ Other stakeholders of the project include math teachers who may print generated 
 N/A
 
 \subsubsection{Partner or Collaborative Applications}
-There are two main libraries used in the program; Flask and OpenCV. OpenCV is an API that allows for image recognition while Flask is a web framework that allows developers to build web applications.
+There are two main libraries used in the program: Flask and OpenCV. OpenCV is an API geared toward image recognition while Flask is a web framework that allows developers to build web applications using Python.
 
 \subsubsection{Off-the-Shelf Software}
 N/A
@@ -133,15 +134,16 @@ Flask & A micro web framework for Python, and will mainly be used to create our 
 \subsubsection{Facts}
 
 \begin{enumerate}
-    \item The original repository for the existing Sudoku solver has approximately 400 lines of code spread across 3 Python files.
-    \item The existing Sudoku solver solves hardcoded Sudoku boards and displays the solution in the command line.
+    \item The original repository for the existing Sudoku solver has approximately 500 lines of code spread across 3 Python files.
+    \item The existing implementation solves only contains a single static Sudoku board and displays the solution as a plain-text output.
 \end{enumerate}
 
 \subsubsection{Assumptions}
 
 \begin{enumerate}
     \item The user has a stable Internet connection to use the web application.
-    \item The Sudoku board uploaded is a 9x9 Sudoku board.
+    \item The user knows the basic basic rules of Sudoku.
+    \item If the image upload option is to be used, the user has a legible photo of the whole puzzle board.
 \end{enumerate}
 
 \section{Functional Requirements}
@@ -152,9 +154,11 @@ Flask & A micro web framework for Python, and will mainly be used to create our 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{sudoku_scope}
-    \caption{Work Context Diagram: The user either uploads a manually inputted or photographed Sudoku to receive feedback on a valid solution, or plays the game on a randomly generated puzzle grid. The Web front-end handles user input and interactive game-play while passing and receiving solution data to the back-end solver application.}
+    \caption{Work Context Diagram}
     \label{fig:my_label}
 \end{figure}
+
+The user either uploads a manually inputted or photographed Sudoku to receive feedback on a valid solution, or plays the game on a randomly generated puzzle grid. The Web front-end handles user input and interactive game-play while passing and receiving solution data to the back-end solver application.
 
 \subsubsection{Work Partitioning}
 \begin{table}[H]
@@ -172,7 +176,17 @@ Flask & A micro web framework for Python, and will mainly be used to create our 
 }
 \end{table}
 
+\newpage
+
 \subsubsection{Individual Product Use Cases}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{use_case}
+    \caption{Use Case Diagram}
+    \label{fig:my_label}
+\end{figure}
+The use case diagram above shows the various ways a user can interact with our web application. Since Starting a Sudoku game involves multiple game-play actions itself, it has a lot of included use cases. Furthermore, there are multiple levels of extends cases when verifying and sudoku board solutions as each complex use case is broken into simpler cases.
+\newpage
 
 \subsection{Functional Requirements}
 
@@ -187,22 +201,30 @@ Flask & A micro web framework for Python, and will mainly be used to create our 
     \begin{enumerate}
         \item [FR4.] The system shall display a loading indicator to the user to show that their picture is being uploaded and solved.
         \item [FR5.] The system shall attempt to interpret the uploaded picture as a 9x9 Sudoku board modelled as an array.
-        \item [FR6.] If the system fails to interpret a 9x9 Sudoku board from the uploaded image, the system shall inform the user that the picture could not be interpreted.
+        \item [FR6.] If the system fails to interpret a 9x9 Sudoku board from the uploaded image, the system must inform the user that the picture could not be interpreted.
         \item [FR7.] The system shall input the 9x9 array into the Sudoku solver algorithm to solve the Sudoku board.
         \item [FR8.] If the system finds a solution to the Sudoku board, the system shall display the solution in the user interface.
-        \item [FR9.] If the system does not find a solution, the system shall notify the user that the Sudoku board is invalid.
+        \item [FR9.] If the system does not find a solution, the system must notify the user that the Sudoku board is invalid.
     \end{enumerate}
     \item [BE3.] The user uploads a Sudoku board through manual input
     \begin{enumerate}
-        \item [FR10.] The system should display a loading indicator to inform the user that the Sudoku board is being solved.
-        \item [FR11.] The system should use the Sudoku solver algorithm to solve the inputted Sudoku board.
-        \item [FR12.] If the system fails to find a solution to the Sudoku board, the system should inform the user that the Sudoku board is invalid.
-        \item [FR13.] If the system finds a solution, the system should display the solution to the user through the user interface.
+        \item [FR10.] The system shall display an empty Sudoku grid
+        \item [FR11.] The system must allow the user to type numbers 1 to 9 into the grid.
+        \item [FR12.] The system must immediately notify the user of invalid input, including repeated numbers in a row, column, or subgrid.
+        \item [FR13.] The system shall attempt to solve an outwardly valid board.
+        \item [FR14.] If the system fails to find a solution to the input board, it must inform the user that the puzzle has no solution.
+        \item [FR15.] If the system finds a solution, it must display the solution to the user through the user interface.
     \end{enumerate}
     \item [BE4.] The user starts a game of Sudoku
     \begin{enumerate}
-        \item [FR14.] The system should generate a random valid Sudoku board.
-        \item [FR15.] The system should output the generated Sudoku board to the user through the user interface.
+        \item [FR16.] The system must generate a random valid Sudoku board.
+        \item [FR17.] The system must output the generated Sudoku board to the user through the user interface.
+        \item [FR18.] The system shall allow the user to print the generated puzzle.
+        \item [FR19.] The system shall allow the user to type numbers into empty cells on the Sudoku board.
+        \item [FR20.] The system must reject invalid user input (non-digits, repeated numbers on row, column, or subgrid) and notify user of the error.
+        \item [FR21.] The system shall allow the user to submit the puzzle once all grid cells are filled.
+        \item [FR22.] The system shall validate the submitted solution and display whether the solution is correct.
+        \item [FR23.] The system shall display a timer to track the duration from puzzle generation to the submission of a correct solution.
     \end{enumerate}
 \end{enumerate}
 
@@ -229,27 +251,48 @@ Flask & A micro web framework for Python, and will mainly be used to create our 
 This section is not in the original Volere template, but health and safety are
 issues that should be considered for every engineering project.
 
+\newpage
+
 \section{Project Issues}
 
 \subsection{Open Issues}
+Sudoku recognition with computer vision may constitute a major challenge due to the large variety of factors that can affect image recognition, such as photo resolution, sharpness, exposure, angle, and colour balance. 
+
+The image upload feature may also expose the system to potential attacks in the form of malicious file content.
 
 \subsection{Off-the-Shelf Solutions}
+OpenCV provides a suite of image processing functions such as adaptive thresholding and colour conversion that can be used to preprocess uploaded photos and improve their recognizability. 
 
 \subsection{New Problems}
+Higher traffic to the web application and the increased calls to the image recognizer and solver may increase the load on the system and potentially delay response times or cause crashes.
 
 \subsection{Tasks}
+Task schedules and delegated responsibilities are outlined in the project \href{https://gitlab.cas.mcmaster.ca/bhuiyr2/sudokusolver_l02_grp08/-/blob/main/ProjectSchedule/Gantt_Sudoku.pdf}{Gantt Chart}.
 
 \subsection{Migration to the New Product}
 
 \subsection{Risks}
 
 \subsection{Costs}
+The project does not involve monetary cost as it uses only open-source resources. A labour cost of between 5-10 hours per week is expected from each group member during the development period outlined in the \href{https://gitlab.cas.mcmaster.ca/bhuiyr2/sudokusolver_l02_grp08/-/blob/main/ProjectSchedule/Gantt_Sudoku.pdf}{Gantt Chart}.
 
 \subsection{User Documentation and Training}
+\subsubsection{Documentation}
+Basic instructions and rules of Sudoku will be outlined in the game interface. The user interface will also inform the user of any errors and provide remedy instructions, such as in the case of an unrecognizable photo, invalid input, or unsolvable uploaded puzzle.
+
+\subsubsection{Training}
+No training is required to use this application beyond the basic knowledge of using a web browser.
 
 \subsection{Waiting Room}
+Additional quality-of-life features, given extra development time, may include:
+\begin{enumerate}
+    \item Account system that saves player statistics such as solved puzzles and past uploads.
+    \item Multiplayer challenge system that pits two players against each other on the same puzzle to improve the fun, competitive aspect of the game.
+\end{enumerate}
+
 
 \subsection{Ideas for Solutions}
+N/A
 
 \bibliographystyle{plainnat}
 
