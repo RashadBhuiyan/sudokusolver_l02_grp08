@@ -235,33 +235,109 @@ The use case diagram above shows the various ways a user can interact with our w
 \subsubsection{Look Requirements}
 
 \begin{enumerate} % fill in the look/feel requirement number (LF#.)
-    \item [LF.] The system should display to the user an option to choose between uploading a Sudoku board, manually inputting a Sudoku board, or generating a random Sudoku board.
+    \item [LF1.] The system should display to the user an option to choose between uploading a Sudoku board, manually inputting a Sudoku board, or generating a random Sudoku board.
 \end{enumerate}
 
 \subsubsection{Feel Requirements}
 
-\begin{enumerate}
-    \item [LF.] The system should 
+\begin{enumerate} % fill in the look/feel requirement number (LF#.)
+    \item [LF2.] The system should have a sleek and non-cluttered user interface.
+    \item [LF3.] The user interface should have colours that are appealing and is accessible to people with potential colour blindness.
 \end{enumerate}
 
 \subsection{Usability and Humanity Requirements}
 
+\subsubsection{Ease of Use Requirements}
+
+\begin{enumerate}
+    \item [UH1.] The system should be able to accept Sudoku boards from a variety of different mediums.
+\end{enumerate}
+
+\subsubsection{Ease of Learning Requirements}
+
+N/A
+
+\subsubsection{Accessibility Requirements}
+
+\begin{enumerate}
+    \item [UH2.] The colour palette must be accessible to users with colour blindness.
+\end{enumerate}
+
 \subsection{Performance Requirements}
+
+\subsubsection{Speed Requirements}
+
+\begin{enumerate}
+    \item [PR1.] Upload of pictures to the system should take a maximum of \emph{MAX\_UPLOAD\_TIME} seconds. % feel free to alter
+    \item [PR2.] The system should be able to solve a given Sudoku board within a timeframe of \emph{MAX\_SOLUTION\_TIME} seconds. % feel free to alter
+\end{enumerate}
+
+\subsubsection{Safety-Critical Requirements}
+
+N/A
+
+\subsubsection{Precision Requirements}
+
+\begin{enumerate}
+    \item [PR3.] The system should output the proper solution to the inputted Sudoku board.
+    \item [PR4.] The system should accurately determine whether or not a given Sudoku board is valid.
+\end{enumerate}
+
+\subsubsection{Reliability and Availability Requirements} % don't think we will be hosting it on a web server?
+
+N/A
+
+\subsubsection{Capacity Requirements} % don't need storage or anything
+
+N/A
 
 \subsection{Operational and Environmental Requirements}
 
-\subsection{Maintainability and Support Requirements}
+N/A
+
+\subsection{Maintainability and Support Requirements} % don't need to maintain anything
+
+N/A
 
 \subsection{Security Requirements}
 
+\subsubsection{File Integrity Requirements}
+
+\begin{enumerate}
+    \item [SR1.] Uploaded pictures should be deleted by the system after used by the Sudoku Solver.
+\end{enumerate}
+
+\subsubsection{Access Requirements}
+
+N/A
+
+\subsubsection{Privacy Requirements}
+
+\begin{enumerate}
+    \item [SR2.] Uploaded pictures should not be accessible to any user other than the system itself.
+\end{enumerate}
+
+\subsubsection{Audit Requirements}
+
+N/A
+
+\subsubsection{Immunity}
+
+N/A
+
 \subsection{Cultural Requirements}
+
+\begin{enumerate}
+    \item [CR1.] The user interface should not display any culturally insensitive imagery.
+\end{enumerate}
 
 \subsection{Legal Requirements}
 
+N/A
+
 \subsection{Health and Safety Requirements}
 
-This section is not in the original Volere template, but health and safety are
-issues that should be considered for every engineering project.
+N/A
 
 \section{Project Issues}
 
@@ -320,7 +396,9 @@ additional information.
 \subsection{Symbolic Parameters}
 
 The definition of the requirements will likely call for SYMBOLIC\_CONSTANTS.
-Their values are defined in this section for easy maintenance.
+Their values are defined in this section for easy maintenance.\\
 
+\noindent \emph{MAX\_UPLOAD\_TIME} = 3\\
+\emph{MAX\_SOLUTION\_TIME} = 2
 
 \end{document}
