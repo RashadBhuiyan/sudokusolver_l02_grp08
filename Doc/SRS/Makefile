@@ -21,17 +21,8 @@ TEMP2 := $(shell mkdir make 2>/dev/null)
 .PHONY: all
 all: $(MAIN).pdf
 
-$(MAIN).pdf: $(TEST_SET) $(EXTRA)
-	pdflatex $(MAIN)
-	pdflatex $(MAIN)
-
-make/%.t: %.tex
-	touch $@
-
-make/bib: $(BIB)
-	latex $(MAIN)
-	bibtex $(MAIN)
-	touch $@
+$(MAIN).pdf: 
+	pdflatex $(MAIN).tex
 
 .PHONY: clean
 clean:
