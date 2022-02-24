@@ -37,6 +37,23 @@ def generateRandomValidBoard(hints):
                 board[y][x] = value
     return board
 
+def convertInput(inp):
+    board = [
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    ]
+    for i in range(len(inp)):
+        row = i // 9
+        column = i % 9
+        board[row][column] = inp[i]
+    return board
 
 
 # testing if board is valid
