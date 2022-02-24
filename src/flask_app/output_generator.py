@@ -23,7 +23,8 @@ def parseOutput(arr):
         for index in range(len(arr[row])):
             horizontal_section = index // 3
             vertical_section = row // 3
-            image_editable.text((8+47*(index+1/2)-15/2+4*horizontal_section, 8+45*(row+1/2)-15/2+4*vertical_section), str(arr[row][index]), (0, 0, 0), font=image_font)
+            value = arr[row][index] if arr[row][index] > 0 else ""
+            image_editable.text((8+47*(index+1/2)-15/2+4*horizontal_section, 8+45*(row+1/2)-15/2+4*vertical_section), str(value), (0, 0, 0), font=image_font)
     image.save("result.png")
 
 parseOutput(output)
