@@ -16,3 +16,7 @@ body {
   background: linear-gradient(to right, #E9E4F0, #D3CCE3); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
 }
+
+.rounded-logo {
+  border-radius: 20%;
+}
