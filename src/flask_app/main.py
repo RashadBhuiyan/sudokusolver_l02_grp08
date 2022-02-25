@@ -7,6 +7,7 @@ from sudokucv.sudokucv import SudokuCV
 import os
 
 app = Flask(__name__)
+cv = SudokuCV(os.path.dirname(__file__) + "\\" + "\\sudokucv\\model\\handwritten_printed.h5")
 
 @app.route("/")
 def home():
@@ -14,14 +15,12 @@ def home():
     
 @app.route("/upload")
 def upload():
-    return render_template("upload.html")
+    return render_template("upload.html", empty=True)
 
 @app.route("/submit.html", methods = ["POST"])
 def submit():
     # store the file in an image
     image = request.files['formFile'].read()
-
-    cv = SudokuCV(os.path.dirname(__file__) + "\\" + "\\sudokucv\\model\\handwritten_printed.h5")
 
     # store the results of that model analysis
     results = cv.recognize(image, is_file=False)
