@@ -2,10 +2,13 @@ import cv2
 import numpy as np
 from tensorflow.keras.models import load_model
 from cvresults import CVResults
+import cverrors as err
 
 class SudokuCV:
-    WIDTH = 900;
-    HEIGHT = 900;
+    WIDTH = 900
+    HEIGHT = 900
+    MIN_IMAGE_WIDTH = 400
+    MIN_IMAGE_HEIGHT = 400
 
     ## initialize with model file path, show_image displays debug intermediary graphics
     def __init__(self, model) -> None:
@@ -17,6 +20,16 @@ class SudokuCV:
         imgBlur = cv2.GaussianBlur(imgGrey, (5, 5), 1)
         imgThreshold = cv2.adaptiveThreshold( imgBlur, 255, 1, 1, 11, 2)
         return imgThreshold
+
+    ## Split input image into list of cells
+    def getCells(self, image):
+        cells = []
+        rows = np.vsplit(image, 9)
+        for row in rows:
+            columns = np.hsplit(row, 9) 
+            for col in columns:
+                cells.append(col)
+        return cells
 
     ## Attempt to identify number with Keras model
     def getPrediction(self, cells):
@@ -36,7 +49,7 @@ class SudokuCV:
             result[i] = np.argmax(predictions, axis=-1)[0]
             confidence[i] = np.amax(predictions)
 
-        return CVResults(result, confidence)
+        return (result, confidence)
         
     ## Returns the biggest contour and its area
     def biggestContour(self, contours):
@@ -59,8 +72,22 @@ class SudokuCV:
         contour = contour[(angles).argsort()]
         return contour
 
+    def removePerspective(self, image, corners):
+        targetCorners = np.float32([[0, self.HEIGHT], [self.WIDTH, self.HEIGHT],
+                    [self.WIDTH, 0], [0, 0]])
+
+        matrix = cv2.getPerspectiveTransform(np.float32(np.reshape(corners, (4,2))), targetCorners)
+        return cv2.warpPerspective(image, matrix, (self.WIDTH,self.HEIGHT))
+
+    def Error(self, error):
+        return CVResults(None, None, None, err.getErrorMessage(error))
+
     def recognize(self, imagePath, show_image = False):
         img = cv2.imread(imagePath)
+        dimensions = img.shape
+        if dimensions[0] < self.MIN_IMAGE_WIDTH or dimensions[1] < self.MIN_IMAGE_HEIGHT:
+            return self.Error(err.ERR_IMG_TOO_SMALL)
+
         img = cv2.resize(img, (self.WIDTH, self.HEIGHT))
         imgThreshold = self.preProcess(img)
 
@@ -72,38 +99,29 @@ class SudokuCV:
         cv2.drawContours(imgContours, contours, -1, (0, 255, 0), 3)
 
         # find biggest contour
-        biggest, maxArea = self.biggestContour(contours)
+        biggestCorners, maxArea = self.biggestContour(contours)
+        if len(biggestCorners) == 0:
+            return self.Error(err.ERR_NOGRID)
+        elif maxArea < 104976:               # 324^2 = 9 * (model size + 2 * border size) = 9 * (28 + 2*4)
+            return self.Error(err.ERR_GRID_TOO_SMALL)
 
-        biggest = self.getOrderedCorners(biggest)
-        cv2.drawContours(imgBigContour, biggest, -1, (255, 0, 0), 3)
-        #cv2.polylines(imgBigContour, biggest, True, (255,0,0))
+        biggestCorners = self.getOrderedCorners(biggestCorners)
+        cv2.drawContours(imgBigContour, biggestCorners, -1, (255, 0, 0), 3)
 
-        targetCorners = np.float32([[0, self.HEIGHT], [self.WIDTH, self.HEIGHT],
-                            [self.WIDTH, 0], [0, 0]])
-
-        # extract and remove perspective from largest box
-        matrix = cv2.getPerspectiveTransform(np.float32(np.reshape(biggest, (4,2))), targetCorners)
-        # ImgFlattened = img.copy()
-        ImgFlattened = img.copy()
-        ImgFlattened = cv2.warpPerspective(ImgFlattened, matrix, (self.WIDTH,self.HEIGHT))
-        ImgFlattened = cv2.cvtColor(ImgFlattened, cv2.COLOR_BGR2GRAY)
-
+        imgFlattened = self.removePerspective(img, biggestCorners)
+        imgFlattened = cv2.cvtColor(imgFlattened, cv2.COLOR_BGR2GRAY)
+        imgFlattened = cv2.adaptiveThreshold( imgFlattened, 255, 1, 1, 11, cv2.THRESH_TOZERO_INV)
         # split grid into cells
+        cells = self.getCells(imgFlattened)
 
-        cells = []
-        rows = np.vsplit(cv2.adaptiveThreshold( ImgFlattened, 255, 1, 1, 11, cv2.THRESH_TOZERO_INV) , 9)
-        for row in rows:
-            columns = np.hsplit(row, 9) 
-            for col in columns:
-                cells.append(col)
-
-        results = self.getPrediction(cells)
+        results, confidence = self.getPrediction(cells)
 
         if (show_image):
             cv2.imshow("input", img)
             cv2.imshow("threshold", imgThreshold)
-            cv2.imshow("Flattened", ImgFlattened)
-            cv2.imshow("contours", imgBigContour)
+            cv2.imshow("Contours", imgContours)
+            cv2.imshow("DetectedGrid", imgBigContour)
+            cv2.imshow("Flattened", imgFlattened)
             cv2.waitKey(0)
 
-        return results
+        return CVResults(results, confidence, 255 - imgFlattened)
