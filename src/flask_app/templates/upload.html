@@ -27,8 +27,7 @@
     </div>
 
     <script>
-      const output = "{{ solvedBoard }}"
-      console.log(output);
+      var output = {{ solvedBoard }}
       function preview() {
           frame.src = URL.createObjectURL(event.target.files[0]);
       }
