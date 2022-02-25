@@ -19,12 +19,25 @@
               <input type="submit" value="Submit" class="btn btn-primary my-3">
             </div>
             <img id="frame" src="" class="img-fluid" alt="" />
-          </form>
-        </div>
-      </div>
+            <div class="pt-3">
+              <table id="sudoku-board" class="table">
+
+              </table>
+            </div>
     </section>
 
     <script>
+      const output = [
+        [7, 8, 0, 4, 0, 0, 1, 2, 0],
+        [6, 0, 0, 0, 7, 5, 0, 0, 9],
+        [0, 0, 0, 6, 0, 1, 0, 7, 8],
+        [0, 0, 7, 0, 4, 0, 2, 6, 0],
+        [0, 0, 1, 0, 5, 0, 9, 3, 0],
+        [9, 0, 4, 0, 6, 0, 0, 0, 5],
+        [0, 7, 0, 3, 0, 0, 0, 1, 2],
+        [1, 2, 0, 0, 0, 7, 4, 0, 0],
+        [0, 4, 9, 2, 0, 6, 0, 0, 7]
+    ]
       function preview() {
           frame.src = URL.createObjectURL(event.target.files[0]);
       }
@@ -32,6 +45,38 @@
           document.getElementById('formFile').value = null;
           frame.src = "";
       }
+      function populateSudokuBoard(board) {
+        var table = document.getElementById('sudoku-board');
+        var tbody = document.createElement('tbody');
+        table.append(tbody);
+        for(let row = 0; row < 3; row++) {
+          var tr = document.createElement('tr');
+          tbody.append(tr);
+          for(let column = 0; column < 3; column++) {
+            var td = document.createElement('td');
+            var innerTable = document.createElement('table');
+            var innerBody = document.createElement('tbody');
+            td.append(innerTable);
+            tr.append(td);
+            innerTable.append(innerBody);
+            for(let iRow = 0; iRow < 3; iRow++) {
+              var innerRow = document.createElement('tr');
+              innerBody.append(innerRow);
+              for(let iColumn = 0; iColumn < 3; iColumn++) {
+                var innerColumn = document.createElement('td');
+                var input = document.createElement('input');
+                const rowIndex = (row * 3) + iRow;
+                const columnIndex = (column * 3) + iColumn;
+                const value = board[rowIndex][columnIndex];
+                input.value = value > 0 ? value : "";
+                innerColumn.append(input);
+                innerRow.append(innerColumn);
+              }
+            }
+          }
+        }
+      }
+      populateSudokuBoard(output);
     </script>
       
     {% endblock %}
