@@ -82,8 +82,13 @@ class SudokuCV:
     def Error(self, error):
         return CVResults(None, None, None, err.getErrorMessage(error))
 
-    def recognize(self, imagePath, show_image = False):
-        img = cv2.imread(imagePath)
+    ## performs recognition on an image and returns a result object. The input image can be a file or directly from HTTP request (is_file = False)
+    def recognize(self, image, is_file = True,show_image = False):
+        if is_file:
+            img = cv2.imread(image)
+        else:
+            img = cv2.imdecode(np.fromstring(image, np.uint8), cv2.IMREAD_UNCHANGED)
+
         dimensions = img.shape
         if dimensions[0] < self.MIN_IMAGE_WIDTH or dimensions[1] < self.MIN_IMAGE_HEIGHT:
             return self.Error(err.ERR_IMG_TOO_SMALL)
