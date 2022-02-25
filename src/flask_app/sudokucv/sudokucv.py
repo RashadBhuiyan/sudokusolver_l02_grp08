@@ -1,8 +1,8 @@
 import cv2
 import numpy as np
 from tensorflow.keras.models import load_model
-from cvresults import CVResults
-import cverrors as err
+from sudokucv.cvresults import CVResults
+import sudokucv.cverrors as err
 
 class SudokuCV:
     WIDTH = 900
