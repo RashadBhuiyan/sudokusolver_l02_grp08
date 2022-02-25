@@ -18,13 +18,13 @@ def upload():
 @app.route("/submit.html", methods = ["POST"])
 def submit():
     # store the file in an image
-    image = request.files['formFile']
+    image = request.files['formFile'].read()
 
     # create a CV model that will analyze the image
     cv = SudokuCV("sudokucv/model/handwritten_printed.h5")
 
     # store the results of that model analysis
-    results = cv.recognize(image)
+    results = cv.recognize(image, is_file=False)
 
     # store the board and solve it
     bo = results.raw_results
