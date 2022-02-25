@@ -23,7 +23,8 @@ cabal.config
 *.nav
 *.out
 *.snm
+tempCodeRunnerFile.py
 /Physics Engine Families/Papers
-/src/sudokuCV/dataset
+/src/flask_app/sudokuCV/dataset
 Main
 *-nup.pdf
