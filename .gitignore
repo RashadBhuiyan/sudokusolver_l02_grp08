@@ -24,5 +24,6 @@ cabal.config
 *.out
 *.snm
 /Physics Engine Families/Papers
+/src/sudokuCV/dataset
 Main
 *-nup.pdf
