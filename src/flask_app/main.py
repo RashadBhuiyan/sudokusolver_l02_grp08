@@ -4,6 +4,7 @@ from flask import request, redirect
 from solver import solve
 from util import convertInput, generateRandomValidBoard, isBoardValid
 from sudokucv.sudokucv import SudokuCV
+import os
 
 app = Flask(__name__)
 
@@ -20,18 +21,17 @@ def submit():
     # store the file in an image
     image = request.files['formFile'].read()
 
-    # create a CV model that will analyze the image
-    cv = SudokuCV("sudokucv/model/handwritten_printed.h5")
+    cv = SudokuCV(os.path.dirname(__file__) + "\\" + "\\sudokucv\\model\\handwritten_printed.h5")
 
     # store the results of that model analysis
     results = cv.recognize(image, is_file=False)
 
     # store the board and solve it
-    bo = results.raw_results
-    bo = convertInput(bo)
-    solve(bo)
+    bo = results.getConfidentResults(0.75)
+    convertedBo = convertInput(bo)
+    solve(convertedBo)
 
-    return render_template("upload.html", solvedBoard=bo)
+    return render_template("upload.html", solvedBoard=convertedBo)
 
 @app.route("/manual")
 def manual():
