@@ -15,16 +15,16 @@
             <div class="pt-3">
               <label for="Image" class="form-label h2">Upload Sudoku Board</label>
               <p class="text-center">Please upload a clear image of your sudoku board. Our program will then solve the Sudoku board and showcase it to you as an image. If you notice any issues regarding the solution, feel free to contact us using our contact form below!</p>
-              <input class="form-control" type="file" id="formFile" name="formFile" accept="image/png" onchange="preview()" required>
+              <input class="form-control" type="file" id="formFile" name="formFile" accept="image/png, image/jpeg" onchange="preview()" required>
               <input type="submit" value="Submit" class="btn btn-primary my-3">
             </div>
             <img id="frame" src="" class="img-fluid" alt="" />
-            <div class="pt-3">
-              <table id="sudoku-board" class="table">
-
-              </table>
-            </div>
     </section>
+    <div class="pt-3">
+      <table id="sudoku-board" class="table">
+
+      </table>
+    </div>
 
     <script>
       const output = [
