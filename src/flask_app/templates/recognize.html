@@ -127,10 +127,10 @@
         // updates the changes in an input box to the board array
         let inputbox = document.getElementById("su-input-" + String(id))
         let col = id % 9;
-        let row = id / 9;
+        let row = Math.floor(id / 9);
         //TODO: add error checking here
         //TODO: SOME SORT OF ERROR HERE THAT I CANT FIND D:
-        board[row][col] = (inputbox.value === "") ? 0 : parseInt(inputbox.value)
+        board[row][col] = inputbox.value == "" ? 0 : parseInt(inputbox.value)
       }
 
       function parseTable() {
