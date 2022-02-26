@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>SudoCrew:Upload</title>
+    <title>SudoCrew:Solution</title>
   </head>
   <body>
     {% extends "template.html" %}
@@ -11,8 +11,8 @@
     <div class="main-container">
       <!-- image upload container -->
       <div class="p-3 upload-container shadow">
-        <form id="imageForm" action="recognize" method="POST" enctype="multipart/form-data">
-            <label for="formFile" class="form-label text-light h6">Upload Sudoku Board</label>
+        <form id="imageForm" action="recognition" method="POST" enctype="multipart/form-data">
+            <label for="formFile" class="form-label text-light h6">Upload Another Sudoku Board</label>
             <input class="form-control" type="file" id="formFile" name="formFile" accept="image/png, image/jpeg" onchange="preview()" required>
         </form>
       </div>
@@ -49,9 +49,16 @@
           </div>
         </div>
       </div>
+
+    <div class="board-container">
+      <div id="input-board" class="shadow su-table"></div>
+    </div>
     </div>
 
     <script>
+      var board = {{ solution }};
+      var solvedIndices = {{ solvedIndices }}
+
       function preview() {
           frame.src = URL.createObjectURL(event.target.files[0]);
           var myModal = new bootstrap.Modal(document.getElementById('imageModal'));
@@ -61,6 +68,40 @@
           document.getElementById('formFile').value = null;
           frame.src = '';
       }
+      function populateSudokuBoard(board) {
+        let board_container = document.getElementsByClassName('su-table')[0];
+        console.log(board_container)
+        let tableHTML = ''
+        for(let row = 0; row < 9; row++) {
+          tableHTML += '<div class="su-row">';
+          let className = 'su-cell'
+          if (row > 0 && row % 3 == 0) className +=' su-top'
+          for(let col = 0; col < 9; col++) {
+              let colClass = ''
+              let id = row * 9 + col;
+              if (col > 0 && col % 3 == 0) colClass = ' su-left'
+
+              let inputValue = board[row][col] > 0 ? board[row][col] : "";
+              let cellContent = `
+                            <div class="${className + colClass}"> 
+                              <input type="text" class="form-control su-input" id="su-input-${id}" name="fname" value = "${inputValue}"> 
+                            </div>`;
+              tableHTML += cellContent;
+          }
+          tableHTML += '</div>';
+        }
+        board_container.innerHTML = tableHTML;
+      }
+
+      function colorSolved() {
+        for (let i = 0; i < solvedIndices.length; i++){
+          d = document.getElementById('su-input-' + String(solvedIndices[i]))
+          d.classList.add("su-input-new")
+        };
+      }
+      populateSudokuBoard(board);
+      colorSolved(board)
+
     </script>
       
     {% endblock %}

@@ -115,9 +115,8 @@ class SudokuCV:
 
         imgFlattened = self.removePerspective(img, biggestCorners)
         imgFlattened = cv2.cvtColor(imgFlattened, cv2.COLOR_BGR2GRAY)
-        imgFlattened = cv2.adaptiveThreshold( imgFlattened, 255, 1, 1, 11, cv2.THRESH_TOZERO_INV)
         # split grid into cells
-        cells = self.getCells(imgFlattened)
+        cells = self.getCells(cv2.adaptiveThreshold( imgFlattened, 255, 1, 1, 11, cv2.THRESH_TOZERO_INV))
 
         results, confidence = self.getPrediction(cells)
 
@@ -129,4 +128,4 @@ class SudokuCV:
             cv2.imshow("Flattened", imgFlattened)
             cv2.waitKey(0)
 
-        return CVResults(results, confidence, 255 - imgFlattened)
+        return CVResults(results, confidence, cv2.resize(imgFlattened, (500, 500)))

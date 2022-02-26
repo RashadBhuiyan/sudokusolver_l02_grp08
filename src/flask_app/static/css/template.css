@@ -1,5 +1,22 @@
 body {
   font-family: 'Montserrat', sans-serif;
+  /* background: #D3CCE3; */
+  background-color: #363333;
+  /* background: -webkit-linear-gradient(to right, #E9E4F0, #D3CCE3);
+  background: linear-gradient(to right, #E9E4F0, #D3CCE3); */
+}
+
+.upload-container {
+  margin: auto;
+  background-color: #272121;
+  border-radius: 10px;
+  width: 500px;
+  margin: 2rem auto;
+  text-align: left;
+}
+
+.main-container {
+  text-align: center;
 }
   
 .logo {
@@ -7,16 +24,96 @@ body {
 }
 
 .custom-nav-gradient {
-  background-image: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
+  background-image: linear-gradient(to top, #464646 0%, #333 100%);
 }
 
 .custom-body-gradient {
   background: #D3CCE3;  /* fallback for old browsers */
   background: -webkit-linear-gradient(to right, #E9E4F0, #D3CCE3);  /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to right, #E9E4F0, #D3CCE3); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
 }
 
 .rounded-logo {
   border-radius: 20%;
+}
+
+.board-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.su-image,.su-table {
+  background: #E16428;
+  padding: 20px;
+  width: 500px;
+  min-width: 500px;
+  height: 500px;
+  min-height: 500px;
+  margin: 0rem 1.5rem 3rem;
+  border-radius: 10px;
+}
+
+.su-row {
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.su-cell {
+  padding: 4px 2px 2px 4px;
+  margin: 2px
+}
+
+.su-top {
+  border-top: 4px dotted rgba(0,0,0,0.3);
+}
+.su-left {
+  border-left: 4px dotted rgba(0,0,0,0.3);
+}
+
+.su-input {
+  height: 2.5rem;
+  width: 2.5rem;
+  margin: auto;
+  padding: 0;
+  text-align: center;
+  font-size: 1.8rem;
+  background-color: rgba(0,0,0,0.125);
+  border-color: rgba(0,0,0,0.125);
+  color: white;
+}
+
+.su-input-new {
+  color: aquamarine;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+}
+
+.low-confidence {
+  outline-color: rgba(255,0,0,0.4);;
+}
+
+.mid-confidence {
+  outline-color: rgba(255,200,0,0.4);;
+}
+
+.high-confidence {
+  outline-color: rgba(0,0,0,0);
+}
+
+.outline-2 {
+  outline-width: 3px;
+  outline-style: solid;
+}
+
+.solve-button {
+  width: 500px;
+  height: 40px;
+  font-size: large;
 }
