@@ -17,6 +17,25 @@ def home():
 def upload():
     return render_template("upload.html", empty=True)
 
+@app.route("/solve.html", methods = ["POST"])
+def solveroute():
+    board = [[0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0]]
+    for row in range(9):
+        for column in range(9):
+            value = request.form.get(str(row) + "," + str(column))
+            board[row][column] = int(value) if value != "" else 0
+
+    solve(board)
+    return render_template("upload.html", solvedBoard=board)
+
 @app.route("/submit.html", methods = ["POST"])
 def submit():
     # store the file in an image
@@ -28,7 +47,7 @@ def submit():
     # store the board and solve it
     bo = results.getConfidentResults(0.75)
     convertedBo = convertInput(bo)
-    solve(convertedBo)
+    # solve(convertedBo)
 
     return render_template("upload.html", solvedBoard=convertedBo)
 

@@ -19,15 +19,32 @@
               <input type="submit" value="Submit" class="btn btn-primary my-3">
             </div>
             <img id="frame" src="" class="img-fluid" alt="" />
+          </form>
     </section>
-    <div class="pt-3">
-      <table id="sudoku-board" class="table">
-
-      </table>
-    </div>
+    <form id="sudoku-form" class="pt-3" action="solve.html" method="POST">
+      <div class="row py-lg-4 bg-white">
+        <table id="sudoku-board" class="table"></table>
+        <input type="submit" value="Solve" class="btn btn-primary my-3">
+      </div>
+    </form>
 
     <script>
-      var output = {{ solvedBoard }}
+      var output = {{solvedBoard}}
+      // var output;
+      // const isEmpty = {{empty}}
+      // if(isEmpty) {
+      //   output = [[0, 0, 0, 0, 0, 0, 0, 0, 0],
+      //   [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      //   [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      //   [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      //   [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      //   [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      //   [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      //   [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      //   [0, 0, 0, 0, 0, 0, 0, 0, 0],]
+      // } else {
+      //   output =  {{ solvedBoard }};
+      // }
       function preview() {
           frame.src = URL.createObjectURL(event.target.files[0]);
       }
@@ -59,6 +76,7 @@
                 const columnIndex = (column * 3) + iColumn;
                 const value = board[rowIndex][columnIndex];
                 input.value = value > 0 ? value : "";
+                input.name = rowIndex + "," + columnIndex;
                 innerColumn.append(input);
                 innerRow.append(innerColumn);
               }
