@@ -23,6 +23,13 @@ body {
   padding: 10px;
 }
 
+.navbar-brand {
+  font-family: 'Sue Ellen Francisco', cursive;
+  font-weight: bold;
+  padding: 0;
+  font-size: 1.5rem;
+}
+
 .custom-nav-gradient {
   background-image: linear-gradient(to top, #464646 0%, #333 100%);
 }
@@ -43,15 +50,27 @@ body {
   justify-content: center;
 }
 
-.su-image,.su-table {
+.board-card {
+  margin: 0rem 1.5rem 3rem;
+}
+
+.board-body {
   background: #E16428;
   padding: 20px;
   width: 500px;
   min-width: 500px;
   height: 500px;
   min-height: 500px;
-  margin: 0rem 1.5rem 3rem;
-  border-radius: 10px;
+  border-radius: 10px 10px 0 0;
+}
+
+.board-footer {
+  background-color: darkslategray;
+  border-radius: 0 0 10px 10px;
+  padding: 6px 12px;
+  color: #DDD;
+  text-align: left;
+  font-size: large;
 }
 
 .su-row {
@@ -67,10 +86,10 @@ body {
 }
 
 .su-top {
-  border-top: 4px dotted rgba(0,0,0,0.3);
+  border-top: 4px dotted rgba(0,0,0,0.5);
 }
 .su-left {
-  border-left: 4px dotted rgba(0,0,0,0.3);
+  border-left: 4px dotted rgba(0,0,0,0.5);
 }
 
 .su-input {
@@ -86,7 +105,7 @@ body {
 }
 
 .su-input-new {
-  color: aquamarine;
+  color: greenyellow;
 }
 
 .footer {
@@ -116,4 +135,13 @@ body {
   width: 500px;
   height: 40px;
   font-size: large;
+}
+
+.modal-content {
+  background-color: #464646;
+  color: white;
+}
+
+.modal-header, .modal-footer {
+  border-color: #333;
 }

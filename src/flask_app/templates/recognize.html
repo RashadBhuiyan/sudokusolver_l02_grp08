@@ -12,7 +12,7 @@
       <!-- image upload container -->
       <div class="p-3 upload-container shadow">
         <form id="imageForm" action="recognize" method="POST" enctype="multipart/form-data">
-            <label for="formFile" class="form-label text-light h6">Upload Sudoku Board</label>
+            <label for="formFile" class="form-label text-light h6">Upload New Sudoku Board</label>
             <input class="form-control" type="file" id="formFile" name="formFile" accept="image/png, image/jpeg" onchange="preview()" required>
         </form>
       </div>
@@ -30,7 +30,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="clearImage()">Cancel</button>
-              <button type="submit" data-bs-target="#uploadingModel" data-bs-toggle="modal" data-bs-dismiss="modal" class="btn btn-primary" form="imageForm">Submit</button>
+              <button type="submit" data-bs-target="#uploadingModel" data-bs-toggle="modal" data-bs-dismiss="modal" class="btn btn-success" form="imageForm">Submit</button>
             </div>
           </div>
         </div>
@@ -51,11 +51,24 @@
       </div>
 
     <div class="board-container">
-      <div id="input-image" class="shadow su-image">
-        <img id="recognizedImage" src="" class="img-fluid" alt="" />
+      <div class="board-card" >
+        <div id="input-image" class="board-body shadow">
+          <img id="recognizedImage" src="" class="img-fluid" alt="" />
+        </div>
+        <div class="board-footer shadow">
+          Extracted Sudoku Board
+        </div>
       </div>
-      <div id="input-board" class="shadow su-table"></div>
+
+      <div class="board-card" >
+        <div id="input-board" class="board-body shadow"></div>
+        <div class="board-footer shadow">
+          Recognized Digits
+        </div>
+      </div>
     </div>
+
+    <!-- form for submitting to solver -->
     <form id="solveForm" action="solver" method="POST" onsubmit="parseTable()" enctype="multipart/form-data">
       <input type="hidden" id="tableJSON" value="" name="tableJSON">
       <button type="submit" class="btn btn-success solve-button">Solve</button>
@@ -80,8 +93,7 @@
           frame.src = '';
       }
       function populateSudokuBoard(board) {
-        let board_container = document.getElementsByClassName('su-table')[0];
-        console.log(board_container)
+        let board_container = document.getElementById('input-board');
         let tableHTML = ''
         for(let row = 0; row < 9; row++) {
           tableHTML += '<div class="su-row">';
@@ -112,11 +124,13 @@
       }
 
       function updateBoard(id) {
+        // updates the changes in an input box to the board array
         let inputbox = document.getElementById("su-input-" + String(id))
         let col = id % 9;
         let row = id / 9;
         //TODO: add error checking here
-        board[row][col] = (inputbox.value == "") ? 0 : parseInt(inputbox.value)
+        //TODO: SOME SORT OF ERROR HERE THAT I CANT FIND D:
+        board[row][col] = (inputbox.value === "") ? 0 : parseInt(inputbox.value)
       }
 
       function parseTable() {

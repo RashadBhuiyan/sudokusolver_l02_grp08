@@ -16,7 +16,7 @@ def home():
     
 @app.route("/upload")
 def upload():
-    return render_template("upload.html")
+    return render_template("upload.html", error = "")
 
 @app.route("/recognize", methods = ["POST"])
 def recognize():
@@ -26,11 +26,13 @@ def recognize():
     # store the results of that model analysis
     results = cv.recognize(image, is_file=False)
 
-    # store the board and solve it
-    board = results.getConfidentResults(0.75)
-    confidence = results.getConfidence()
-    image = results.getImage()
-    return render_template("recognize.html", inputBoard=board, inputConfidence=confidence, inputImage=image)
+    if (not results.error):
+        board = results.getConfidentResults(0.75)
+        confidence = results.getConfidence()
+        image = results.getImage()
+        return render_template("recognize.html", inputBoard=board, inputConfidence=confidence, inputImage=image)
+    else:
+        return render_template("upload.html", error=results.error)
 
 @app.route("/solver", methods = ["POST"])
 def solver():
@@ -43,9 +45,9 @@ def solver():
             if board[row][col] == 0:
                 solvedCoordinates.append(row * 9 + col)
 
-    solve(board)
-    print(solvedCoordinates)
-    return render_template("solution.html", solution=board, indices = solvedCoordinates)
+    success = solve(board)
+    print("solve successful: ", success)
+    return render_template("solution.html", solution=board, indices=solvedCoordinates, success=str(success))
 
 @app.route("/manual")
 def manual():

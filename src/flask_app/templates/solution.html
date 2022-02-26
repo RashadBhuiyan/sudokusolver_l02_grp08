@@ -30,7 +30,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="clearImage()">Cancel</button>
-              <button type="submit" data-bs-target="#uploadingModel" data-bs-toggle="modal" data-bs-dismiss="modal" class="btn btn-primary" form="imageForm">Submit</button>
+              <button type="submit" data-bs-target="#uploadingModel" data-bs-toggle="modal" data-bs-dismiss="modal" class="btn btn-success" form="imageForm">Submit</button>
             </div>
           </div>
         </div>
@@ -49,28 +49,57 @@
           </div>
         </div>
       </div>
+      
+      <!-- Error message modal -->
+      <div class="modal fade" id = "FailureModal" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Uh oh!</h5>
+            </div>
+            <div class="modal-body">
+              <p class="text-start">The solver was unable to produce a solution for your puzzle. Please check the supplied input digits for correctness.</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-warning" onclick="history.back()">Go Back</button>
+            </div>
+          </div>
+        </div>
+      </div>
 
     <div class="board-container">
-      <div id="input-board" class="shadow su-table"></div>
+      <div class="board-card" >
+        <div id="input-board" class="board-body shadow"></div>
+        <div class="board-footer shadow">
+          Solution
+        </div>
+      </div>
     </div>
     </div>
 
     <script>
       var board = {{ solution }};
-      var solvedIndices = {{ solvedIndices }}
+      var indices = {{ indices }}
+      var success = '{{ success }}'
 
       function preview() {
           frame.src = URL.createObjectURL(event.target.files[0]);
-          var myModal = new bootstrap.Modal(document.getElementById('imageModal'));
+          let myModal = new bootstrap.Modal(document.getElementById('imageModal'));
           myModal.show()
       }
+
+      function showErrorModal() {
+          let myModal = new bootstrap.Modal(document.getElementById('FailureModal'));
+          myModal.show()
+      }
+
       function clearImage() {
           document.getElementById('formFile').value = null;
           frame.src = '';
       }
+      
       function populateSudokuBoard(board) {
-        let board_container = document.getElementsByClassName('su-table')[0];
-        console.log(board_container)
+        let board_container = document.getElementById('input-board');
         let tableHTML = ''
         for(let row = 0; row < 9; row++) {
           tableHTML += '<div class="su-row">';
@@ -93,14 +122,20 @@
         board_container.innerHTML = tableHTML;
       }
 
+      // colour generated numbers
       function colorSolved() {
-        for (let i = 0; i < solvedIndices.length; i++){
-          d = document.getElementById('su-input-' + String(solvedIndices[i]))
+        for (let i = 0; i < indices.length; i++){
+          d = document.getElementById('su-input-' + String(indices[i]))
           d.classList.add("su-input-new")
         };
       }
       populateSudokuBoard(board);
-      colorSolved(board)
+      if (success == "True") {
+        colorSolved()
+      } else {
+        showErrorModal()
+      }
+      
 
     </script>
       
