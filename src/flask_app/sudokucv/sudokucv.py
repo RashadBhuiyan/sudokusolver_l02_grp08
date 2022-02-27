@@ -7,8 +7,8 @@ import sudokucv.cverrors as err
 class SudokuCV:
     WIDTH = 900
     HEIGHT = 900
-    MIN_IMAGE_WIDTH = 400
-    MIN_IMAGE_HEIGHT = 400
+    MIN_IMAGE_WIDTH = 200
+    MIN_IMAGE_HEIGHT = 200
 
     ## initialize with model file path, show_image displays debug intermediary graphics
     def __init__(self, model) -> None:
@@ -16,8 +16,7 @@ class SudokuCV:
 
     ## Preprocess image for board outline recognition
     def preProcess(self, image):
-        imgGrey = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-        imgBlur = cv2.GaussianBlur(imgGrey, (5, 5), 1)
+        imgBlur = cv2.GaussianBlur(image, (5, 5), 1)
         imgThreshold = cv2.adaptiveThreshold( imgBlur, 255, 1, 1, 11, 2)
         return imgThreshold
 
@@ -41,7 +40,7 @@ class SudokuCV:
             img = img[10:img.shape[0] - 10, 10:img.shape[1] - 10]   # crop out grid borders
             img = cv2.resize(img, (28, 28))
             img = img / 255                                         # normalize
-            img = 1-img
+            # img = 1-img
             img = img.reshape(1, 28, 28, 1)                         # resize to match model shape
 
             predictions = self.model.predict(img)
@@ -94,6 +93,8 @@ class SudokuCV:
             return self.Error(err.ERR_IMG_TOO_SMALL)
 
         img = cv2.resize(img, (self.WIDTH, self.HEIGHT))
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
         imgThreshold = self.preProcess(img)
 
         # find contours 
@@ -107,16 +108,18 @@ class SudokuCV:
         biggestCorners, maxArea = self.biggestContour(contours)
         if len(biggestCorners) == 0:
             return self.Error(err.ERR_NOGRID)
-        elif maxArea < 104976:               # 324^2 = 9 * (model size + 2 * border size) = 9 * (28 + 2*4)
+        elif maxArea < 63504:               # 324^2 = 9 * model size = 9 * 28
             return self.Error(err.ERR_GRID_TOO_SMALL)
 
         biggestCorners = self.getOrderedCorners(biggestCorners)
         cv2.drawContours(imgBigContour, biggestCorners, -1, (255, 0, 0), 3)
 
         imgFlattened = self.removePerspective(img, biggestCorners)
-        imgFlattened = cv2.cvtColor(imgFlattened, cv2.COLOR_BGR2GRAY)
+        t = cv2.adaptiveThreshold(imgFlattened, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 21, 15)
+        imgFlattened[t==255] = 255
+
         # split grid into cells
-        cells = self.getCells(cv2.adaptiveThreshold( imgFlattened, 255, 1, 1, 11, cv2.THRESH_TOZERO_INV))
+        cells = self.getCells(imgFlattened)     # cv2.adaptiveThreshold( imgFlattened, 255, 1, 1, 11, cv2.THRESH_TOZERO_INV)
 
         results, confidence = self.getPrediction(cells)
 

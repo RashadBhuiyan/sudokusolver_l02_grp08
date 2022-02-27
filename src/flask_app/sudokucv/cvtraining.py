@@ -22,13 +22,36 @@ def preProcessing(img):
 
 ## based on model by https://github.com/shubham99bisht/Handwritten-digit-recognition-MNIST
 def createModel():
+
     model = Sequential()
-    model.add(layers.Conv2D(32, (5, 5), input_shape=(28, 28, 1), activation='relu'))
-    model.add(layers.MaxPooling2D(pool_size=(2, 2)))
-    model.add(layers.Dropout(0.2))
+    model.add(layers.Conv2D(filters=64, kernel_size = (3,3), activation="relu", input_shape=(28,28,1)))
+    model.add(layers.Conv2D(filters=64, kernel_size = (3,3), activation="relu"))
+
+    model.add(layers.MaxPooling2D(pool_size=(2,2)))
+    model.add(layers.BatchNormalization())
+    model.add(layers.Conv2D(filters=128, kernel_size = (3,3), activation="relu"))
+    model.add(layers.Conv2D(filters=128, kernel_size = (3,3), activation="relu"))
+
+    model.add(layers.MaxPooling2D(pool_size=(2,2)))
+    model.add(layers.BatchNormalization())    
+    model.add(layers.Conv2D(filters=256, kernel_size = (3,3), activation="relu"))
+        
+    model.add(layers.MaxPooling2D(pool_size=(2,2)))
+        
     model.add(layers.Flatten())
-    model.add(layers.Dense(128, activation='relu'))
-    model.add(layers.Dense(10, activation='softmax'))
+    model.add(layers.BatchNormalization())
+    model.add(layers.Dense(512,activation="relu"))
+        
+    model.add(layers.Dense(10,activation="softmax"))
+        
+
+    # model = Sequential()
+    # model.add(layers.Conv2D(32, (5, 5), input_shape=(28, 28, 1), activation='relu'))
+    # model.add(layers.MaxPooling2D(pool_size=(2, 2)))
+    # model.add(layers.Dropout(0.2))
+    # model.add(layers.Flatten())
+    # model.add(layers.Dense(128, activation='relu'))
+    # model.add(layers.Dense(10, activation='softmax'))
 
     # model = Sequential()
     # model.add((layers.Conv2D(60, (5,5), input_shape = (28, 28, 1), activation = "relu")))
@@ -127,7 +150,7 @@ stepsPerEpoc = 10000
 # fit model
 history = model.fit(dataGen.flow(x_train, y_train, batch_size=batch), steps_per_epoch = stepsPerEpoc, epochs = epoch, validation_data = (x_validation, y_validation), shuffle = 1)
 
-model.save("printed.h5")
+model.save("printed_new.h5")
 
 score = model.evaluate(x_test, y_test)
 print('Score: ', score[0])
