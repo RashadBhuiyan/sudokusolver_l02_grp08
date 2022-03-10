@@ -39,8 +39,7 @@ def solver():
     tableJSON = request.form.get('tableJSON')
     print(tableJSON)
     board = json.loads(tableJSON)
-    solvedCoordinates = []
-    getSolvedCoordinates(board, solvedCoordinates)
+    solvedCoordinates = getSolvedCoordinates(board)
     success = solve(board)
     print("solve successful: ", success)
     return render_template("solution.html", solution=board, indices=solvedCoordinates, success=str(success))
