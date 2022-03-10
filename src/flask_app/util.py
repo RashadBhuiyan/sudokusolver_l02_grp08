@@ -131,17 +131,6 @@ def getSolvedCoordinates(board):
                 coordinates.append(row * 9 + col)
     return coordinates
 
-board = generateRandomValidBoard(32)
-for row in board:
-    print(row)
-
-hints = 0
-for i in range(9):
-    for j in range(9):
-        if board[i][j] != 0:
-            hints += 1
-print(hints)
-
 # board = generateRandomValidBoard(24)
 # for row in board:
 #     print(row)
