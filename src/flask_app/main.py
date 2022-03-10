@@ -2,7 +2,7 @@ from flask import Flask
 from flask import render_template
 from flask import request, redirect
 from solver import solve
-from util import generateRandomValidBoard, isBoardValid
+from util import generateRandomValidBoard, isBoardValid, getSolvedCoordinates
 from sudokucv.sudokucv import SudokuCV
 import os
 import json
@@ -40,11 +40,7 @@ def solver():
     print(tableJSON)
     board = json.loads(tableJSON)
     solvedCoordinates = []
-    for row in range(9):
-        for col in range(9):
-            if board[row][col] == 0:
-                solvedCoordinates.append(row * 9 + col)
-
+    getSolvedCoordinates(board, solvedCoordinates)
     success = solve(board)
     print("solve successful: ", success)
     return render_template("solution.html", solution=board, indices=solvedCoordinates, success=str(success))

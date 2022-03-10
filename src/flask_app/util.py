@@ -19,7 +19,7 @@ def generateRandomValidBoard(hints):
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
     ]
-    solve(board)
+    solve(board) 
     coordinates = [(x, y) for x in range(0, 9) for y in range(0, 9)]
     for i in range(hints):
         removed = False
@@ -36,6 +36,12 @@ def generateRandomValidBoard(hints):
             else:
                 board[y][x] = value
     return board
+
+def getSolvedCoordinates(board, coordinates):
+    for row in range(9):
+        for col in range(9):
+            if board[row][col] == 0:
+                coordinates.append(row * 9 + col)
 
 # testing if board is valid
 # board = generateRandomValidBoard(21)
