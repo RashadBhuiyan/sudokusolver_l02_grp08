@@ -1,6 +1,12 @@
-\documentclass[12pt, titlepage]{article}
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[letterpaper, total={6in, 9in}]{geometry}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{hyperref}
+\usepackage{adjustbox,lipsum}
 
 \usepackage{booktabs}
+\usepackage{float}
 \usepackage{tabularx}
 \usepackage{hyperref}
 \hypersetup{
@@ -12,17 +18,19 @@
 }
 \usepackage[round]{natbib}
 
-\title{SE 3XA3: Test Plan\\Title of Project}
+\graphicspath{ {Assets/} }
 
-\author{Team \#, Team Name
-		\\ Student 1 name and macid
-		\\ Student 2 name and macid
-		\\ Student 3 name and macid
+\title{SE 3XA3: Test Plan\\Sudoku Solver}
+
+\author{Team 08, SudoCrew
+		\\ Rashad A. Bhuiyan (bhuiyr2)
+		\\ Kai Zhu (zhuk2)
+		\\ Stanley Chan (chans67)
 }
 
 \date{\today}
 
-\input{../Comments}
+% \input{../Comments}
 
 \begin{document}
 
@@ -33,13 +41,16 @@
 \listoftables
 \listoffigures
 
-\begin{table}[bp]
+\newpage
+
+\begin{table}[H]
 \caption{\bf Revision History}
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
+2022-02-28 & 0.0 & Created Test Plan; started on General Information\\
+2022-03-09 & 0.1 & Updated Plan and Appendix, started System Test Description\\
+2022-03-11 & 0.2 & Updated Sections 3-6\\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -48,51 +59,51 @@ Date 2 & 1.1 & Notes\\
 
 \pagenumbering{arabic}
 
-This document ...
-
 \section{General Information}
 
 \subsection{Purpose}
+The purpose of this document is to describe the testing, validation, and verification procedures that will be implemented for our Sudoku Solver program. The majority of the unit testing will be accomplished through PyTest as our program is primarily written using Python. Structural testing will be done using individually-created testing classes for proper analysis of branching. Non-functional requirements will primarily be realized through manual testing as there is a heavy emphasis on visualization of our project. System testing is done before proof-of-concept demonstration, revision 0 demonstration, and the final demonstration.
 
 \subsection{Scope}
+This test plan provides a basis for testing the functionality of the extended implementation and every new addition to the original Sudoku Solver algorithm by TechWithTim. Since the extended implementation involves creating a web application and methods of playing the game, the scope of testing covers web-application navigation and management, Sudoku generation and solution algorithms, and image recognition algorithms through machine learning. This document provides testing methodologies that covers the scope of the program as well as outlining all methods and tools used for testing.
 
 \subsection{Acronyms, Abbreviations, and Symbols}
-	
-\begin{table}[hbp]
-\caption{\textbf{Table of Abbreviations}} \label{Table}
-
+\begin{table}[H]
+\caption{\bf Table of Naming Conventions and Terminology} \label{Table}
+\centering
 \begin{tabularx}{\textwidth}{p{3cm}X}
 \toprule
-\textbf{Abbreviation} & \textbf{Definition} \\
+Terminology     & Meaning \\
 \midrule
-Abbreviation1 & Definition1\\
-Abbreviation2 & Definition2\\
+PoC & Proof of Concept, one of the deliverables of the 3XA3 project\\
+SRS & Software Requirements Specification, the document outlining all requirements for this program\\
+GUI & graphical user interface, the front-end of the program that users can view and interact\\
+Structural Test & Testing that focusses on the internal structure and branching of the software\\
+Functional Test & Testing derived from the SRS\\
+Dynamic Test & Testing that involves test cases running during execution\\
+Static Test & None-code testing done through code inspection\\
+Manual Test & Testing that is done manually by people\\
+Automated Test & Testing that is done using testing software such as PyTest\\
+Unit Test & Testing that focusses on individual functions and methods\\
+System Test & Testing the entire system as a whole rather than individual components\\
+UI     & User interface, the interface that allows for user interaction with the system. \\
+PyTest & A Python library designed to help create tests for Python code. \\
 \bottomrule
 \end{tabularx}
-
 \end{table}
 
-\begin{table}[!htbp]
-\caption{\textbf{Table of Definitions}} \label{Table}
-
-\begin{tabularx}{\textwidth}{p{3cm}X}
-\toprule
-\textbf{Term} & \textbf{Definition}\\
-\midrule
-Term1 & Definition1\\
-Term2 & Definition2\\
-\bottomrule
-\end{tabularx}
-
-\end{table}	
-
 \subsection{Overview of Document}
+This document contains all information regarding the testing plan for the Sudoku Solver project. An overall plan will be addressed through a schedule as well as creation of a testing team. Furthermore, every functional and non-functional requirement from the SRS will be addressed and tested using various form of blackbox and whitebox testing. PoC testing will cover a specific sample of methods and will highlight some key differences of implementation between the original project and the current implementation.
+
+\newpage
 
 \section{Plan}
 	
 \subsection{Software Description}
+The purpose of this software application is to provide a comprehensive suite of tools for generating, recognizing, and solving Sudoku puzzles. The application will provide a web-based front-end with an intuitive interface to cater to users of different technical abilities on most modern hardware. Computer vision is also utilized to improve ease of use, by directly interfacing puzzles from print-media to the application.
 
 \subsection{Test Team}
+The team responsible for testing consists of Rashad Bhuiyan, Stanley Chan, and Kai Zhu.
 
 \subsection{Automated Testing Approach}
 
@@ -100,19 +111,19 @@ Term2 & Definition2\\
 
 \subsection{Testing Schedule}
 		
-See Gantt Chart at the following url ...
+See Gantt Chart at the following url: \url{https://gitlab.cas.mcmaster.ca/bhuiyr2/sudokusolver_l02_grp08/-/raw/main/ProjectSchedule/Gantt_Sudoku.pdf}
 
 \section{System Test Description}
 	
 \subsection{Tests for Functional Requirements}
 
-\subsubsection{Area of Testing1}
+\subsubsection{Homepage Navigation}
 		
-\paragraph{Title for Test}
+\paragraph{Display Buttons}
 
 \begin{enumerate}
 
-\item{test-id1\\}
+\item{FS-DB-1\\}
 
 Type: Functional, Dynamic, Manual, Static etc.
 					
@@ -124,7 +135,19 @@ Output:
 					
 How test will be performed: 
 					
-\item{test-id2\\}
+\item{FS-DB-2\\}
+
+Type: Functional, Dynamic, Manual, Static etc.
+					
+Initial State: 
+					
+Input: 
+					
+Output: 
+					
+How test will be performed: 
+
+\item{FS-DB-3\\}
 
 Type: Functional, Dynamic, Manual, Static etc.
 					
@@ -138,9 +161,299 @@ How test will be performed:
 
 \end{enumerate}
 
-\subsubsection{Area of Testing2}
+\subsubsection{Image Upload}
 
-...
+\paragraph{Initial Upload}
+
+\begin{enumerate}
+
+\item{FS-IU-1\\}
+
+Type: Functional, Dynamic, Manual, Static etc.
+					
+Initial State: 
+					
+Input: 
+					
+Output: 
+					
+How test will be performed: 
+					
+\item{FS-IU-2\\}
+
+Type: Functional, Dynamic, Manual, Static etc.
+					
+Initial State: 
+					
+Input: 
+					
+Output: 
+					
+How test will be performed: 
+
+\end{enumerate}
+
+\paragraph{Image Interpretation}
+
+\begin{enumerate}
+
+\item{FS-II-1\\}
+
+Type: Functional, Dynamic, Manual, Static etc.
+					
+Initial State: 
+					
+Input: 
+					
+Output: 
+					
+How test will be performed: 
+					
+\item{FS-II-2\\}
+
+Type: Functional, Dynamic, Manual, Static etc.
+					
+Initial State: 
+					
+Input: 
+					
+Output: 
+					
+How test will be performed: 
+
+\end{enumerate}
+
+\paragraph{Solution Output}
+
+\begin{enumerate}
+
+\item{FS-SO-1\\}
+
+Type: Functional, Dynamic, Manual, Static etc.
+					
+Initial State: 
+					
+Input: 
+					
+Output: 
+					
+How test will be performed: 
+					
+\item{FS-SO-2\\}
+
+Type: Functional, Dynamic, Manual, Static etc.
+					
+Initial State: 
+					
+Input: 
+					
+Output: 
+					
+How test will be performed: 
+
+\end{enumerate}
+
+\subsubsection{Manual Input}
+
+\paragraph{Board Display}
+
+\begin{enumerate}
+
+\item{FS-BD-1\\}
+
+Type: Functional, Dynamic, Manual, Static etc.
+					
+Initial State: 
+					
+Input: 
+					
+Output: 
+					
+How test will be performed: 
+					
+\item{FS-BD-2\\}
+
+Type: Functional, Dynamic, Manual, Static etc.
+					
+Initial State: 
+					
+Input: 
+					
+Output: 
+					
+How test will be performed: 
+
+\end{enumerate}
+
+\paragraph{Solution Verification}
+
+\begin{enumerate}
+
+\item{FS-SV-1\\}
+
+Type: Functional, Dynamic, Manual, Static etc.
+					
+Initial State: 
+					
+Input: 
+					
+Output: 
+					
+How test will be performed: 
+					
+\item{FS-SV-2\\}
+
+Type: Functional, Dynamic, Manual, Static etc.
+					
+Initial State: 
+					
+Input: 
+					
+Output: 
+					
+How test will be performed: 
+
+\item{FS-SV-3\\}
+
+Type: Functional, Dynamic, Manual, Static etc.
+					
+Initial State: 
+					
+Input: 
+					
+Output: 
+					
+How test will be performed: 
+
+\item{FS-SV-4\\}
+
+Type: Functional, Dynamic, Manual, Static etc.
+					
+Initial State: 
+					
+Input: 
+					
+Output: 
+					
+How test will be performed: 
+
+\end{enumerate}
+
+\subsubsection{Play Sudoku}
+
+\paragraph{Board Generation}
+
+\begin{enumerate}
+
+\item{FS-BG-1\\}
+
+Type: Functional, Dynamic, Manual, Static etc.
+					
+Initial State: 
+					
+Input: 
+					
+Output: 
+					
+How test will be performed: 
+					
+\item{FS-BG-2\\}
+
+Type: Functional, Dynamic, Manual, Static etc.
+					
+Initial State: 
+					
+Input: 
+					
+Output: 
+					
+How test will be performed: 
+
+\item{FS-BG-3\\}
+
+Type: Functional, Dynamic, Manual, Static etc.
+					
+Initial State: 
+					
+Input: 
+					
+Output: 
+					
+How test will be performed: 
+
+\end{enumerate}
+
+\paragraph{Sudoku Gameplay}
+
+\begin{enumerate}
+
+\item{FS-SG-1\\}
+
+Type: Functional, Dynamic, Manual, Static etc.
+					
+Initial State: 
+					
+Input: 
+					
+Output: 
+					
+How test will be performed: 
+					
+\item{FS-SG-2\\}
+
+Type: Functional, Dynamic, Manual, Static etc.
+					
+Initial State: 
+					
+Input: 
+					
+Output: 
+					
+How test will be performed: 
+
+\item{FS-SG-3\\}
+
+Type: Functional, Dynamic, Manual, Static etc.
+					
+Initial State: 
+					
+Input: 
+					
+Output: 
+					
+How test will be performed: 
+
+\end{enumerate}
+
+\paragraph{User Sudoku Verification}
+
+\begin{enumerate}
+
+\item{FS-USV-1\\}
+
+Type: Functional, Dynamic, Manual, Static etc.
+					
+Initial State: 
+					
+Input: 
+					
+Output: 
+					
+How test will be performed: 
+					
+\item{FS-USV-2\\}
+
+Type: Functional, Dynamic, Manual, Static etc.
+					
+Initial State: 
+					
+Input: 
+					
+Output: 
+					
+How test will be performed: 
+
+\end{enumerate}
 
 \subsection{Tests for Nonfunctional Requirements}
 
