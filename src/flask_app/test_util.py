@@ -110,6 +110,8 @@ class TestUtil:
         assert util.isBoardUnique(self.non_unique_board) == False
         assert util.isBoardUnique(self.non_unique_board2) == False
         assert util.isBoardUnique(self.unique_board) == True
+        with pytest.raises(Exception):
+            util.isBoardUnique(self.no_solution_board) 
 
     def testGetSolvedCoordinates(self):
         assert util.getSolvedCoordinates(self.non_unique_board2) == [16, 17, 79, 80]
