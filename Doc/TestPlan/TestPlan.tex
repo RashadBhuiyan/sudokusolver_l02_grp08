@@ -88,7 +88,7 @@ Unit Test & Testing that focusses on individual functions and methods\\
 System Test & Testing the entire system as a whole rather than individual components\\
 UI     & User interface, the interface that allows for user interaction with the system. \\
 PyTest & A Python library designed to help create tests for Python code. \\
-MNIST & A Modified National Institute of Standards and Technology data set with a large number of images of handwritten digits.
+MNIST & A Modified National Institute of Standards and Technology data set with a large number of images of handwritten digits.\\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -112,7 +112,9 @@ The team responsible for testing consists of Rashad Bhuiyan, Stanley Chan, and K
 
 \subsection{Testing Schedule}
 		
-See Gantt Chart at the following url: \url{https://gitlab.cas.mcmaster.ca/bhuiyr2/sudokusolver_l02_grp08/-/raw/main/ProjectSchedule/Gantt_Sudoku.pdf}
+Detailed testing schedule and responsibilities are included in the Project Gantt chart, available at  \url{https://gitlab.cas.mcmaster.ca/bhuiyr2/sudokusolver_l02_grp08/-/raw/main/ProjectSchedule/Gantt_Sudoku.pdf}
+
+\newpage
 
 \section{System Test Description}
 	
@@ -152,7 +154,7 @@ How test will be performed: The button that says 'Play a Game' will be pressed t
 
 Type: Functional, Dynamic, Manual
 					
-Initial State: old browser
+Initial State: Old browser
 					
 Input: Enter Sudoku Solver website path
 					
@@ -170,27 +172,27 @@ How test will be performed: The website will attempt to be launched using an old
 
 \item{FS-IU-1\\}
 
-Type: Functional, Dynamic, Manual, Static etc.
+Type: Functional, Dynamic, Manual
 					
-Initial State: 
+Initial State: Sudoku Image input page with image uploaded
 					
-Input: 
+Input: Submit image
 					
-Output: 
+Output: Loading symbol will be shown
 					
-How test will be performed: 
+How test will be performed: The change in website state will be tested by uploading and submitting a Sudoku board to see if a loading icon is displayed.
 					
 \item{FS-IU-2\\}
 
-Type: Functional, Dynamic, Manual, Static etc.
+Type: Functional, Dynamic, Manual
 					
-Initial State: 
+Initial State: Sudoku Image input page with image uploaded
 					
-Input: 
+Input: Submit Sudoku board
 					
-Output: 
+Output: Converted image to array
 					
-How test will be performed: 
+How test will be performed: The functions used to interpret the image will be tested by giving an image of Sudoku board and checking output flags to see if the image has been able to be converted to an array.
 
 \end{enumerate}
 
@@ -200,27 +202,27 @@ How test will be performed:
 
 \item{FS-II-1\\}
 
-Type: Functional, Dynamic, Manual, Static etc.
+Type: Functional, Dynamic, Manual
 					
-Initial State: 
+Initial State: Loading icon after image upload
 					
-Input: 
+Input: Invalid image was originally given
 					
-Output: 
+Output: Error message indicating that image could not be interpreted
 					
-How test will be performed: 
+How test will be performed: An invalid image will be uploaded to check whether the function can successfully recognize that it is invalid and output an error message to the user that the image is invalid or could not be recognized. This checks code coverage of the invalid branching path for the image recognition algorithm.
 					
 \item{FS-II-2\\}
 
-Type: Functional, Dynamic, Manual, Static etc.
+Type: Functional, Dynamic, Manual
 					
-Initial State: 
+Initial State: Loading icon after image upload
 					
-Input: 
+Input: Valid image was given
 					
-Output: 
+Output: Array of Sudoku numbers to solver algorithm
 					
-How test will be performed: 
+How test will be performed: The function to interpret a Sudoku board will be given a valid Sudoku board to check whether it will send the correct integer array to the Sudoku solver algorithm. This checks code coverage of the valid branching path for the image recognition algorithm.
 
 \end{enumerate}
 
@@ -230,27 +232,27 @@ How test will be performed:
 
 \item{FS-SO-1\\}
 
-Type: Functional, Dynamic, Manual, Static etc.
+Type: Functional, Dynamic, Manual
 					
-Initial State: 
+Initial State: Loading icon after image submission
 					
-Input: 
+Input: Legal image with a possible solution
 					
-Output: 
+Output: Display solution to user
 					
-How test will be performed: 
+How test will be performed: The overall upload system will be tested using a valid Sudoku board with a known solution where the generated Sudoku solution will be compared to the actual solution to determine whether the interpretation and solution algorithms work effectively. This checks code coverage of the valid branching path for the Sudoku solution algorithm.
 					
 \item{FS-SO-2\\}
 
-Type: Functional, Dynamic, Manual, Static etc.
+Type: Functional, Dynamic, Manual
 					
-Initial State: 
+Initial State: Loading icon after image submission
 					
-Input: 
+Input: Legal image with no solution
 					
-Output: 
+Output: Notify user about no solution
 					
-How test will be performed: 
+How test will be performed: The overall upload system will be tested using an invalid Sudoku board with no known solution to check whether the image interpretation algorithm and the solution algorithm will notify the user that there is no solution possible. This checks code coverage of the invalid branching path for the Sudoku solution algorithm.
 
 \end{enumerate}
 
@@ -262,27 +264,27 @@ How test will be performed:
 
 \item{FS-BD-1\\}
 
-Type: Functional, Dynamic, Manual, Static etc.
+Type: Functional, Dynamic, Manual
 					
-Initial State: 
+Initial State: Homepage of Sudoku Solver Flask app
 					
-Input: 
+Input: Click on Manual Input button
 					
-Output: 
+Output: Empty Sudoku board on Manual Input page
 					
-How test will be performed: 
+How test will be performed: The navigation to the Manual Input page will be tested alongside whether an empty grid is shown for the user to input their numbers of the Sudoku board.
 					
 \item{FS-BD-2\\}
 
-Type: Functional, Dynamic, Manual, Static etc.
+Type: Functional, Dynamic, Manual
 					
-Initial State: 
+Initial State: Manual Input page with empty Sudoku board
 					
-Input: 
+Input: Number in cell
 					
-Output: 
+Output: Number appears in cell
 					
-How test will be performed: 
+How test will be performed: The manual input function will be tested by attempting to place the numbers 1-9 in any empty cell of the Sudoku board.
 
 \end{enumerate}
 
@@ -292,51 +294,51 @@ How test will be performed:
 
 \item{FS-SV-1\\}
 
-Type: Functional, Dynamic, Manual, Static etc.
+Type: Functional, Dynamic, Manual
 					
-Initial State: 
+Initial State: Semi-populated Sudoku board
 					
-Input: 
+Input: Number that breaks Sudoku rules
 					
-Output: 
+Output: Notification about invalid input
 					
-How test will be performed: 
+How test will be performed: The manual input will be tested to see whether it can reject bad input by putting in an invalid input into a row/column/box due to a repeating number and checking if the function notifies the user about an invalid move. This checks code coverage of the invalid input branching path for the manual input function.
 					
 \item{FS-SV-2\\}
 
-Type: Functional, Dynamic, Manual, Static etc.
+Type: Functional, Dynamic, Manual
 					
-Initial State: 
+Initial State: Semi-populated board
 					
-Input: 
+Input: Submit button
 					
-Output: 
+Output: Loading icon
 					
-How test will be performed: 
+How test will be performed: The submission function will be tested by filling out the manual input with a legal board and pressing the submit button to see if a loading icon will appear to indicate that the given board is being processed.
 
 \item{FS-SV-3\\}
 
-Type: Functional, Dynamic, Manual, Static etc.
+Type: Functional, Dynamic, Manual
 					
-Initial State: 
+Initial State: Loading icon after manual submission
 					
-Input: 
+Input: Legal board with no solution
 					
-Output: 
+Output: Notify user about no solution
 					
-How test will be performed: 
+How test will be performed: The overall upload system will be tested using an invalid Sudoku board with no known solution to check whether the solution algorithm will notify the user that there is no solution possible. This checks code coverage of the invalid branching path for the Sudoku solution algorithm.
 
 \item{FS-SV-4\\}
 
-Type: Functional, Dynamic, Manual, Static etc.
+Type: Functional, Dynamic, Manual
 					
-Initial State: 
+Initial State: Loading icon after manual submission
 					
-Input: 
+Input: Legal board with possible solution
 					
-Output: 
+Output: Display solution to user
 					
-How test will be performed: 
+How test will be performed: The overall upload system will be tested using a valid Sudoku board with a known solution to check whether the solution algorithm will produce the same solution as the previously known solution. This checks code coverage of the valid branching path for the Sudoku solution algorithm.
 
 \end{enumerate}
 
