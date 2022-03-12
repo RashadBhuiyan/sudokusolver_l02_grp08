@@ -88,7 +88,8 @@ Unit Test & Testing that focusses on individual functions and methods\\
 System Test & Testing the entire system as a whole rather than individual components\\
 UI     & User interface, the interface that allows for user interaction with the system. \\
 PyTest & A Python library designed to help create tests for Python code. \\
-MNIST & A Modified National Institute of Standards and Technology data set with a large number of images of handwritten digits.
+Mocha & A JavaScript test framework. \\
+MNIST & A Modified National Institute of Standards and Technology data set with a large number of images of handwritten digits.\\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -107,12 +108,16 @@ The purpose of this software application is to provide a comprehensive suite of 
 The team responsible for testing consists of Rashad Bhuiyan, Stanley Chan, and Kai Zhu.
 
 \subsection{Automated Testing Approach}
+Automated unit testing will be performed using PyTest and Mocha for the Flask and JavaScript components of the application, respectively. Additionally, the number recognition system uses a trained neural network model, which can be automatically tested against a test data set for prediction accuracy.
 
 \subsection{Testing Tools}
+PyTest will be used for the unit test of the Flask back-end application. Mocha will be used for the unit test of front-end JavaScript.
 
 \subsection{Testing Schedule}
 		
-See Gantt Chart at the following url: \url{https://gitlab.cas.mcmaster.ca/bhuiyr2/sudokusolver_l02_grp08/-/raw/main/ProjectSchedule/Gantt_Sudoku.pdf}
+Detailed testing schedule and responsibilities are included in the Project Gantt chart, available at  \url{https://gitlab.cas.mcmaster.ca/bhuiyr2/sudokusolver_l02_grp08/-/raw/main/ProjectSchedule/Gantt_Sudoku.pdf}
+
+\newpage
 
 \section{System Test Description}
 	
@@ -152,7 +157,7 @@ How test will be performed: The button that says 'Play a Game' will be pressed t
 
 Type: Functional, Dynamic, Manual
 					
-Initial State: old browser
+Initial State: Old browser
 					
 Input: Enter Sudoku Solver website path
 					
@@ -170,27 +175,27 @@ How test will be performed: The website will attempt to be launched using an old
 
 \item{FS-IU-1\\}
 
-Type: Functional, Dynamic, Manual, Static etc.
+Type: Functional, Dynamic, Manual
 					
-Initial State: 
+Initial State: Sudoku Image input page with image uploaded
 					
-Input: 
+Input: Submit image
 					
-Output: 
+Output: Loading symbol will be shown
 					
-How test will be performed: 
+How test will be performed: The change in website state will be tested by uploading and submitting a Sudoku board to see if a loading icon is displayed.
 					
 \item{FS-IU-2\\}
 
-Type: Functional, Dynamic, Manual, Static etc.
+Type: Functional, Dynamic, Manual
 					
-Initial State: 
+Initial State: Sudoku Image input page with image uploaded
 					
-Input: 
+Input: Submit Sudoku board
 					
-Output: 
+Output: Converted image to array
 					
-How test will be performed: 
+How test will be performed: The functions used to interpret the image will be tested by giving an image of Sudoku board and checking output flags to see if the image has been able to be converted to an array.
 
 \end{enumerate}
 
@@ -200,27 +205,27 @@ How test will be performed:
 
 \item{FS-II-1\\}
 
-Type: Functional, Dynamic, Manual, Static etc.
+Type: Functional, Dynamic, Manual
 					
-Initial State: 
+Initial State: Loading icon after image upload
 					
-Input: 
+Input: Invalid image was originally given
 					
-Output: 
+Output: Error message indicating that image could not be interpreted
 					
-How test will be performed: 
+How test will be performed: An invalid image will be uploaded to check whether the function can successfully recognize that it is invalid and output an error message to the user that the image is invalid or could not be recognized. This checks code coverage of the invalid branching path for the image recognition algorithm.
 					
 \item{FS-II-2\\}
 
-Type: Functional, Dynamic, Manual, Static etc.
+Type: Functional, Dynamic, Manual
 					
-Initial State: 
+Initial State: Loading icon after image upload
 					
-Input: 
+Input: Valid image was given
 					
-Output: 
+Output: Array of Sudoku numbers to solver algorithm
 					
-How test will be performed: 
+How test will be performed: The function to interpret a Sudoku board will be given a valid Sudoku board to check whether it will send the correct integer array to the Sudoku solver algorithm. This checks code coverage of the valid branching path for the image recognition algorithm.
 
 \end{enumerate}
 
@@ -230,27 +235,27 @@ How test will be performed:
 
 \item{FS-SO-1\\}
 
-Type: Functional, Dynamic, Manual, Static etc.
+Type: Functional, Dynamic, Manual
 					
-Initial State: 
+Initial State: Loading icon after image submission
 					
-Input: 
+Input: Legal image with a possible solution
 					
-Output: 
+Output: Display solution to user
 					
-How test will be performed: 
+How test will be performed: The overall upload system will be tested using a valid Sudoku board with a known solution where the generated Sudoku solution will be compared to the actual solution to determine whether the interpretation and solution algorithms work effectively. This checks code coverage of the valid branching path for the Sudoku solution algorithm.
 					
 \item{FS-SO-2\\}
 
-Type: Functional, Dynamic, Manual, Static etc.
+Type: Functional, Dynamic, Manual
 					
-Initial State: 
+Initial State: Loading icon after image submission
 					
-Input: 
+Input: Legal image with no solution
 					
-Output: 
+Output: Notify user about no solution
 					
-How test will be performed: 
+How test will be performed: The overall upload system will be tested using an invalid Sudoku board with no known solution to check whether the image interpretation algorithm and the solution algorithm will notify the user that there is no solution possible. This checks code coverage of the invalid branching path for the Sudoku solution algorithm.
 
 \end{enumerate}
 
@@ -262,27 +267,27 @@ How test will be performed:
 
 \item{FS-BD-1\\}
 
-Type: Functional, Dynamic, Manual, Static etc.
+Type: Functional, Dynamic, Manual
 					
-Initial State: 
+Initial State: Homepage of Sudoku Solver Flask app
 					
-Input: 
+Input: Click on Manual Input button
 					
-Output: 
+Output: Empty Sudoku board on Manual Input page
 					
-How test will be performed: 
+How test will be performed: The navigation to the Manual Input page will be tested alongside whether an empty grid is shown for the user to input their numbers of the Sudoku board.
 					
 \item{FS-BD-2\\}
 
-Type: Functional, Dynamic, Manual, Static etc.
+Type: Functional, Dynamic, Manual
 					
-Initial State: 
+Initial State: Manual Input page with empty Sudoku board
 					
-Input: 
+Input: Number in cell
 					
-Output: 
+Output: Number appears in cell
 					
-How test will be performed: 
+How test will be performed: The manual input function will be tested by attempting to place the numbers 1-9 in any empty cell of the Sudoku board.
 
 \end{enumerate}
 
@@ -292,51 +297,51 @@ How test will be performed:
 
 \item{FS-SV-1\\}
 
-Type: Functional, Dynamic, Manual, Static etc.
+Type: Functional, Dynamic, Manual
 					
-Initial State: 
+Initial State: Semi-populated Sudoku board
 					
-Input: 
+Input: Number that breaks Sudoku rules
 					
-Output: 
+Output: Notification about invalid input
 					
-How test will be performed: 
+How test will be performed: The manual input will be tested to see whether it can reject bad input by putting in an invalid input into a row/column/box due to a repeating number and checking if the function notifies the user about an invalid move. This checks code coverage of the invalid input branching path for the manual input function.
 					
 \item{FS-SV-2\\}
 
-Type: Functional, Dynamic, Manual, Static etc.
+Type: Functional, Dynamic, Manual
 					
-Initial State: 
+Initial State: Semi-populated board
 					
-Input: 
+Input: Submit button
 					
-Output: 
+Output: Loading icon
 					
-How test will be performed: 
+How test will be performed: The submission function will be tested by filling out the manual input with a legal board and pressing the submit button to see if a loading icon will appear to indicate that the given board is being processed.
 
 \item{FS-SV-3\\}
 
-Type: Functional, Dynamic, Manual, Static etc.
+Type: Functional, Dynamic, Manual
 					
-Initial State: 
+Initial State: Loading icon after manual submission
 					
-Input: 
+Input: Legal board with no solution
 					
-Output: 
+Output: Notify user about no solution
 					
-How test will be performed: 
+How test will be performed: The overall upload system will be tested using an invalid Sudoku board with no known solution to check whether the solution algorithm will notify the user that there is no solution possible. This checks code coverage of the invalid branching path for the Sudoku solution algorithm.
 
 \item{FS-SV-4\\}
 
-Type: Functional, Dynamic, Manual, Static etc.
+Type: Functional, Dynamic, Manual
 					
-Initial State: 
+Initial State: Loading icon after manual submission
 					
-Input: 
+Input: Legal board with possible solution
 					
-Output: 
+Output: Display solution to user
 					
-How test will be performed: 
+How test will be performed: The overall upload system will be tested using a valid Sudoku board with a known solution to check whether the solution algorithm will produce the same solution as the previously known solution. This checks code coverage of the valid branching path for the Sudoku solution algorithm.
 
 \end{enumerate}
 
@@ -348,39 +353,123 @@ How test will be performed:
 
 \item{FS-BG-1\\}
 
-Type: Functional, Dynamic, Manual, Static etc.
+Type: Functional, Dynamic, Manual
 					
-Initial State: 
+Initial State: Sudoku Gameplay page
 					
-Input: 
+Input: Click button to start game
 					
-Output: 
+Output: Loading symbol shown
 					
-How test will be performed: 
+How test will be performed: Ensure that when the user presses the button, the website displays a loading symbol.
 					
 \item{FS-BG-2\\}
 
-Type: Functional, Dynamic, Manual, Static etc.
+Type: Functional, Dynamic, Automated
 					
-Initial State: 
+Initial State: Board is valid
 					
-Input: 
+Input: Completed valid Sudoku board
 					
-Output: 
+Output: true boolean value, indicating that the board is valid
 					
-How test will be performed: 
+How test will be performed: A completed valid Sudoku board will be used as an input into the function. The test will ensure that the output of the function will be true.
 
 \item{FS-BG-3\\}
 
-Type: Functional, Dynamic, Manual, Static etc.
+Type: Functional, Dynamic, Automated
 					
-Initial State: 
+Initial State: Board is valid
 					
-Input: 
+Input: Completed invalid Sudoku board
 					
-Output: 
+Output: false boolean value, indicating that the board is invalid
 					
-How test will be performed: 
+How test will be performed: A completed Sudoku board that does not follow the Sudoku rules will be used as an input into the function. The test will ensure that the output of the function will be false.
+
+\item{FS-BG-4\\}
+
+Type: Functional, Dynamic, Automated
+					
+Initial State: Board is valid
+					
+Input: Incomplete valid/invalid Sudoku board
+					
+Output: an exception should be raised, indicating that the board is incomplete
+					
+How test will be performed: An incomplete Sudoku board will be used as an input into the function. The test will ensure that the function will raise an exception.
+
+\item{FS-BG-5\\}
+
+Type: Functional, Dynamic, Automated
+					
+Initial State: Board has no solutions
+					
+Input: No solution board
+					
+Output: false boolean value, indicating that the board has no solutions
+					
+How test will be performed: A Sudoku board with no solutions will be used as input for the function. The test will ensure that the function outputs false.
+
+\item{FS-BG-6\\}
+
+Type: Functional, Dynamic, Automated
+					
+Initial State: Board has no solutions
+					
+Input: Board with solution(s)
+					
+Output: true boolean value, indicating that the board has solutions
+					
+How test will be performed: A Sudoku board with one or more solutions will be used as input for the function. The test will ensure that the function outputs true.
+
+\item{FS-BG-7\\}
+
+Type: Functional, Dynamic, Automated
+					
+Initial State: Board is unique
+					
+Input: Non-unique board (multiple solutions)
+					
+Output: false boolean value, indicating that the board is not unique
+					
+How test will be performed: A Sudoku board with more than one solution will be used as input for the function. The test will ensure that the function outputs false.
+
+\item{FS-BG-8\\}
+
+Type: Functional, Dynamic, Automated
+					
+Initial State: Board is unique
+					
+Input: Unique board (one solution)
+					
+Output: true boolean value, indicating that the board is unique
+					
+How test will be performed: A Sudoku board with only one solution will be used as input for the function. The test will ensure that the function outputs true.
+
+\item{FS-BG-9\\}
+
+Type: Functional, Dynamic, Automated
+					
+Initial State: Board is unique
+					
+Input: No solution board
+					
+Output: exception should be raised, informing the user that the board has no solutions
+					
+How test will be performed: A Sudoku board with no solutions will be used as input for the function. The test will ensure that the function raises an exception, and informs the user that the Sudoku board has no solutions.
+
+\item{FS-BG-10\\}
+
+Type: Functional, Dynamic, Automated
+					
+Initial State: No board generated
+					
+Input: Number of hints
+					
+Output: A randomly generated unique Sudoku board
+					
+How test will be performed: Generate multiple Sudoku boards with the function, and test that each board generated has a solution and is unique (with the aforementioned functions). Also iterate through each board and ensure that the number of hints generated matches the input. 
 
 \end{enumerate}
 
@@ -458,41 +547,205 @@ How test will be performed:
 
 \subsection{Tests for Nonfunctional Requirements}
 
-\subsubsection{Area of Testing1}
+\subsubsection{Look and Feel}
 		
-\paragraph{Title for Test}
+\paragraph{Homepage Display}
 
 \begin{enumerate}
 
-\item{test-id1\\}
+\item{SS-HD-1\\}
 
-Type: 
+Type: Non-Functional, Static, Manual
 					
-Initial State: 
+Initial State: Homepage of the Sudoku solver Flask app
 					
-Input/Condition: 
+Input: Users from testing group will view the homepage
 					
-Output/Result: 
+Output: Users will give feedback on button layout
 					
-How test will be performed: 
+How test will be performed: The users from the testing group will each load the Homepage on their own device to check the buttons and see if they look distinct and separate from each other.
 					
-\item{test-id2\\}
+\item{SS-HD-2\\}
 
-Type: Functional, Dynamic, Manual, Static etc.
+Type: Non-Functional, Static, Manual
 					
-Initial State: 
+Initial State: Homepage of the Sudoku solver Flask app
 					
-Input: 
+Input: Users from the test group will change the browser size
 					
-Output: 
+Output: The Homepage scales accordingly, making UI changes based on the dimensions of the window
 					
-How test will be performed: 
+How test will be performed: The users from the testing group will each load the Homepage on their own device and change the browser's size to see whether the page scales accordingly and changes views depending on screen dimensions.
 
 \end{enumerate}
 
-\subsubsection{Area of Testing2}
+\paragraph{User Interface Design}
 
-...
+\begin{enumerate}
+
+\item{SS-UID-1\\}
+
+Type: Non-Functional, Static, Manual
+					
+Initial State: Homepage of the Sudoku solver Flask app
+					
+Input: Users from the test group view the web app
+					
+Output: Users give feedback on the overall UI
+					
+How test will be performed: The users from the testing group will each load the Homepage on their own device and explore the web app on their own, taking note of each UI element and whether it is appropriate.
+					
+\item{SS-UID-2\\}
+
+Type: Non-Functional, Static, Manual
+					
+Initial State: Homepage of the Sudoku solver Flask app
+					
+Input: Users with mild forms of colour-blindness view the web app
+					
+Output: Users give feedback on the accessibility of the web app
+					
+How test will be performed: The users officially diagnosed with some forms of colour-blindness will load the Homepage on their own device and explore the web app on their own, taking note of whether every page is accessible and appealing to them.
+
+\end{enumerate}
+
+\subsubsection{Usability and Humanity}
+
+\paragraph{Ease of Use}
+
+\begin{enumerate}
+
+\item{SS-EU-1\\}
+
+Type: Non-Functional, Static, Manual
+					
+Initial State: Manual input page or Image Upload page
+					
+Input: Users from test group follow instructions of respective page
+					
+Output: System accepts provided Sudoku board
+					
+How test will be performed: The users from the testing group will check both the Manual Input and the Image Upload pages by following the given instructions about filling out the Sudoku board and submitting them in order to get a valid solution, using a set of Sudoku boards that are both valid and invalid.
+					
+\item{SS-EU-2\\}
+
+Type: Non-Functional, Static, Manual
+					
+Initial State: Sudoku gameplay page
+					
+Input: Users from test group start playing the game
+					
+Output: Users play Sudoku and are given solution at the end
+					
+How test will be performed: The users from the testing group will attempt to play a game of Sudoku on the Sudoku gameplay page and check whether their given solution is correct and whether the game then provides the actual solution.
+
+\end{enumerate}
+
+\paragraph{Ease of Learning}
+
+\begin{enumerate}
+
+\item{SS-EL-1\\}
+
+Type: Non-Functional, Static, Manual
+					
+Initial State: How to Play Sudoku page
+					
+Input: Users from the test group read the page 
+					
+Output/Result: Users understand rules of Sudoku
+					
+How test will be performed: The users from the testing group will view the instructions of Sudoku shown on the How to Play page and see if they can understand the rules of the game.
+
+\end{enumerate}
+
+\subsubsection{Performance}
+
+\paragraph{Speed}
+
+\begin{enumerate}
+
+\item{SS-S-1\\}
+
+Type: Non-Functional, Static, Manual
+					
+Initial State: Upload image page
+					
+Input/Condition: User from test group submits an image
+					
+Output/Result: Loading icon will take MAX\_UPLOAD\_TIME to upload
+					
+How test will be performed: The users from the testing group will submit an image to be recognized using the image recognition function and will time whether it takes more than MAX\_UPLOAD\_TIME.
+					
+\item{SS-S-2\\}
+
+Type: Non-Functional, Static, Manual
+					
+Initial State: Verify upload page
+					
+Input/Condition: User from test group submits an image
+					
+Output/Result: Loading icon will take MAX\_SOLUTION\_TIME to upload
+					
+How test will be performed: The users from the testing group will submit an image to be recognized using the Sudoku solution function and will time whether it takes more than MAX\_SOLUTION\_TIME.
+
+\end{enumerate}
+
+\paragraph{Capacity}
+
+\begin{enumerate}
+
+\item{SS-C-1\\}
+
+Type: Non-Functional, Static, Manual
+					
+Initial State: Upload Image page
+					
+Input/Condition: User from test group uploads image
+					
+Output/Result: Image is not stored locally
+					
+How test will be performed: The user from the testing group will upload an image and then will check their local device memory to see if the image was saved.
+
+\end{enumerate}
+
+\subsubsection{Security}
+
+\paragraph{File Integrity}
+
+\begin{enumerate}
+
+\item{SS-FI-1\\}
+
+Type: Non-Functional, Static, Manual
+					
+Initial State: Upload Image page
+					
+Input/Condition: User from test group uploads image that is too large
+					
+Output/Result: Error is given about file size 
+					
+How test will be performed: The user from the testing group will upload an image that is too large to be used and will check whether they are notified about the file size being too large.
+
+\end{enumerate}
+
+\paragraph{Access, Privacy, and Immunity}
+
+\begin{enumerate}
+
+\item{SS-API-1\\}
+
+Type: Non-Functional, Static, Manual
+					
+Initial State: Solution of Sudoku board
+					
+Input/Condition: User from test group attempts to edit shown solution
+					
+Output/Result: User cannot edit solution
+					
+How test will be performed: The user from the testing group will attempt to edit the given solution to either an image upload or a manual board submission to check on whether they can edit the solution.
+
+\end{enumerate}
 
 \subsection{Traceability Between Test Cases and Requirements}
 
@@ -517,8 +770,20 @@ Input: 10 different photographs of Sudoku boards, and 3 photographs without Sudo
 Output: flattened and cropped images of Sudoku boards, or raise error if no board is detected.
 					
 How test will be performed: SudokuCV object is supplied with input image through the recognize() method with the show\_image parameter set to true. This displays the input and output images for manual validation.
-					
+
 \item{poc-ie2\\}
+
+Type: Functional, Dynamic, Manual
+					
+Initial State: SudokuCV object is instantiated
+					
+Input: 3 photographs without a fully visible Sudoku puzzle
+					
+Output: error string indicating that no Sudoku board can be extracted.
+					
+How test will be performed: Three images with an assortment of problems are supplied to test the error handling of the SudokuCV recognize() method. Specifically, one input image does not have a Sudoku board, another is too small to extract any features from, and a third cropped to include only a part of a board.
+					
+\item{poc-ie3\\}
 
 Type: Functional, Dynamic, Manual
 					
@@ -596,10 +861,10 @@ How test will be performed: The photographs are uploaded one at a time through t
 \section{Unit Testing Plan}
 		
 \subsection{Unit testing of internal functions}
-The internal functions of the system mostly include the Sudoku solver algorithm itself, the Sudoku board generator, and the image recognition functions. To test such functions, it is simple enough to give these functions an input and ensure that the output is what is to be expected from that given input. Since most of the internal functions is written in Python and JavaScript, we will be utilizing the pytest and Mocha testing frameworks for both programming languages respectively. Since the board generator generates random boards, it is not possible to generate and test every single randomly generated board. Therefore, unit testing for Sudoku board generation will be done by testing individual functions that check for board validity, solvability, and uniqueness. These individual functions serve as the basis for random Sudoku board generation, and thus reinforces the validity of the generation. 
+The internal functions of the system mostly include the Sudoku solver algorithm itself, the Sudoku board generator, and the image recognition functions. To test such functions, it is simple enough to give these functions an input and ensure that the output is what is to be expected from that given input. Since most of the internal functions is written in Python and JavaScript, we will be utilizing the PyTest and Mocha automatic testing frameworks for each programming language respectively. Since the board generator creates random boards, it is impractical generate and test every possible board. Therefore, unit testing for Sudoku board generation will create a reasonably sized set of boards, between 100 to 200. Individual functions that check for solvability and uniqueness will be called upon these generated boards to confirm the reliability and validity of the generation system. 
 		
 \subsection{Unit testing of output files}		
-Unit testing the output files of the system will be done by inputting various Sudoku boards via picture (or manual input) into the web application, and ensuring that the outputted solution follows the Sudoku rules and is complete. The outputted Sudoku boards can be scraped from the web application, transformed into an array format, and be used as an input into a function that tests whether a complete Sudoku board follows the Sudoku rules. 
+Unit testing the output files of the system will be performed by inputting various Sudoku boards via images (or manual input) into the web application, and ensuring that the outputted solution follows the Sudoku rules and is complete. The outputted Sudoku boards can be scraped from the web application, transformed into an array format, and be used as an input into a function that tests whether a complete Sudoku board follows the Sudoku rules. 
 
 \bibliographystyle{plainnat}
 
@@ -609,15 +874,12 @@ Unit testing the output files of the system will be done by inputting various Su
 
 \section{Appendix}
 
-This is where you can place additional information.
-
 \subsection{Symbolic Parameters}
 
-The definition of the test cases will call for SYMBOLIC\_CONSTANTS.
-Their values are defined in this section for easy maintenance.
+The definition of the requirements will likely call for SYMBOLIC\_CONSTANTS.
+Their values are defined in this section for easy maintenance.\\
 
-\subsection{Usability Survey Questions?}
-
-This is a section that would be appropriate for some teams.
+\noindent \emph{MAX\_UPLOAD\_TIME} = 3\\
+\emph{MAX\_SOLUTION\_TIME} = 2
 
 \end{document}

@@ -683,8 +683,18 @@ INPUT C:\Program Files\MiKTeX\tex\generic\gettitlestring\gettitlestring.sty
 INPUT C:\Program Files\MiKTeX\tex\generic\gettitlestring\gettitlestring.sty
 INPUT C:\Program Files\MiKTeX\tex\latex\kvoptions\kvoptions.sty
 INPUT C:\Program Files\MiKTeX\tex\generic\ltxcmds\ltxcmds.sty
-OUTPUT TestPlan.out
+INPUT .\TestPlan.out
+INPUT TestPlan.out
+INPUT .\TestPlan.out
+INPUT TestPlan.out
+INPUT .\TestPlan.out
+INPUT TestPlan.out
+INPUT .\TestPlan.out
+INPUT TestPlan.out
 OUTPUT TestPlan.pdf
+INPUT .\TestPlan.out
+INPUT .\TestPlan.out
+OUTPUT TestPlan.out
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmr17.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmr12.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmr8.tfm
@@ -697,15 +707,25 @@ INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmsy8.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmsy6.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmr12.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmbx12.tfm
-OUTPUT TestPlan.toc
-OUTPUT TestPlan.lot
-OUTPUT TestPlan.lof
-INPUT C:\Users\HP\AppData\Local\MiKTeX\fonts\map\pdftex\pdftex.map
+INPUT .\TestPlan.toc
+INPUT TestPlan.toc
+INPUT TestPlan.toc
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmbx10.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmmi10.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmsy10.tfm
+INPUT C:\Users\HP\AppData\Local\MiKTeX\fonts\map\pdftex\pdftex.map
+OUTPUT TestPlan.toc
+INPUT .\TestPlan.lot
+INPUT TestPlan.lot
+INPUT TestPlan.lot
+OUTPUT TestPlan.lot
+INPUT .\TestPlan.lof
+INPUT TestPlan.lof
+INPUT TestPlan.lof
+OUTPUT TestPlan.lof
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmbx12.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmtt10.tfm
+INPUT C:\Program Files\MiKTeX\fonts\tfm\public\cm\cmti10.tfm
 INPUT TestPlan.aux
 INPUT .\TestPlan.out
 INPUT .\TestPlan.out
@@ -719,5 +739,7 @@ INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmr12.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmr12.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmr17.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmr17.pfb
+INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmti10.pfb
+INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmti10.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmtt10.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmtt10.pfb
