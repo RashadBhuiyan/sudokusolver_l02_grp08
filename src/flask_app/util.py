@@ -54,6 +54,8 @@ def isBoardUnique(board, attempts=5):
     :param attempts: Attempts the function makes to find another solution
     :return: board
     """
+    if not doesBoardHaveSolution(board):
+        raise Exception("The inputted board does not have a solution.")
     solutions = []
     copy = [x[:] for x in board]
     solve(copy)
