@@ -88,6 +88,7 @@ Unit Test & Testing that focusses on individual functions and methods\\
 System Test & Testing the entire system as a whole rather than individual components\\
 UI     & User interface, the interface that allows for user interaction with the system. \\
 PyTest & A Python library designed to help create tests for Python code. \\
+MNIST & A Modified National Institute of Standards and Technology data set with a large number of images of handwritten digits.
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -125,39 +126,39 @@ See Gantt Chart at the following url: \url{https://gitlab.cas.mcmaster.ca/bhuiyr
 
 \item{FS-DB-1\\}
 
-Type: Functional, Dynamic, Manual, Static etc.
+Type: Functional, Dynamic, Manual
 					
-Initial State: 
+Initial State: Looking at homepage of Flask app
 					
-Input: 
+Input: Click Manual or Image Input button
 					
-Output: 
+Output: Appropriate screen will be shown depending on input type specified
 					
-How test will be performed: 
+How test will be performed: The button that specifies either 'Manual Input' or 'Image Input' will be pressed to see if it will redirect the user to the appropriate page that allows them to either upload an image or manually input a Sudoku board.
 					
 \item{FS-DB-2\\}
 
-Type: Functional, Dynamic, Manual, Static etc.
+Type: Functional, Dynamic, Manual
 					
-Initial State: 
+Initial State: Looking at homepage of Flask app
 					
-Input: 
+Input: Click play a game button
 					
-Output: 
+Output: Sudoku game for user to play will be loaded
 					
-How test will be performed: 
+How test will be performed: The button that says 'Play a Game' will be pressed to check and see if it will redirect the user to a separate page where they may play a game of Sudoku.
 
 \item{FS-DB-3\\}
 
-Type: Functional, Dynamic, Manual, Static etc.
+Type: Functional, Dynamic, Manual
 					
-Initial State: 
+Initial State: old browser
 					
-Input: 
+Input: Enter Sudoku Solver website path
 					
-Output: 
+Output: Error message stating browser mismatch
 					
-How test will be performed: 
+How test will be performed: The website will attempt to be launched using an old and/or deprecated browser, such as Internet Explorer, where an error message will be shown stating a mismatch of browser and website.
 
 \end{enumerate}
 
@@ -497,41 +498,97 @@ How test will be performed:
 
 \section{Tests for Proof of Concept}
 
-\subsection{Area of Testing1}
+The primary feature in the PoC is the application's ability to recognize a Sudoku image and display the recognized digits on a web-based front-end. Therefore, tests for the PoC will focus on image extraction, digit recognition, and front-end presentation.
+
+\subsection{Board image extraction}
 		
-\paragraph{Title for Test}
+This portion of the testing focuses on the extraction of Sudoku board and cell image data from a set of 10 photographs of varying perspective, brightness, and clarity. The output is compared manually with the expected output in each case, since automatic testing of computer vision results is an advanced topic beyond the scope of this project.
 
 \begin{enumerate}
 
-\item{test-id1\\}
+\item{poc-ie1\\}
 
-Type: Functional, Dynamic, Manual, Static etc.
+Type: Functional, Dynamic, Manual
 					
-Initial State: 
+Initial State: SudokuCV object is instantiated
 					
-Input: 
+Input: 10 different photographs of Sudoku boards, and 3 photographs without Sudoku
 					
-Output: 
+Output: flattened and cropped images of Sudoku boards, or raise error if no board is detected.
 					
-How test will be performed: 
+How test will be performed: SudokuCV object is supplied with input image through the recognize() method with the show\_image parameter set to true. This displays the input and output images for manual validation.
 					
-\item{test-id2\\}
+\item{poc-ie2\\}
 
-Type: Functional, Dynamic, Manual, Static etc.
+Type: Functional, Dynamic, Manual
 					
-Initial State: 
+Initial State: SudokuCV object is instantiated
 					
-Input: 
+Input: 10 different photographs of Sudoku boards
 					
-Output: 
+Output: An array of 81 images each cropped from a cell on the 9x9 Sudoku board
 					
-How test will be performed: 
+How test will be performed: array of numpy output is displayed using the Opencv imshow() method and manually validated against the input image.
 
 \end{enumerate}
 
-\subsection{Area of Testing2}
+\subsection{Digit recognition}
+\begin{enumerate}
 
-...
+\item{poc-dr1\\}
+
+Type: Non-functional, Dynamic, Automatic
+					
+Initial State: a neural network model is trained from the handwritten and printed digits data set
+					
+Input: 10000 MNIST handwritten numbers test set
+					
+Output: percentage accuracy of the model prediction
+					
+How test will be performed: cvtraining module compares the labels of the input data set against the prediction made by the trained model and returns the rate of correct predictions.
+
+\item{poc-dr2\\}
+
+Type: Non-functional, Dynamic, Manual
+					
+Initial State: SudokuCV object is instantiated with trained model
+					
+Input: 10 photographs of Sudoku boards with handwritten and printed numbers
+					
+Output: an integer array of size 81 with recognized digits
+					
+How test will be performed: SudokuCV object supplies the array of recognized digits (0 for empty cells) and a corresponding array of confidence rates for each index. Digits with a confidence greater than 75\% are displayed and manually compared against the input images to calculate recognition accuracy.
+
+\end{enumerate}
+
+\subsection{Front-end presentation}
+\begin{enumerate}
+
+\item{poc-fp1\\}
+
+Type: functional, Dynamic, manual
+					
+Initial State: Flask app is running using an initialized SudokuCV object
+					
+Input: 10 photographs of Sudoku boards with handwritten and printed numbers
+					
+Output: HTML page displaying extracted board image and table of recognized digits 
+					
+How test will be performed: The photographs are uploaded one at a time through the web-based GUI, the output table is manually compared to the original photograph to validate that digits are displayed correctly in the Sudoku grid format.
+
+\item{poc-fp2\\}
+
+Type: functional, Dynamic, manual
+					
+Initial State: Flask app is running using an initialized SudokuCV object
+					
+Input: 3 invalid Sudoku photographs (too small, no Sudoku puzzle, and empty grid)
+					
+Output: HTML page displaying error and suggested solution
+					
+How test will be performed: The photographs are uploaded one at a time through the web-based GUI, the output is manually compared against the expected error for each input image.
+
+\end{enumerate}
 
 	
 \section{Comparison to Existing Implementation}	
@@ -539,8 +596,10 @@ How test will be performed:
 \section{Unit Testing Plan}
 		
 \subsection{Unit testing of internal functions}
+The internal functions of the system mostly include the Sudoku solver algorithm itself, the Sudoku board generator, and the image recognition functions. To test such functions, it is simple enough to give these functions an input and ensure that the output is what is to be expected from that given input. Since most of the internal functions is written in Python and JavaScript, we will be utilizing the pytest and Mocha testing frameworks for both programming languages respectively. Since the board generator generates random boards, it is not possible to generate and test every single randomly generated board. Therefore, unit testing for Sudoku board generation will be done by testing individual functions that check for board validity, solvability, and uniqueness. These individual functions serve as the basis for random Sudoku board generation, and thus reinforces the validity of the generation. 
 		
 \subsection{Unit testing of output files}		
+Unit testing the output files of the system will be done by inputting various Sudoku boards via picture (or manual input) into the web application, and ensuring that the outputted solution follows the Sudoku rules and is complete. The outputted Sudoku boards can be scraped from the web application, transformed into an array format, and be used as an input into a function that tests whether a complete Sudoku board follows the Sudoku rules. 
 
 \bibliographystyle{plainnat}
 
