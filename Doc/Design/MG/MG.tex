@@ -126,28 +126,18 @@ adapted here is called design for
 change.
 
 \begin{description}
-\item[\refstepcounter{acnum} \actheacnum \label{acHardware}:] The specific
-  hardware on which the software is running.
-\item[\refstepcounter{acnum} \actheacnum \label{acInput}:] The format of the
-  initial input data.
-\item ...
+\item[\refstepcounter{acnum} \actheacnum \label{acBrowser}:] The hosting format of the web application.
+\item[\refstepcounter{acnum} \actheacnum \label{acDisplay}:] The resolution of the device that the web application will be running on (mobile, desktop, etc.)
 \end{description}
 
 \subsection{Unlikely Changes} \label{SecUchange}
 
-The module design should be as general as possible. However, a general system is
-more complex. Sometimes this complexity is not necessary. Fixing some design
-decisions at the system architecture stage can simplify the software design. If
-these decision should later need to be changed, then many parts of the design
-will potentially need to be modified. Hence, it is not intended that these
-decisions will be changed.
-
 \begin{description}
-\item[\refstepcounter{ucnum} \uctheucnum \label{ucIO}:] Input/Output devices
-  (Input: File and/or Keyboard, Output: File, Memory, and/or Screen).
-\item[\refstepcounter{ucnum} \uctheucnum \label{ucInput}:] There will always be
-  a source of input data external to the software.
-\item ...
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucRules}:] The rules to Sudoku.
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucInput}:] Input/Output devices (Input: File and/or Keyboard, Output: File, Memory, and/or Screen).
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucSource}:] There will always be a source of input data external to the source.
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucPurpose}:] The purpose of the system is to allow users to play Sudoku as well as provide solutions to their Sudoku boards.
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucStorage}:] The system will not store any given files.
 \end{description}
 
 \section{Module Hierarchy} \label{SecMH}
@@ -158,10 +148,18 @@ below, which are leaves in the hierarchy tree, are the modules that will
 actually be implemented.
 
 \begin{description}
-\item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Hardware-Hiding Module
-\item ...
+\item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Hardware-Hiding Module\\
+\item [\refstepcounter{mnum} \mthemnum \label{mGM}:] Generation Module\\ 
+\item [\refstepcounter{mnum} \mthemnum \label{mSM}:] Solver Module \\
+\item [\refstepcounter{mnum} \mthemnum \label{mCCM}:] CV Classification  Module \\
+\item [\refstepcounter{mnum} \mthemnum \label{mCRM}:] CV Results Module \\
+\item [\refstepcounter{mnum} \mthemnum \label{mCEM}:] CV Errors Module \\
+\item [\refstepcounter{mnum} \mthemnum \label{mFAM}:] Flask App Module \\
+\item [\refstepcounter{mnum} \mthemnum \label{mSUM}:] Sudoku Utilities 
+Module \\
+\item [\refstepcounter{mnum} \mthemnum \label{mFM}:] Frontend 
+Module \\
 \end{description}
-
 
 \begin{table}[h!]
 \centering
@@ -173,19 +171,16 @@ actually be implemented.
 {Hardware-Hiding Module} & ~ \\
 \midrule
 
-\multirow{7}{0.3\textwidth}{Behaviour-Hiding Module} & ?\\
-& ?\\
-& ?\\
-& ?\\
-& ?\\
-& ?\\
-& ?\\ 
-& ?\\
+\multirow{7}{0.3\textwidth}{Behaviour-Hiding Module} & CV Classification Module\\
+& CV Results Module\\
+& CV Errors Module\\
+& Flask App Module\\
+& Frontend Module\\
 \midrule
 
-\multirow{3}{0.3\textwidth}{Software Decision Module} & {?}\\
-& ?\\
-& ?\\
+\multirow{3}{0.3\textwidth}{Software Decision Module} & {Generation Module}\\
+& Solver Module\\
+& Sudoku Utilities Module\\
 \bottomrule
 
 \end{tabular}
@@ -240,12 +235,43 @@ selected.
 \item[Implemented By:] --
 \end{description}
 
-\subsubsection{Input Format Module (\mref{mInput})}
+\subsubsection{CV Classification Module (\mref{mCCM})}
 
 \begin{description}
-\item[Secrets:]The format and structure of the input data.
-\item[Services:]Converts the input data into the data structure used by the
-  input parameters module.
+\item[Secrets:] The algorithms and machine learning model that is used to interpret Sudoku boards.
+\item[Services:] Interprets the inputted image and serializes the Sudoku board into an array format.
+\item[Implemented By:] [Your Program Name Here]
+\end{description}
+
+\subsubsection{CV Results Module (\mref{mCRM})}
+
+\begin{description}
+\item[Secrets:] 
+\item[Services:] 
+\item[Implemented By:] [Your Program Name Here]
+\end{description}
+
+\subsubsection{CV Errors Module (\mref{mCEM})}
+
+\begin{description}
+\item[Secrets:] 
+\item[Services:] 
+\item[Implemented By:] [Your Program Name Here]
+\end{description}
+
+\subsubsection{Flask App Module (\mref{mFAM})}
+
+\begin{description}
+\item[Secrets:] Route handling and Sudoku board handling logic.
+\item[Services:] Serves as the backend for the web application and handles different routes and the high level logic of the application.
+\item[Implemented By:] [Your Program Name Here]
+\end{description}
+
+\subsubsection{Frontend Module (\mref{mFM})}
+
+\begin{description}
+\item[Secrets:] Rendering details of the web application.
+\item[Services:] Acts as the interface for the user to interact with the web application.
 \item[Implemented By:] [Your Program Name Here]
 \end{description}
 
