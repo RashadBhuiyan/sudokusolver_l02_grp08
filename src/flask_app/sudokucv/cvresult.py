@@ -5,7 +5,7 @@ import os
 import base64
 
 ## sudokuCV result class
-class CVResults:
+class CVResult:
     def __init__(self, raw_results, confidence, image, error = '') -> None:
         self.raw_results = np.array(raw_results)
         self.confidence = np.array(confidence)
