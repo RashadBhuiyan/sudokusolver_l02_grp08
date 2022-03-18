@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 from tensorflow.keras.models import load_model
-from sudokucv.cvresults import CVResults
+from sudokucv.cvresult import CVResult
 import sudokucv.cverrors as err
 
 class SudokuCV:
@@ -11,17 +11,17 @@ class SudokuCV:
     MIN_IMAGE_HEIGHT = 200
 
     ## initialize with model file path, show_image displays debug intermediary graphics
-    def __init__(self, model) -> None:
-        self.model = load_model(model)
+    def __init__(self, model_file) -> None:
+        self.model = load_model(model_file)
 
     ## Preprocess image for board outline recognition
-    def preProcess(self, image):
+    def __preProcess(self, image):
         imgBlur = cv2.GaussianBlur(image, (5, 5), 1)
         imgThreshold = cv2.adaptiveThreshold( imgBlur, 255, 1, 1, 11, 2)
         return imgThreshold
 
     ## Split input image into list of cells
-    def getCells(self, image):
+    def __getCells(self, image):
         cells = []
         rows = np.vsplit(image, 9)
         for row in rows:
@@ -31,7 +31,7 @@ class SudokuCV:
         return cells
 
     ## Attempt to identify number with Keras model
-    def getPrediction(self, cells):
+    def __getPrediction(self, cells):
         result = [0] * 81
         confidence = [0] * 81
 
@@ -51,7 +51,7 @@ class SudokuCV:
         return (result, confidence)
         
     ## Returns the biggest contour and its area
-    def biggestContour(self, contours):
+    def __biggestContour(self, contours):
         biggest = np.array([])
         max_area = 0
         for contour in contours:
@@ -65,21 +65,21 @@ class SudokuCV:
         return biggest, max_area
 
     ## Sorts given corner points clockwise from top left
-    def getOrderedCorners(self, contour):
+    def __getOrderedCorners(self, contour):
         midpoint = np.sum(contour, axis = 0)/4
         angles = - np.reshape(np.arctan2(contour[:,:,1] - midpoint[0,1], contour[:,:,0] - midpoint[0,0]), (1,4))
         contour = contour[(angles).argsort()]
         return contour
 
-    def removePerspective(self, image, corners):
+    def __removePerspective(self, image, corners):
         targetCorners = np.float32([[0, self.HEIGHT], [self.WIDTH, self.HEIGHT],
                     [self.WIDTH, 0], [0, 0]])
 
         matrix = cv2.getPerspectiveTransform(np.float32(np.reshape(corners, (4,2))), targetCorners)
         return cv2.warpPerspective(image, matrix, (self.WIDTH,self.HEIGHT))
 
-    def Error(self, error):
-        return CVResults(None, None, None, err.getErrorMessage(error))
+    def __error(self, error):
+        return CVResult(None, None, None, err.getErrorMessage(error))
 
     ## performs recognition on an image and returns a result object. The input image can be a file or directly from HTTP request (is_file = False)
     def recognize(self, image, is_file = True,show_image = False):
@@ -90,12 +90,12 @@ class SudokuCV:
 
         dimensions = img.shape
         if dimensions[0] < self.MIN_IMAGE_WIDTH or dimensions[1] < self.MIN_IMAGE_HEIGHT:
-            return self.Error(err.ERR_IMG_TOO_SMALL)
+            return self.__error(err.ERR_IMG_TOO_SMALL)
 
         img = cv2.resize(img, (self.WIDTH, self.HEIGHT))
         img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-        imgThreshold = self.preProcess(img)
+        imgThreshold = self.__preProcess(img)
 
         # find contours 
 
@@ -105,23 +105,23 @@ class SudokuCV:
         cv2.drawContours(imgContours, contours, -1, (0, 255, 0), 3)
 
         # find biggest contour
-        biggestCorners, maxArea = self.biggestContour(contours)
+        biggestCorners, maxArea = self.__biggestContour(contours)
         if len(biggestCorners) == 0:
-            return self.Error(err.ERR_NOGRID)
+            return self.Error(err.ERR_NO_GRID)
         elif maxArea < 63504:               # 324^2 = 9 * model size = 9 * 28
-            return self.Error(err.ERR_GRID_TOO_SMALL)
+            return self.__error(err.ERR_GRID_TOO_SMALL)
 
-        biggestCorners = self.getOrderedCorners(biggestCorners)
+        biggestCorners = self.__getOrderedCorners(biggestCorners)
         cv2.drawContours(imgBigContour, biggestCorners, -1, (255, 0, 0), 3)
 
-        imgFlattened = self.removePerspective(img, biggestCorners)
+        imgFlattened = self.__removePerspective(img, biggestCorners)
         t = cv2.adaptiveThreshold(imgFlattened, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 21, 15)
         imgFlattened[t==255] = 255
 
         # split grid into cells
-        cells = self.getCells(imgFlattened)     # cv2.adaptiveThreshold( imgFlattened, 255, 1, 1, 11, cv2.THRESH_TOZERO_INV)
+        cells = self.__getCells(imgFlattened)     # cv2.adaptiveThreshold( imgFlattened, 255, 1, 1, 11, cv2.THRESH_TOZERO_INV)
 
-        results, confidence = self.getPrediction(cells)
+        results, confidence = self.__getPrediction(cells)
 
         if (show_image):
             cv2.imshow("input", img)
@@ -131,4 +131,4 @@ class SudokuCV:
             cv2.imshow("Flattened", imgFlattened)
             cv2.waitKey(0)
 
-        return CVResults(results, confidence, cv2.resize(imgFlattened, (500, 500)))
+        return CVResult(results, confidence, cv2.resize(imgFlattened, (500, 500)))
