@@ -17,6 +17,8 @@
 }
 \usepackage[round]{natbib}
 
+\graphicspath{ {Assets/} }
+
 \newcounter{acnum}
 \newcommand{\actheacnum}{AC\theacnum}
 \newcommand{\acref}[1]{AC\ref{#1}}
@@ -59,7 +61,7 @@
 \midrule
 2022-03-16 & 0.0 & Created Module Guide\\
 2022-03-17 & 0.1 & Finished Sections 1, 2, 3, 6\\
-2022-03-18 & 0.2 & ...\\
+2022-03-18 & 0.2 & Finished Sections 4, 5, 7, 8\\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -106,7 +108,9 @@ modules. Section \ref{SecMD} gives a detailed description of the
 modules. Section \ref{SecTM} includes two traceability matrices. One checks
 the completeness of the design against the requirements provided in the SRS. The
 other shows the relation between anticipated changes and the modules. Section
-\ref{SecUse} describes the use relation between modules.
+\ref{SecUse} describes the use relation between modules. Section \ref{SecGantt} 
+provides a link to the Gantt Schedule where the testing schedule and responsibilities
+are shown.
 
 \newpage
 
@@ -155,8 +159,6 @@ actually be implemented.
 \item [\refstepcounter{mnum} \mthemnum \label{mCRM}:] CV Results Module \\
 \item [\refstepcounter{mnum} \mthemnum \label{mCEM}:] CV Errors Module \\
 \item [\refstepcounter{mnum} \mthemnum \label{mFAM}:] Flask App Module \\
-\item [\refstepcounter{mnum} \mthemnum \label{mSUM}:] Sudoku Utilities 
-Module \\
 \item [\refstepcounter{mnum} \mthemnum \label{mFM}:] Frontend 
 Module \\
 \end{description}
@@ -180,7 +182,6 @@ Module \\
 
 \multirow{3}{0.3\textwidth}{Software Decision Module} & {Generation Module}\\
 & Solver Module\\
-& Sudoku Utilities Module\\
 \bottomrule
 
 \end{tabular}
@@ -192,25 +193,18 @@ Module \\
 
 The design of the system is intended to satisfy the requirements developed in
 the SRS. In this stage, the system is decomposed into modules. The connection
-between requirements and modules is listed in Table \ref{TblRT}.
+between requirements and modules is listed in Tables \ref{TblFRT} and \ref{TblNFRT}.
+
+\newpage
 
 \section{Module Decomposition} \label{SecMD}
 
-Modules are decomposed according to the principle of ``information hiding''
+The following modules are decomposed according to the principle of ``information hiding''
 proposed by \citet{ParnasEtAl1984}. The \emph{Secrets} field in a module
 decomposition is a brief statement of the design decision hidden by the
 module. The \emph{Services} field specifies \emph{what} the module will do
 without documenting \emph{how} to do it. For each module, a suggestion for the
-implementing software is given under the \emph{Implemented By} title. If the
-entry is \emph{OS}, this means that the module is provided by the operating
-system or by standard programming language libraries.  Also indicate if the
-module will be implemented specifically for the software.
-
-Only the leaf modules in the
-hierarchy have to be implemented. If a dash (\emph{--}) is shown, this means
-that the module is not a leaf and will not have to be implemented. Whether or
-not this module is implemented depends on the programming language
-selected.
+implementing software is given under the \emph{Implemented By} title. 
 
 \subsection{Hardware Hiding Modules (\mref{mHH})}
 
@@ -232,7 +226,7 @@ selected.
   documents. This module serves as a communication layer between the
   hardware-hiding module and the software decision module. The programs in this
   module will need to change if there are changes in the SRS.
-\item[Implemented By:] --
+\item[Implemented By:] N/A
 \end{description}
 
 \subsubsection{CV Classification Module (\mref{mCCM})}
@@ -240,23 +234,15 @@ selected.
 \begin{description}
 \item[Secrets:] The algorithms and machine learning model that is used to interpret Sudoku boards.
 \item[Services:] Interprets the inputted image and serializes the Sudoku board into an array format.
-\item[Implemented By:] [Your Program Name Here]
+\item[Implemented By:] CV2 and TensorFlow Python libraries.
 \end{description}
 
 \subsubsection{CV Results Module (\mref{mCRM})}
 
 \begin{description}
-\item[Secrets:] 
-\item[Services:] 
-\item[Implemented By:] [Your Program Name Here]
-\end{description}
-
-\subsubsection{CV Errors Module (\mref{mCEM})}
-
-\begin{description}
-\item[Secrets:] 
-\item[Services:] 
-\item[Implemented By:] [Your Program Name Here]
+\item[Secrets:] The contents of the image confidence for Sudoku boards.
+\item[Services:] Includes methods that provide confidence grades for the machine learning algorithm as well as access mechanics for the image.
+\item[Implemented By:] CV2 and os Python libraries.
 \end{description}
 
 \subsubsection{Flask App Module (\mref{mFAM})}
@@ -264,7 +250,7 @@ selected.
 \begin{description}
 \item[Secrets:] Route handling and Sudoku board handling logic.
 \item[Services:] Serves as the backend for the web application and handles different routes and the high level logic of the application.
-\item[Implemented By:] [Your Program Name Here]
+\item[Implemented By:] Flask Python library.
 \end{description}
 
 \subsubsection{Frontend Module (\mref{mFM})}
@@ -272,7 +258,7 @@ selected.
 \begin{description}
 \item[Secrets:] Rendering details of the web application.
 \item[Services:] Acts as the interface for the user to interact with the web application.
-\item[Implemented By:] [Your Program Name Here]
+\item[Implemented By:] Various HTML, CSS, and JavaScript pages.
 \end{description}
 
 
@@ -283,7 +269,7 @@ selected.
 \begin{description}
 \item[Secrets:] Algorithms that randomly generate unique Sudoku boards with one solution.
 \item[Services:] Includes algorithms that provide random Sudoku board generation services.
-\item[Implemented By:] --
+\item[Implemented By:] N/A
 \end{description}
 
 \subsubsection{Solver Module (\mref{mSM})}
@@ -291,15 +277,15 @@ selected.
 \begin{description}
 \item[Secrets:] Algorithms that deal with solving valid Sudoku boards.
 \item[Services:] Provides algorithms that solve valid Sudoku boards through the use of backtracking.
-\item[Implemented By:] --
+\item[Implemented By:] N/A
 \end{description}
 
-\subsubsection{Sudoku Utilities Module (\mref{mSM})}
+\subsubsection{CV Errors Module (\mref{mCEM})}
 
 \begin{description}
-\item[Secrets:] Algorithms that deal with handling and interpreting Sudoku boards in the web application.
-\item[Services:] Handles and interprets Sudoku boards received from the backend to be used in the frontend.
-\item[Implemented By:] --
+\item[Secrets:] Data structure that provides error messages for classification.
+\item[Services:] Provides various error messages about the issues occurring during the image classification about various inputs.
+\item[Implemented By:] N/A
 \end{description}
 
 \section{Traceability Matrix} \label{SecTM}
@@ -313,35 +299,79 @@ requirements and between the modules and the anticipated changes.
 \centering
 \begin{tabular}{p{0.2\textwidth} p{0.6\textwidth}}
 \toprule
-\textbf{Req.} & \textbf{Modules}\\
+\textbf{Func. Req.} & \textbf{Modules}\\
 \midrule
-R1 & \mref{mFM}\\
-R2 & \mref{mFM}\\
-R3 & \mref{mFM}\\
-R4 & \mref{mFM}\\
-R5 & \mref{mCCM}, \mref{mCRM}, \mref{mCEM}, \mref{mFAM}\\
-R6 & \mref{mCEM}, \mref{mFM}, \mref{mFAM}\\
-R7 & \mref{mFAM}, \mref{mSM}\\
-R8 & \mref{mSM}, \mref{mFAM}, \mref{mFM}, \mref{mSUM}\\
-R9 & \mref{mSM}, \mref{mFAM}, \mref{mFM}\\
-R10 & \mref{mFM}\\
-R11 & \mref{mFM}\\
-R12 & \mref{mFM}, \mref{mSUM}\\
-R13 & \mref{mFAM}, \mref{mSM}\\
-R14 & \mref{mFM}, \mref{mSM}, \mref{mFAM}\\
-R15 & \mref{mFM}, \mref{mSM}, \mref{mSUM}, \mref{mFAM}\\
-R16 & \mref{mGM}, \mref{mFAM}\\
-R17 & \mref{mFM}, \mref{mFAM}, \mref{mSUM}\\
-R18 & \mref{mFM}, \mref{mSUM}\\
-R19 & \mref{mFM}\\
-R20 & \mref{mFM}, \mref{mSUM}\\
-R21 & \mref{mSUM}, \mref{mFM}\\
-R22 & \mref{mFAM}, \mref{mGM}, \mref{mFM}\\
-R23 & \mref{mFM} \\
+FR1 & \mref{mFM}\\
+FR2 & \mref{mFM}\\
+FR3 & \mref{mFM}\\
+FR4 & \mref{mFM}\\
+FR5 & \mref{mCCM}, \mref{mCRM}, \mref{mCEM}, \mref{mFAM}\\
+FR6 & \mref{mCEM}, \mref{mFM}, \mref{mFAM}\\
+FR7 & \mref{mFAM}, \mref{mSM}\\
+FR8 & \mref{mSM}, \mref{mFAM}, \mref{mFM}\\
+FR9 & \mref{mSM}, \mref{mFAM}, \mref{mFM}\\
+FR10 & \mref{mFM}\\
+FR11 & \mref{mFM}\\
+FR12 & \mref{mFM}\\
+FR13 & \mref{mFAM}, \mref{mSM}\\
+FR14 & \mref{mFM}, \mref{mSM}, \mref{mFAM}\\
+FR15 & \mref{mFM}, \mref{mSM}, \mref{mFAM}\\
+FR16 & \mref{mGM}, \mref{mFAM}\\
+FR17 & \mref{mFM}, \mref{mFAM}\\
+FR18 & \mref{mFM}\\
+FR19 & \mref{mFM}\\
+FR20 & \mref{mFM}\\
+FR21 & \mref{mFM}\\
+FR22 & \mref{mFAM}, \mref{mGM}, \mref{mFM}\\
+FR23 & \mref{mFM} \\
 \bottomrule
 \end{tabular}
-\caption{Trace Between Requirements and Modules}
-\label{TblRT}
+\caption{Trace Between Functional Requirements and Modules}
+\label{TblFRT}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{p{0.2\textwidth} p{0.6\textwidth}}
+\toprule
+\textbf{Req.} & \textbf{Modules}\\
+\midrule
+\multicolumn{2}{c}{Look and Feel Requirements}\\
+\midrule
+LF1 & \mref{mFM} \\
+LF2 & \mref{mFM} \\
+LF3 & \mref{mFM} \\
+LF4 & \mref{mFM} \\
+\midrule
+\multicolumn{2}{c}{Usability and Humanity Requirements}\\
+\midrule
+UH1 & \mref{mFAM} \\
+UH2 & \mref{mHH} \\
+UH3 & \mref{mFM} \\
+UH4 & \mref{mFAM} \\
+UH5 & \mref{mFM} \\
+UH6 & \mref{mFM} \\
+\midrule
+\multicolumn{2}{c}{Performance Requirements}\\
+\midrule
+PR1 & \mref{mCCM}, \mref{mFAM} \\
+PR2 & \mref{mCRM}, \mref{mFAM} \\
+PR3 & \mref{mSM}, \mref{mCRM}, \mref{mFAM} \\
+PR4 & \mref{mCCM}, \mref{mCEM}, \mref{mFAM} \\
+PR5 & \mref{mCCM}, \mref{mFAM}, \mref{mFM} \\
+PR6 & \mref{mFAM}, \mref{mFM} \\
+\midrule
+\multicolumn{2}{c}{Security Requirements}\\
+\midrule
+SR1 & \mref{mFAM}, \mref{mFM} \\
+SR2 & \mref{mFAM}, \mref{mFM} \\
+SR3 & \mref{mSM}, \mref{mCRM}, \mref{mFAM}, \mref{mFM} \\
+SR4 & \mref{mFAM}, \mref{mFM} \\
+SR5 & \mref{mFAM}, \mref{mFM} \\
+\bottomrule
+\end{tabular}
+\caption{Trace Between Non Functional Requirements and Modules}
+\label{TblNFRT}
 \end{table}
 
 \begin{table}[H]
@@ -360,23 +390,15 @@ R23 & \mref{mFM} \\
 
 \section{Use Hierarchy Between Modules} \label{SecUse}
 
-In this section, the uses hierarchy between modules is
-provided. \citet{Parnas1978} said of two programs A and B that A {\em uses} B if
-correct execution of B may be necessary for A to complete the task described in
-its specification. That is, A {\em uses} B if there exist situations in which
-the correct functioning of A depends upon the availability of a correct
-implementation of B.  Figure \ref{FigUH} illustrates the use relation between
-the modules. It can be seen that the graph is a directed acyclic graph
-(DAG). Each level of the hierarchy offers a testable and usable subset of the
-system, and modules in the higher level of the hierarchy are essentially simpler
-because they use modules from the lower levels.
-
 \begin{figure}[H]
 \centering
-%\includegraphics[width=0.7\textwidth]{UsesHierarchy.png}
+\includegraphics[width=0.7\textwidth]{useHierarchy}
 \caption{Use hierarchy among modules}
 \label{FigUH}
 \end{figure}
+
+\section{Gantt Schedule} \label{SecGantt}
+Detailed implementation and testing schedule, as well as responsibilities are included in the Project Gantt chart, available at  \url{https://gitlab.cas.mcmaster.ca/bhuiyr2/sudokusolver_l02_grp08/-/raw/main/ProjectSchedule/Gantt_Sudoku.pdf}
 
 %\section*{References}
 
