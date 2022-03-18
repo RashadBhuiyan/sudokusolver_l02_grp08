@@ -275,23 +275,32 @@ selected.
 \item[Implemented By:] [Your Program Name Here]
 \end{description}
 
-\subsubsection{Etc.}
-
 
 \subsection{Software Decision Module}
 
+\subsubsection{Generation Module (\mref{mGM})}
+
 \begin{description}
-\item[Secrets:] The design decision based on mathematical theorems, physical
-  facts, or programming considerations. The secrets of this module are
-  \emph{not} described in the SRS.
-\item[Services:] Includes data structure and algorithms used in the system that
-  do not provide direct interaction with the user. 
-  % Changes in these modules are more likely to be motivated by a desire to
-  % improve performance than by externally imposed changes.
+\item[Secrets:] Algorithms that randomly generate unique Sudoku boards with one solution.
+\item[Services:] Includes algorithms that provide random Sudoku board generation services.
 \item[Implemented By:] --
 \end{description}
 
-\subsubsection{Etc.}
+\subsubsection{Solver Module (\mref{mSM})}
+
+\begin{description}
+\item[Secrets:] Algorithms that deal with solving valid Sudoku boards.
+\item[Services:] Provides algorithms that solve valid Sudoku boards through the use of backtracking.
+\item[Implemented By:] --
+\end{description}
+
+\subsubsection{Sudoku Utilities Module (\mref{mSM})}
+
+\begin{description}
+\item[Secrets:] Algorithms that deal with handling and interpreting Sudoku boards in the web application.
+\item[Services:] Handles and interprets Sudoku boards received from the backend to be used in the frontend.
+\item[Implemented By:] --
+\end{description}
 
 \section{Traceability Matrix} \label{SecTM}
 
@@ -306,17 +315,29 @@ requirements and between the modules and the anticipated changes.
 \toprule
 \textbf{Req.} & \textbf{Modules}\\
 \midrule
-R1 & \mref{mHH}, \mref{mInput}, \mref{mParams}, \mref{mControl}\\
-R2 & \mref{mInput}, \mref{mParams}\\
-R3 & \mref{mVerify}\\
-R4 & \mref{mOutput}, \mref{mControl}\\
-R5 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS}, \mref{mSolver}, \mref{mPlot}\\
-R6 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS}, \mref{mSolver}, \mref{mPlot}\\
-R7 & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS}, \mref{mPlot}\\
-R8 & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS}, \mref{mPlot}\\
-R9 & \mref{mVerifyOut}\\
-R10 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}\\
-R11 & \mref{mOutput}, \mref{mODEs}, \mref{mEnergy}, \mref{mControl}\\
+R1 & \mref{mFM}\\
+R2 & \mref{mFM}\\
+R3 & \mref{mFM}\\
+R4 & \mref{mFM}\\
+R5 & \mref{mCCM}, \mref{mCRM}, \mref{mCEM}, \mref{mFAM}\\
+R6 & \mref{mCEM}, \mref{mFM}, \mref{mFAM}\\
+R7 & \mref{mFAM}, \mref{mSM}\\
+R8 & \mref{mSM}, \mref{mFAM}, \mref{mFM}, \mref{mSUM}\\
+R9 & \mref{mSM}, \mref{mFAM}, \mref{mFM}\\
+R10 & \mref{mFM}\\
+R11 & \mref{mFM}\\
+R12 & \mref{mFM}, \mref{mSUM}\\
+R13 & \mref{mFAM}, \mref{mSM}\\
+R14 & \mref{mFM}, \mref{mSM}, \mref{mFAM}\\
+R15 & \mref{mFM}, \mref{mSM}, \mref{mSUM}, \mref{mFAM}\\
+R16 & \mref{mGM}, \mref{mFAM}\\
+R17 & \mref{mFM}, \mref{mFAM}, \mref{mSUM}\\
+R18 & \mref{mFM}, \mref{mSUM}\\
+R19 & \mref{mFM}\\
+R20 & \mref{mFM}, \mref{mSUM}\\
+R21 & \mref{mSUM}, \mref{mFM}\\
+R22 & \mref{mFAM}, \mref{mGM}, \mref{mFM}\\
+R23 & \mref{mFM} \\
 \bottomrule
 \end{tabular}
 \caption{Trace Between Requirements and Modules}
@@ -329,18 +350,8 @@ R11 & \mref{mOutput}, \mref{mODEs}, \mref{mEnergy}, \mref{mControl}\\
 \toprule
 \textbf{AC} & \textbf{Modules}\\
 \midrule
-\acref{acHardware} & \mref{mHH}\\
-\acref{acInput} & \mref{mInput}\\
-\acref{acParams} & \mref{mParams}\\
-\acref{acVerify} & \mref{mVerify}\\
-\acref{acOutput} & \mref{mOutput}\\
-\acref{acVerifyOut} & \mref{mVerifyOut}\\
-\acref{acODEs} & \mref{mODEs}\\
-\acref{acEnergy} & \mref{mEnergy}\\
-\acref{acControl} & \mref{mControl}\\
-\acref{acSeqDS} & \mref{mSeqDS}\\
-\acref{acSolver} & \mref{mSolver}\\
-\acref{acPlot} & \mref{mPlot}\\
+\acref{acBrowser} & \mref{mFAM}\\
+\acref{acDisplay} & \mref{mFM}\\
 \bottomrule
 \end{tabular}
 \caption{Trace Between Anticipated Changes and Modules}
