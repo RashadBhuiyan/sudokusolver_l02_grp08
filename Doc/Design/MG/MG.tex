@@ -29,17 +29,17 @@
 \newcommand{\mthemnum}{M\themnum}
 \newcommand{\mref}[1]{M\ref{#1}}
 
-\title{SE 3XA3: Software Requirements Specification\\Title of Project}
+\title{SE 3XA3: Software Requirements Specification\\Sudoku Solver}
 
-\author{Team \#, Team Name
-		\\ Student 1 name and macid
-		\\ Student 2 name and macid
-		\\ Student 3 name and macid
+\author{Team 08, SudoCrew
+		\\ Rashad A. Bhuiyan (bhuiyr2)
+		\\ Kai Zhu (zhuk2)
+		\\ Stanley Chan (chans67)
 }
 
 \date{\today}
 
-\input{../../Comments}
+% \input{../../Comments}
 
 \begin{document}
 
@@ -50,13 +50,16 @@
 \listoftables
 \listoffigures
 
-\begin{table}[bp]
+\newpage
+
+\begin{table}[h]
 \caption{\bf Revision History}
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
+2022-03-16 & 0.0 & Created Module Guide\\
+2022-03-17 & 0.1 & Finished Sections 1, 2, 3, 6\\
+2022-03-18 & 0.2 & ...\\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -67,24 +70,10 @@ Date 2 & 1.1 & Notes\\
 
 \section{Introduction}
 
-Decomposing a system into modules is a commonly accepted approach to developing
-software.  A module is a work assignment for a programmer or programming
-team~\citep{ParnasEtAl1984}.  We advocate a decomposition
-based on the principle of information hiding~\citep{Parnas1972a}.  This
-principle supports design for change, because the ``secrets'' that each module
-hides represent likely future changes.  Design for change is valuable in SC,
-where modifications are frequent, especially during initial development as the
-solution space is explored.  
+\subsection{Overview}
+The purpose of this software application is to provide a comprehensive suite of tools for generating, recognizing, and solving Sudoku puzzles. The application will provide a web-based front-end with an intuitive interface to cater to users of different technical abilities on most modern hardware. Computer vision is also utilized to improve ease of use, by directly interfacing puzzles from print-media to the application.
 
-Our design follows the rules layed out by \citet{ParnasEtAl1984}, as follows:
-\begin{itemize}
-\item System details that are likely to change independently should be the
-  secrets of separate modules.
-\item Each data structure is used in only one module.
-\item Any other program that requires information stored in a module's data
-  structures must obtain it by calling access programs belonging to that module.
-\end{itemize}
-
+\subsection{Context}
 After completing the first stage of the design, the Software Requirements
 Specification (SRS), the Module Guide (MG) is developed~\citep{ParnasEtAl1984}. The MG
 specifies the modular structure of the system and is intended to allow both
@@ -92,9 +81,6 @@ designers and maintainers to easily identify the parts of the software.  The
 potential readers of this document are as follows:
 
 \begin{itemize}
-\item New project members: This document can be a guide for a new project member
-  to easily understand the overall structure and quickly find the
-  relevant modules they are searching for.
 \item Maintainers: The hierarchical structure of the module guide improves the
   maintainers' understanding when they need to make changes to the system. It is
   important for a maintainer to update the relevant sections of the document
@@ -105,6 +91,12 @@ potential readers of this document are as follows:
   decomposition, and flexibility of the design.
 \end{itemize}
 
+\subsection{Design Principles}
+The Design Principles used as the basis for the decomposition of the system into modules are the Information Hiding and Encapsulation principle, as well as the principles that a Uses Relation Hierarchy should have no cycle, have low coupling, and have high cohesion. \\
+
+\noindent The Information Hiding principle states that each module hides a specified secret—related to a design decision—from the rest of the system. The Encapsulation principle states that any changeable information about a module is within its implementation details, but the module interface remains unchanged regardless of any changes to the implementation details. Cycles within a Uses Hierarchy indicates poor design as it implies the existence of infinite loops which indicates a need for further decomposition of modules into smaller components. Low coupling indicates that each module is not tightly dependent on other modules and that it can independently function without much use of other modules. High cohesion indicates that the elements within the module are strongly related to each other.
+
+\subsection{Document Structure}
 The rest of the document is organized as follows. Section
 \ref{SecChange} lists the anticipated and unlikely changes of the software
 requirements. Section \ref{SecMH} summarizes the module decomposition that
@@ -115,6 +107,8 @@ modules. Section \ref{SecTM} includes two traceability matrices. One checks
 the completeness of the design against the requirements provided in the SRS. The
 other shows the relation between anticipated changes and the modules. Section
 \ref{SecUse} describes the use relation between modules.
+
+\newpage
 
 \section{Anticipated and Unlikely Changes} \label{SecChange}
 
@@ -132,28 +126,18 @@ adapted here is called design for
 change.
 
 \begin{description}
-\item[\refstepcounter{acnum} \actheacnum \label{acHardware}:] The specific
-  hardware on which the software is running.
-\item[\refstepcounter{acnum} \actheacnum \label{acInput}:] The format of the
-  initial input data.
-\item ...
+\item[\refstepcounter{acnum} \actheacnum \label{acBrowser}:] The hosting format of the web application.
+\item[\refstepcounter{acnum} \actheacnum \label{acDisplay}:] The resolution of the device that the web application will be running on (mobile, desktop, etc.)
 \end{description}
 
 \subsection{Unlikely Changes} \label{SecUchange}
 
-The module design should be as general as possible. However, a general system is
-more complex. Sometimes this complexity is not necessary. Fixing some design
-decisions at the system architecture stage can simplify the software design. If
-these decision should later need to be changed, then many parts of the design
-will potentially need to be modified. Hence, it is not intended that these
-decisions will be changed.
-
 \begin{description}
-\item[\refstepcounter{ucnum} \uctheucnum \label{ucIO}:] Input/Output devices
-  (Input: File and/or Keyboard, Output: File, Memory, and/or Screen).
-\item[\refstepcounter{ucnum} \uctheucnum \label{ucInput}:] There will always be
-  a source of input data external to the software.
-\item ...
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucRules}:] The rules to Sudoku.
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucInput}:] Input/Output devices (Input: File and/or Keyboard, Output: File, Memory, and/or Screen).
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucSource}:] There will always be a source of input data external to the source.
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucPurpose}:] The purpose of the system is to allow users to play Sudoku as well as provide solutions to their Sudoku boards.
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucStorage}:] The system will not store any given files.
 \end{description}
 
 \section{Module Hierarchy} \label{SecMH}
@@ -164,10 +148,18 @@ below, which are leaves in the hierarchy tree, are the modules that will
 actually be implemented.
 
 \begin{description}
-\item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Hardware-Hiding Module
-\item ...
+\item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Hardware-Hiding Module\\
+\item [\refstepcounter{mnum} \mthemnum \label{mGM}:] Generation Module\\ 
+\item [\refstepcounter{mnum} \mthemnum \label{mSM}:] Solver Module \\
+\item [\refstepcounter{mnum} \mthemnum \label{mCCM}:] CV Classification  Module \\
+\item [\refstepcounter{mnum} \mthemnum \label{mCRM}:] CV Results Module \\
+\item [\refstepcounter{mnum} \mthemnum \label{mCEM}:] CV Errors Module \\
+\item [\refstepcounter{mnum} \mthemnum \label{mFAM}:] Flask App Module \\
+\item [\refstepcounter{mnum} \mthemnum \label{mSUM}:] Sudoku Utilities 
+Module \\
+\item [\refstepcounter{mnum} \mthemnum \label{mFM}:] Frontend 
+Module \\
 \end{description}
-
 
 \begin{table}[h!]
 \centering
@@ -179,19 +171,16 @@ actually be implemented.
 {Hardware-Hiding Module} & ~ \\
 \midrule
 
-\multirow{7}{0.3\textwidth}{Behaviour-Hiding Module} & ?\\
-& ?\\
-& ?\\
-& ?\\
-& ?\\
-& ?\\
-& ?\\ 
-& ?\\
+\multirow{7}{0.3\textwidth}{Behaviour-Hiding Module} & CV Classification Module\\
+& CV Results Module\\
+& CV Errors Module\\
+& Flask App Module\\
+& Frontend Module\\
 \midrule
 
-\multirow{3}{0.3\textwidth}{Software Decision Module} & {?}\\
-& ?\\
-& ?\\
+\multirow{3}{0.3\textwidth}{Software Decision Module} & {Generation Module}\\
+& Solver Module\\
+& Sudoku Utilities Module\\
 \bottomrule
 
 \end{tabular}
@@ -246,32 +235,72 @@ selected.
 \item[Implemented By:] --
 \end{description}
 
-\subsubsection{Input Format Module (\mref{mInput})}
+\subsubsection{CV Classification Module (\mref{mCCM})}
 
 \begin{description}
-\item[Secrets:]The format and structure of the input data.
-\item[Services:]Converts the input data into the data structure used by the
-  input parameters module.
+\item[Secrets:] The algorithms and machine learning model that is used to interpret Sudoku boards.
+\item[Services:] Interprets the inputted image and serializes the Sudoku board into an array format.
 \item[Implemented By:] [Your Program Name Here]
 \end{description}
 
-\subsubsection{Etc.}
+\subsubsection{CV Results Module (\mref{mCRM})}
+
+\begin{description}
+\item[Secrets:] 
+\item[Services:] 
+\item[Implemented By:] [Your Program Name Here]
+\end{description}
+
+\subsubsection{CV Errors Module (\mref{mCEM})}
+
+\begin{description}
+\item[Secrets:] 
+\item[Services:] 
+\item[Implemented By:] [Your Program Name Here]
+\end{description}
+
+\subsubsection{Flask App Module (\mref{mFAM})}
+
+\begin{description}
+\item[Secrets:] Route handling and Sudoku board handling logic.
+\item[Services:] Serves as the backend for the web application and handles different routes and the high level logic of the application.
+\item[Implemented By:] [Your Program Name Here]
+\end{description}
+
+\subsubsection{Frontend Module (\mref{mFM})}
+
+\begin{description}
+\item[Secrets:] Rendering details of the web application.
+\item[Services:] Acts as the interface for the user to interact with the web application.
+\item[Implemented By:] [Your Program Name Here]
+\end{description}
 
 
 \subsection{Software Decision Module}
 
+\subsubsection{Generation Module (\mref{mGM})}
+
 \begin{description}
-\item[Secrets:] The design decision based on mathematical theorems, physical
-  facts, or programming considerations. The secrets of this module are
-  \emph{not} described in the SRS.
-\item[Services:] Includes data structure and algorithms used in the system that
-  do not provide direct interaction with the user. 
-  % Changes in these modules are more likely to be motivated by a desire to
-  % improve performance than by externally imposed changes.
+\item[Secrets:] Algorithms that randomly generate unique Sudoku boards with one solution.
+\item[Services:] Includes algorithms that provide random Sudoku board generation services.
 \item[Implemented By:] --
 \end{description}
 
-\subsubsection{Etc.}
+\subsubsection{Solver Module (\mref{mSM})}
+
+\begin{description}
+\item[Secrets:] Algorithms that deal with solving valid Sudoku boards.
+\item[Services:] Provides algorithms that solve valid Sudoku boards through the use of backtracking.
+\item[Implemented By:] --
+\end{description}
+
+\subsubsection{Sudoku Utilities Module (\mref{mSM})}
+
+\begin{description}
+\item[Secrets:] Algorithms that deal with handling and interpreting Sudoku boards in the web application.
+\item[Services:] Handles and interprets Sudoku boards received from the backend to be used in the frontend.
+\item[Implemented By:] --
+\end{description}
 
 \section{Traceability Matrix} \label{SecTM}
 
@@ -286,17 +315,29 @@ requirements and between the modules and the anticipated changes.
 \toprule
 \textbf{Req.} & \textbf{Modules}\\
 \midrule
-R1 & \mref{mHH}, \mref{mInput}, \mref{mParams}, \mref{mControl}\\
-R2 & \mref{mInput}, \mref{mParams}\\
-R3 & \mref{mVerify}\\
-R4 & \mref{mOutput}, \mref{mControl}\\
-R5 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS}, \mref{mSolver}, \mref{mPlot}\\
-R6 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS}, \mref{mSolver}, \mref{mPlot}\\
-R7 & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS}, \mref{mPlot}\\
-R8 & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS}, \mref{mPlot}\\
-R9 & \mref{mVerifyOut}\\
-R10 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}\\
-R11 & \mref{mOutput}, \mref{mODEs}, \mref{mEnergy}, \mref{mControl}\\
+R1 & \mref{mFM}\\
+R2 & \mref{mFM}\\
+R3 & \mref{mFM}\\
+R4 & \mref{mFM}\\
+R5 & \mref{mCCM}, \mref{mCRM}, \mref{mCEM}, \mref{mFAM}\\
+R6 & \mref{mCEM}, \mref{mFM}, \mref{mFAM}\\
+R7 & \mref{mFAM}, \mref{mSM}\\
+R8 & \mref{mSM}, \mref{mFAM}, \mref{mFM}, \mref{mSUM}\\
+R9 & \mref{mSM}, \mref{mFAM}, \mref{mFM}\\
+R10 & \mref{mFM}\\
+R11 & \mref{mFM}\\
+R12 & \mref{mFM}, \mref{mSUM}\\
+R13 & \mref{mFAM}, \mref{mSM}\\
+R14 & \mref{mFM}, \mref{mSM}, \mref{mFAM}\\
+R15 & \mref{mFM}, \mref{mSM}, \mref{mSUM}, \mref{mFAM}\\
+R16 & \mref{mGM}, \mref{mFAM}\\
+R17 & \mref{mFM}, \mref{mFAM}, \mref{mSUM}\\
+R18 & \mref{mFM}, \mref{mSUM}\\
+R19 & \mref{mFM}\\
+R20 & \mref{mFM}, \mref{mSUM}\\
+R21 & \mref{mSUM}, \mref{mFM}\\
+R22 & \mref{mFAM}, \mref{mGM}, \mref{mFM}\\
+R23 & \mref{mFM} \\
 \bottomrule
 \end{tabular}
 \caption{Trace Between Requirements and Modules}
@@ -309,18 +350,8 @@ R11 & \mref{mOutput}, \mref{mODEs}, \mref{mEnergy}, \mref{mControl}\\
 \toprule
 \textbf{AC} & \textbf{Modules}\\
 \midrule
-\acref{acHardware} & \mref{mHH}\\
-\acref{acInput} & \mref{mInput}\\
-\acref{acParams} & \mref{mParams}\\
-\acref{acVerify} & \mref{mVerify}\\
-\acref{acOutput} & \mref{mOutput}\\
-\acref{acVerifyOut} & \mref{mVerifyOut}\\
-\acref{acODEs} & \mref{mODEs}\\
-\acref{acEnergy} & \mref{mEnergy}\\
-\acref{acControl} & \mref{mControl}\\
-\acref{acSeqDS} & \mref{mSeqDS}\\
-\acref{acSolver} & \mref{mSolver}\\
-\acref{acPlot} & \mref{mPlot}\\
+\acref{acBrowser} & \mref{mFAM}\\
+\acref{acDisplay} & \mref{mFM}\\
 \bottomrule
 \end{tabular}
 \caption{Trace Between Anticipated Changes and Modules}
