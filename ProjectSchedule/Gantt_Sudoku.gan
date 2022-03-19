@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="Sudoku Solver Project Schedule" company="Sudocrew" webLink="http://" view-date="2022-02-26" view-index="0" gantt-divider-location="300" resource-divider-location="300" version="3.1.3103" locale="en_US">
+<?xml version="1.0" encoding="UTF-8"?><project name="Sudoku Solver Project Schedule" company="Sudocrew" webLink="http://" view-date="2022-02-18" view-index="0" gantt-divider-location="300" resource-divider-location="300" version="3.1.3100" locale="en_US">
     <description/>
     <view zooming-state="default:1" id="gantt-chart">
         <field id="tpd3" name="Name" width="158" order="0"/>
         <field id="tpd4" name="Begin date" width="62" order="1"/>
         <field id="tpd5" name="End date" width="61" order="2"/>
         <option id="color.recent">
-            <![CDATA[#33ffff #ffff33 #3333ff #ff0033 #ff3333]]>
+            <![CDATA[#ffff33 #f4f4f4 #33ffff #3333ff #ff0033 #ff3333]]>
         </option>
     </view>
     <view id="resource-table">
@@ -38,41 +38,48 @@
         </taskproperties>
         <task id="33" name="Project Approval" color="#ffff33" meeting="false" start="2022-01-17" duration="6" complete="100" thirdDate="2022-01-10" thirdDate-constraint="0" expand="true"/>
         <task id="1" name="Problem Statement" color="#8cb6ce" meeting="false" start="2022-01-25" duration="4" complete="100" thirdDate="2022-01-10" thirdDate-constraint="0" priority="2" expand="true"/>
-        <task id="36" name="Development Plan" color="#000000" meeting="false" start="2022-01-31" duration="5" complete="0" thirdDate="2022-01-31" thirdDate-constraint="0" expand="true">
-            <task id="38" name="Drafting DP" color="#8cb6ce" meeting="false" start="2022-01-31" duration="5" complete="0" thirdDate="2018-11-22" thirdDate-constraint="0" expand="true"/>
+        <task id="36" name="Development Plan" color="#000000" meeting="false" start="2022-01-31" duration="5" complete="100" thirdDate="2022-01-31" thirdDate-constraint="0" expand="true">
+            <task id="38" name="Drafting DP" color="#8cb6ce" meeting="false" start="2022-01-31" duration="5" complete="100" thirdDate="2018-11-22" thirdDate-constraint="0" expand="true"/>
             <task id="39" name="DP deadline" color="#3333ff" meeting="true" start="2022-02-04" duration="0" complete="0" thirdDate="2022-02-07" thirdDate-constraint="0" expand="true"/>
-            <task id="41" name="Project schedule draft" color="#ffff33" meeting="false" start="2022-02-03" duration="1" complete="0" thirdDate="2022-01-21" thirdDate-constraint="0" expand="true"/>
+            <task id="41" name="Project schedule draft" color="#ffff33" meeting="false" start="2022-02-03" duration="1" complete="100" thirdDate="2022-01-21" thirdDate-constraint="0" expand="true"/>
         </task>
-        <task id="43" name="Requirements Doc" color="#8cb6ce" meeting="false" start="2022-02-07" duration="5" complete="0" thirdDate="2022-01-10" thirdDate-constraint="0" expand="true">
-            <task id="44" name="Draft Rev 0" color="#8cb6ce" meeting="false" start="2022-02-07" duration="5" complete="0" thirdDate="2022-02-01" thirdDate-constraint="0" expand="true"/>
+        <task id="43" name="Requirements Doc" color="#8cb6ce" meeting="false" start="2022-02-07" duration="5" complete="100" thirdDate="2022-01-10" thirdDate-constraint="0" expand="true">
+            <task id="44" name="Draft Rev 0" color="#8cb6ce" meeting="false" start="2022-02-07" duration="5" complete="100" thirdDate="2022-02-01" thirdDate-constraint="0" expand="true"/>
             <task id="49" name="Req Rev 0 Deadline" color="#3333ff" meeting="true" start="2022-02-11" duration="0" complete="0" thirdDate="2022-01-10" thirdDate-constraint="0" expand="true"/>
         </task>
-        <task id="159" name="Feature Implementation" color="#8cb6ce" meeting="false" start="2022-02-14" duration="26" complete="69" thirdDate="2022-01-26" thirdDate-constraint="0" expand="true">
-            <task id="171" name="Proof of Concept" color="#8cb6ce" meeting="false" start="2022-02-14" duration="15" complete="86" thirdDate="2022-01-25" thirdDate-constraint="0" expand="true">
+        <task id="159" name="Feature Implementation" color="#8cb6ce" meeting="false" start="2022-02-14" duration="26" complete="80" thirdDate="2022-01-26" thirdDate-constraint="0" expand="true">
+            <task id="171" name="Proof of Concept" color="#8cb6ce" meeting="false" start="2022-02-14" duration="15" complete="100" thirdDate="2022-01-25" thirdDate-constraint="0" expand="true">
                 <task id="172" name="Implementing POC" color="#8cb6ce" meeting="false" start="2022-02-14" duration="10" complete="100" thirdDate="2022-01-25" thirdDate-constraint="0" expand="true"/>
                 <task id="173" name="Implement ML model" color="#8cb6ce" meeting="false" start="2022-02-14" duration="8" complete="100" thirdDate="2022-02-18" thirdDate-constraint="0" expand="true"/>
                 <task id="174" name="Implement Flask App" color="#8cb6ce" meeting="false" start="2022-02-16" duration="8" complete="100" thirdDate="2022-02-18" thirdDate-constraint="0" expand="true"/>
                 <task id="175" name="Create HTML/CSS/JS Frontend" color="#8cb6ce" meeting="false" start="2022-02-18" duration="6" complete="100" thirdDate="2022-02-18" thirdDate-constraint="0" expand="true"/>
-                <task id="176" name="POC Demo" color="#ff3333" meeting="false" start="2022-02-28" duration="5" complete="0" thirdDate="2022-01-18" thirdDate-constraint="0" priority="2" expand="true"/>
+                <task id="176" name="POC Demo" color="#ff3333" meeting="false" start="2022-02-28" duration="5" complete="100" thirdDate="2022-01-18" thirdDate-constraint="0" priority="2" expand="true"/>
                 <task id="177" name="POC Deadline" color="#3333ff" meeting="true" start="2022-02-28" duration="0" complete="0" thirdDate="2022-01-31" thirdDate-constraint="0" expand="true"/>
             </task>
             <task id="189" name="Responsive Styling" color="#33ffff" meeting="false" start="2022-03-18" duration="2" complete="0" thirdDate="2022-03-02" thirdDate-constraint="0" expand="true"/>
             <task id="193" name="Playable Sudoku" color="#33ffff" meeting="false" start="2022-03-14" duration="4" complete="0" thirdDate="2022-03-02" thirdDate-constraint="0" expand="true"/>
             <task id="214" name="Randomized puzzle generation" color="#33ffff" meeting="false" start="2022-03-14" duration="3" complete="0" thirdDate="2022-03-02" thirdDate-constraint="0" expand="true" cost-manual-value="0.0" cost-calculated="true"/>
         </task>
-        <task id="54" name="Testing" color="#8cb6ce" meeting="false" start="2022-02-17" duration="27" complete="0" thirdDate="2022-02-14" thirdDate-constraint="0" expand="true">
-            <task id="56" name="Test Plan Rev 0" color="#8cb6ce" meeting="false" start="2022-03-07" duration="5" complete="0" thirdDate="2022-02-04" thirdDate-constraint="0" expand="true"/>
+        <task id="54" name="Testing" color="#8cb6ce" meeting="false" start="2022-02-17" duration="27" complete="68" thirdDate="2022-02-14" thirdDate-constraint="0" expand="true">
+            <task id="56" name="Test Plan Rev 0" color="#8cb6ce" meeting="false" start="2022-03-07" duration="5" complete="100" thirdDate="2022-02-04" thirdDate-constraint="0" expand="true"/>
             <task id="57" name="Test Plan Deadline" color="#3333ff" meeting="true" start="2022-03-11" duration="0" complete="0" thirdDate="2022-02-14" thirdDate-constraint="0" expand="true"/>
-            <task id="94" name="PoC Test" color="#ffff33" meeting="false" start="2022-02-17" duration="4" complete="0" thirdDate="2022-02-07" thirdDate-constraint="0" expand="true"/>
-            <task id="99" name="CV unit test" color="#ffff33" meeting="false" start="2022-03-17" duration="2" complete="0" thirdDate="2022-02-25" thirdDate-constraint="0" expand="true"/>
-            <task id="111" name="Solver unit test" color="#ffff33" meeting="false" start="2022-03-17" duration="2" complete="0" thirdDate="2022-02-22" thirdDate-constraint="0" expand="true"/>
-            <task id="125" name="Flask unit test" color="#ffff33" meeting="false" start="2022-03-17" duration="2" complete="0" thirdDate="2022-02-22" thirdDate-constraint="0" expand="true" cost-manual-value="0.0" cost-calculated="true"/>
+            <task id="94" name="PoC Test" color="#ffff33" meeting="false" start="2022-02-17" duration="4" complete="100" thirdDate="2022-02-07" thirdDate-constraint="0" expand="true"/>
+            <task id="99" name="CV unit test" color="#ffff33" meeting="false" start="2022-03-17" duration="2" complete="100" thirdDate="2022-02-25" thirdDate-constraint="0" expand="true"/>
+            <task id="111" name="Solver unit test" color="#ffff33" meeting="false" start="2022-03-17" duration="2" complete="100" thirdDate="2022-02-22" thirdDate-constraint="0" expand="true"/>
+            <task id="125" name="Flask unit test" color="#ffff33" meeting="false" start="2022-03-17" duration="2" complete="100" thirdDate="2022-02-22" thirdDate-constraint="0" expand="true" cost-manual-value="0.0" cost-calculated="true"/>
             <task id="131" name="Recognition system test" color="#ffff33" meeting="false" start="2022-03-21" duration="2" complete="0" thirdDate="2022-02-22" thirdDate-constraint="0" expand="true" cost-manual-value="0.0" cost-calculated="true"/>
             <task id="137" name="Puzzle generation system test" color="#ffff33" meeting="false" start="2022-03-21" duration="2" complete="0" thirdDate="2022-02-22" thirdDate-constraint="0" expand="true" cost-manual-value="0.0" cost-calculated="true"/>
             <task id="140" name="Gameplay system test" color="#ffff33" meeting="false" start="2022-03-23" duration="3" complete="0" thirdDate="2022-02-22" thirdDate-constraint="0" expand="true" cost-manual-value="0.0" cost-calculated="true"/>
         </task>
-        <task id="59" name="Design and Doc" color="#8cb6ce" meeting="false" start="2022-03-14" duration="5" complete="0" thirdDate="2022-02-14" thirdDate-constraint="0" expand="true">
-            <task id="63" name="Draft Rev 0" color="#8cb6ce" meeting="false" start="2022-03-14" duration="5" complete="0" thirdDate="2022-02-08" thirdDate-constraint="0" expand="true"/>
+        <task id="59" name="Design and Doc" color="#8cb6ce" meeting="false" start="2022-03-08" duration="10" complete="85" thirdDate="2022-02-14" thirdDate-constraint="0" expand="true">
+            <task id="63" name="Draft Rev 0" color="#8cb6ce" meeting="false" start="2022-03-14" duration="5" complete="100" thirdDate="2022-02-08" thirdDate-constraint="0" expand="true"/>
+            <task id="215" name="CV Classification Module" color="#ffff33" meeting="false" start="2022-03-08" duration="4" complete="100" thirdDate="2022-03-08" thirdDate-constraint="0" expand="true"/>
+            <task id="226" name="CV Results Module" color="#ffff33" meeting="false" start="2022-03-08" duration="3" complete="100" thirdDate="2022-02-24" thirdDate-constraint="0" expand="true"/>
+            <task id="229" name="CV Errors Module" color="#ffff33" meeting="false" start="2022-03-09" duration="2" complete="100" thirdDate="2022-02-24" thirdDate-constraint="0" expand="true"/>
+            <task id="231" name="Flask App Module" color="#ffff33" meeting="false" start="2022-03-11" duration="5" complete="100" thirdDate="2022-02-24" thirdDate-constraint="0" expand="true"/>
+            <task id="235" name="Solver Module" color="#ffff33" meeting="false" start="2022-03-08" duration="2" complete="100" thirdDate="2022-02-24" thirdDate-constraint="0" expand="true"/>
+            <task id="237" name="Generation Module" color="#ffff33" meeting="false" start="2022-03-10" duration="6" complete="80" thirdDate="2022-02-24" thirdDate-constraint="0" expand="true"/>
+            <task id="240" name="Frontend Module" color="#ffff33" meeting="false" start="2022-03-08" duration="10" complete="60" thirdDate="2022-02-24" thirdDate-constraint="0" expand="true"/>
             <task id="65" name="Design and Doc Rev 0 Deadline" color="#3333ff" meeting="true" start="2022-03-18" duration="0" complete="0" thirdDate="2022-02-14" thirdDate-constraint="0" expand="true"/>
         </task>
         <task id="15" name="Rev 0 Demo" color="#ff0033" meeting="false" start="2022-03-21" duration="5" complete="0" thirdDate="2022-02-24" thirdDate-constraint="0" expand="true"/>
@@ -101,6 +108,11 @@
         <allocation task-id="99" resource-id="0" function="SoftwareDevelopment:2" responsible="true" load="70.0"/>
         <allocation task-id="131" resource-id="0" function="SoftwareDevelopment:2" responsible="true" load="70.0"/>
         <allocation task-id="140" resource-id="0" function="SoftwareDevelopment:2" responsible="false" load="50.0"/>
+        <allocation task-id="215" resource-id="0" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
+        <allocation task-id="226" resource-id="0" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
+        <allocation task-id="229" resource-id="0" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
+        <allocation task-id="231" resource-id="0" function="SoftwareDevelopment:2" responsible="false" load="15.0"/>
+        <allocation task-id="240" resource-id="0" function="SoftwareDevelopment:2" responsible="false" load="30.0"/>
         <allocation task-id="38" resource-id="1" function="SoftwareDevelopment:2" responsible="false" load="100.0"/>
         <allocation task-id="43" resource-id="1" function="SoftwareDevelopment:2" responsible="false" load="100.0"/>
         <allocation task-id="56" resource-id="1" function="SoftwareDevelopment:2" responsible="false" load="100.0"/>
@@ -113,6 +125,8 @@
         <allocation task-id="193" resource-id="1" function="SoftwareDevelopment:2" responsible="true" load="10.0"/>
         <allocation task-id="189" resource-id="1" function="SoftwareDevelopment:2" responsible="true" load="20.0"/>
         <allocation task-id="125" resource-id="1" function="SoftwareDevelopment:2" responsible="true" load="50.0"/>
+        <allocation task-id="231" resource-id="1" function="SoftwareDevelopment:2" responsible="true" load="70.0"/>
+        <allocation task-id="240" resource-id="1" function="SoftwareDevelopment:2" responsible="true" load="40.0"/>
         <allocation task-id="38" resource-id="2" function="SoftwareDevelopment:2" responsible="false" load="100.0"/>
         <allocation task-id="43" resource-id="2" function="SoftwareDevelopment:2" responsible="false" load="100.0"/>
         <allocation task-id="56" resource-id="2" function="SoftwareDevelopment:2" responsible="false" load="100.0"/>
@@ -124,6 +138,10 @@
         <allocation task-id="140" resource-id="2" function="SoftwareDevelopment:2" responsible="false" load="50.0"/>
         <allocation task-id="214" resource-id="2" function="SoftwareDevelopment:2" responsible="true" load="10.0"/>
         <allocation task-id="193" resource-id="2" function="SoftwareDevelopment:2" responsible="false" load="10.0"/>
+        <allocation task-id="231" resource-id="2" function="SoftwareDevelopment:2" responsible="false" load="15.0"/>
+        <allocation task-id="235" resource-id="2" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
+        <allocation task-id="237" resource-id="2" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
+        <allocation task-id="240" resource-id="2" function="SoftwareDevelopment:2" responsible="false" load="30.0"/>
     </allocations>
     <vacations/>
     <previous/>
