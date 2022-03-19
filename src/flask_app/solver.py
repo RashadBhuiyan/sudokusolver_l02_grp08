@@ -79,8 +79,33 @@ def find_empty(bo):
 
     return None
 
+def getSolvedCoordinates(board):
+    """
+    Generates a list of coordinates that correspond to areas of the board that were filled in via the solver algorithm.
+    For example:
+    Input
+    [2, 9, 5, 7, 4, 3, 8, 6, 1]
+    [4, 3, 1, 8, 6, 5, 9, 0, 0]
+    [8, 7, 4, 1, 9, 2, 5, 4, 3]
+    [3, 8, 7, 4, 5, 9, 2, 1, 6]
+    [6, 1, 2, 3, 8, 7, 4, 9, 5]
+    [5, 4, 9, 2, 1, 6, 7, 3, 8]
+    [7, 6, 3, 5, 2, 4, 1, 8, 9]
+    [9, 2, 8, 6, 7, 1, 3, 5, 4]
+    [1, 5, 4, 9, 3, 8, 6, 0, 0]
+    Generates a list of coordinates [16, 17, 79, 80]
+    :param board: input board
+    :returns: list of coordinates
+    """
+    coordinates = []
+    for row in range(9):
+        for col in range(9):
+            if board[row][col] == 0:
+                coordinates.append(row * 9 + col)
+    return coordinates
 
-def print_board(bo):
+
+def __print_board(bo):
     """
     prints the board
     :param bo: 2d List of ints

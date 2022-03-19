@@ -1,8 +1,8 @@
 from flask import Flask
 from flask import render_template
 from flask import request, redirect
-from solver import solve
-from generator import generateRandomValidBoard, isBoardValid, getSolvedCoordinates
+from solver import solve, getSolvedCoordinates
+from generator import generateRandomValidBoard
 from sudokucv.sudokucv import SudokuCV
 import os
 import json
