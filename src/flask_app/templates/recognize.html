@@ -76,8 +76,8 @@
     </div>
 
     <script>
-      var board = {{ inputBoard }};
-      var confidence = {{ inputConfidence }};
+      var board = {{ inputBoard }}
+      var confidence = {{ inputConfidence }}
       var image = '{{ inputImage}}';
 
       const LOW_CONFIDENCE = 0.75;
@@ -110,7 +110,7 @@
               let inputValue = board[row][col] > 0 ? board[row][col] : "";
               let cellContent = `
                             <div class="${className + colClass}"> 
-                              <input type="text" class="form-control su-input ${confidenceClass} outline-2" onchange="updateBoard(${id})" id="su-input-${id}" name="fname" value = "${inputValue}"> 
+                              <input type="number" class="form-control su-input ${confidenceClass} outline-2" onchange="updateBoard(${id})" id="su-input-${id}" name="fname" value = "${inputValue}" onKeyPress="if(this.value.length==1) return false;" min="1"> 
                             </div>`;
               tableHTML += cellContent;
           }
