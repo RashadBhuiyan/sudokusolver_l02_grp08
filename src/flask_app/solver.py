@@ -49,6 +49,24 @@ def find_empty(bo):
 
     return None
 
+def solve(bo):
+    find = find_empty(bo)
+    if not find:
+        return True
+    else:
+        row, col = find
+
+    for i in range(1,10):
+        if valid(bo, (row, col), i):
+            bo[row][col] = i
+
+            if solve(bo):
+                return True
+
+            bo[row][col] = 0
+
+    return False
+
 def solve_randomly(bo):
     """
     Solves a sudoku board using backtracking, picking random values at each iteration.
