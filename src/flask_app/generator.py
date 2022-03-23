@@ -112,11 +112,11 @@ def generateRandomValidBoard(hints):
     Generates a random valid unique board
     :param hints: The number of hints on the sudoku board
     :param uniquenessLikelihood: The amount of times to check for multiple solutions in each iteration of the random board generation. The higher the number, the greater the likelihood of generating a board with one solution.
-    :raises Exception: If the number of hints is less than 30, an exception is raised.
+    :raises Exception: If the number of hints is less than 26, an exception is raised.
     :return: board
     """
-    if hints < 30:
-        raise Exception("The number of hints must not be less than 30.")
+    if hints < 26:
+        raise Exception("The number of hints must not be less than 26.")
     generatedBoard = False
     while not generatedBoard:
         board = [
@@ -154,7 +154,6 @@ def generateRandomValidBoard(hints):
             if len(coordinates) == 0:
                 break
         if numsRemoved == 81 - hints:
-            print("generated board")
             generatedBoard = True
     return board
 
