@@ -1,37 +1,8 @@
 # solver.py
 # author: techwithtim
 # https://github.com/techwithtim/Sudoku-GUI-Solver
+from enum import unique
 from random import choice
-
-def solve(bo):
-    """
-    Solves a sudoku board using backtracking
-    :param bo: 2d list of ints
-    :return: solution
-    """
-    find = find_empty(bo)
-    if find:
-        row, col = find
-    else:
-        return True
-
-    values = list(range(1, 10))
-
-    for i in range(1, 10):
-        value = choice(values)
-        values.remove(value)
-        if valid(bo, (row, col), value):
-            bo[row][col] = value
-            # print("placing", value, "at ", row, ",", col, "was valid")
-            # print_board(bo)
-
-            if solve(bo):
-                return True
-
-            bo[row][col] = 0
-
-    return False
-
 
 def valid(bo, pos, num):
     """
@@ -64,7 +35,6 @@ def valid(bo, pos, num):
 
     return True
 
-
 def find_empty(bo):
     """
     finds an empty space in the board
@@ -78,6 +48,35 @@ def find_empty(bo):
                 return (i, j)
 
     return None
+
+def solve_randomly(bo):
+    """
+    Solves a sudoku board using backtracking, picking random values at each iteration.
+    :param bo: 2d list of ints
+    :return: solution
+    """
+    find = find_empty(bo)
+    if find:
+        row, col = find
+    else:
+        return True
+
+    values = list(range(1, 10))
+
+    for i in range(1, 10):
+        value = choice(values)
+        values.remove(value)
+        if valid(bo, (row, col), value):
+            bo[row][col] = value
+            # print("placing", value, "at ", row, ",", col, "was valid")
+            # print_board(bo)
+
+            if solve_randomly(bo):
+                return True
+
+            bo[row][col] = 0
+
+    return False
 
 def getSolvedCoordinates(board):
     """

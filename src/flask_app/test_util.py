@@ -1,7 +1,7 @@
 import pytest
-import util
+import generator
 
-class TestUtil:
+class Testgenerator:
 
     def setup(self):
         self.non_unique_board = [
@@ -93,39 +93,28 @@ class TestUtil:
             [7, 9, 5, 1, 4, 2, 8, 6, 3],
         ]
 
-    def testIsBoardValid(self):
-        assert util.isBoardValid(self.valid_board) == True
-        assert util.isBoardValid(self.invalid_board) == False
-        assert util.isBoardValid(self.valid_board2) == True
-        with pytest.raises(Exception):
-            util.isBoardValid(self.unique_board)
-
     def testDoesBoardHaveSolution(self):
-        assert util.doesBoardHaveSolution(self.no_solution_board) == False
-        assert util.doesBoardHaveSolution(self.non_unique_board) == True
-        assert util.doesBoardHaveSolution(self.unique_board) == True
-        assert util.doesBoardHaveSolution(self.empty_board) == True
+        assert generator.hasSolution(self.no_solution_board) == False
+        assert generator.hasSolution(self.non_unique_board) == True
+        assert generator.hasSolution(self.unique_board) == True
+        assert generator.hasSolution(self.empty_board) == True
 
     def testIsBoardUnique(self):
-        assert util.isBoardUnique(self.non_unique_board) == False
-        assert util.isBoardUnique(self.non_unique_board2) == False
-        assert util.isBoardUnique(self.unique_board) == True
+        assert generator.hasUniqueSolution(self.non_unique_board) == False
+        assert generator.hasUniqueSolution(self.non_unique_board2) == False
+        assert generator.hasUniqueSolution(self.unique_board) == True
         with pytest.raises(Exception):
-            util.isBoardUnique(self.no_solution_board) 
-
-    def testGetSolvedCoordinates(self):
-        assert util.getSolvedCoordinates(self.non_unique_board2) == [16, 17, 79, 80]
-        assert util.getSolvedCoordinates(self.empty_board) == [x for x in range(81)]
+            generator.hasUniqueSolution(self.no_solution_board) 
 
     def testGenerateRandomValidBoard(self):
-        board = util.generateRandomValidBoard(32)
-        board2 = util.generateRandomValidBoard(34)
+        board = generator.generateRandomValidBoard(32)
+        board2 = generator.generateRandomValidBoard(34)
         with pytest.raises(Exception):
-            util.generateRandomValidBoard(23)
-        assert util.doesBoardHaveSolution(board) == True
-        assert util.doesBoardHaveSolution(board2) == True
-        assert util.isBoardUnique(board) == True
-        assert util.isBoardUnique(board2) == True
+            generator.generateRandomValidBoard(23)
+        assert generator.hasSolution(board) == True
+        assert generator.hasSolution(board2) == True
+        assert generator.hasUniqueSolution(board) == True
+        assert generator.hasUniqueSolution(board2) == True
         count = 0
         for row in board:
             for val in row:
