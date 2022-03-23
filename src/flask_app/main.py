@@ -53,6 +53,16 @@ def solver():
 def manual():
     return render_template("manual.html")
 
+@app.route("/solver2", methods = ["POST"])
+def solver2():
+    tableJSON = request.form.get('tableJSON')
+    print(tableJSON)
+    board = json.loads(tableJSON)
+    solvedCoordinates = getSolvedCoordinates(board)
+    success = solve(board)
+    print("solve successful: ", success)
+    return render_template("solution2.html", solution=board, indices=solvedCoordinates, success=str(success))
+
 ## returns the play game page for the flask app (should have pencil function by revision 1)
 @app.route("/game")
 def game():

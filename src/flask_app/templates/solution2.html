@@ -9,33 +9,6 @@
     {% block content %}
 
     <div class="main-container">
-      <!-- image upload container -->
-      <div class="p-3 upload-container shadow">
-        <form id="imageForm" action="recognize" method="POST" enctype="multipart/form-data">
-            <label for="formFile" class="form-label text-light h6">Upload Another Sudoku Board</label>
-            <input class="form-control" type="file" id="formFile" name="formFile" accept="image/png, image/jpeg" onchange="preview()" required>
-        </form>
-      </div>
-
-      <!-- image confirmation modal -->
-      <div class="modal fade" id = "imageModal" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content shadow">
-            <div class="modal-header">
-              <h5 class="modal-title">Image Upload Confirmation</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="clearImage()" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <img id="frame" src="" class="img-fluid" alt="" />
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="clearImage()">Cancel</button>
-              <button type="submit" data-bs-target="#uploadingModel" data-bs-toggle="modal" data-bs-dismiss="modal" class="btn btn-success" form="imageForm">Submit</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <!-- loading screen modal -->
       <div class="modal fade" id = "uploadingModel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-sm">
@@ -67,7 +40,7 @@
         </div>
       </div>
 
-      <div class="board-container">
+      <div class="board-container p-3 m-3">
         <div class="board-card" >
           <div id="input-board" class="board-body shadow"></div>
           <div class="board-footer shadow">
@@ -75,27 +48,33 @@
           </div>
         </div>
       </div>
+
+      <!-- solve another board-->
+      <div class="main-container m-3">
+        <div class="board-container">
+          <div class="board-card" >
+            <div id="input-board2" class="board-body shadow"></div>
+          </div>
+        </div>
+        <!-- form for submitting to solver -->
+        <form id="solveForm" action="solver2" method="POST" onsubmit="parseTable()" enctype="multipart/form-data">
+          <input type="hidden" id="tableJSON" value="" name="tableJSON">
+          <button type="submit" class="btn btn-success solve-button">Solve</button>
+        </form>
+      </div>
     </div>
 
     <script>
+      var board2 = [[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],
+                   [0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],
+                   [0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0]];
       var board = {{ solution }};
       var indices = {{ indices }};
       var success = '{{ success }}'
 
-      function preview() {
-          frame.src = URL.createObjectURL(event.target.files[0]);
-          let myModal = new bootstrap.Modal(document.getElementById('imageModal'));
-          myModal.show()
-      }
-
       function showErrorModal() {
           let myModal = new bootstrap.Modal(document.getElementById('FailureModal'));
           myModal.show()
-      }
-
-      function clearImage() {
-          document.getElementById('formFile').value = null;
-          frame.src = '';
       }
       
       function populateSudokuBoard(board) {
@@ -122,6 +101,45 @@
         board_container.innerHTML = tableHTML;
       }
 
+      function generateSudokuBoard(board) {
+        let board_container = document.getElementById('input-board2');
+        let tableHTML = ''
+        for(let row = 0; row < 9; row++) {
+          tableHTML += '<div class="su-row">';
+          let className = 'su-cell'
+          if (row > 0 && row % 3 == 0) className +=' su-top'
+          for(let col = 0; col < 9; col++) {
+              let colClass = ''
+              let id = row * 9 + col;
+              if (col > 0 && col % 3 == 0) colClass = ' su-left'
+
+              let inputValue = board2[row][col] > 0 ? board2[row][col] : "";
+              let cellContent = `
+                            <div class="${className + colClass}"> 
+                              <input type="number" class="form-control su-input" id="su-input2-${id}" onchange="updateBoard(${id})" name="fname" value = "${inputValue}" onKeyPress="if(this.value.length==1) return false;" min="1"> 
+                            </div>`;
+              tableHTML += cellContent;
+          }
+          tableHTML += '</div>';
+        }
+        board_container.innerHTML = tableHTML;
+      }
+
+      function updateBoard(id) {
+        // updates the changes in an input box to the board array
+        let inputbox = document.getElementById("su-input2-" + String(id))
+        let col = id % 9;
+        let row = Math.floor(id / 9);
+        //TODO: add error checking here
+        //TODO: SOME SORT OF ERROR HERE THAT I CANT FIND D:
+        board2[row][col] = inputbox.value == "" ? 0 : parseInt(inputbox.value)
+      }
+
+      function parseTable() {
+        let boardJSON = JSON.stringify(board2);
+        document.getElementById('tableJSON').value = boardJSON;
+      }
+
       // colour generated numbers
       function colorSolved() {
         for (let i = 0; i < indices.length; i++){
@@ -135,6 +153,7 @@
       } else {
         showErrorModal()
       }
+      generateSudokuBoard(board2);
       
 
     </script>
