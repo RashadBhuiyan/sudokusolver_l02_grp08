@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>SudoCrew:Solution</title>
+  </head>
+  <body>
+    {% extends "template.html" %}
+    {% block content %}
+
+    <div class="main-container">
+      <!-- loading screen modal -->
+      <div class="modal fade" id = "uploadingModel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+          <div class="modal-content shadow">
+            <div class="modal-body text-center">
+              <p>Processing your uploaded image</p>
+              <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Error message modal -->
+      <div class="modal fade" id = "FailureModal" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content shadow">
+            <div class="modal-header">
+              <h5 class="modal-title">Uh oh!</h5>
+            </div>
+            <div class="modal-body">
+              <p class="text-start">The solver was unable to produce a solution for your puzzle. Please check the supplied input digits for correctness.</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-warning" onclick="history.back()">Go Back</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="board-container p-3 m-3">
+        <div class="board-card" >
+          <div id="input-board" class="board-body shadow"></div>
+          <div class="board-footer shadow">
+            Solution
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+        var board = {{ solution }};
+        var indices = {{ indices }};
+  
+        function preview() {
+            frame.src = URL.createObjectURL(event.target.files[0]);
+            let myModal = new bootstrap.Modal(document.getElementById('imageModal'));
+            myModal.show()
+        }
+  
+        function showErrorModal() {
+            let myModal = new bootstrap.Modal(document.getElementById('FailureModal'));
+            myModal.show()
+        }
+  
+        function clearImage() {
+            document.getElementById('formFile').value = null;
+            frame.src = '';
+        }
+        
+        function populateSudokuBoard(board) {
+          let board_container = document.getElementById('input-board');
+          let tableHTML = ''
+          for(let row = 0; row < 9; row++) {
+            tableHTML += '<div class="su-row">';
+            let className = 'su-cell'
+            if (row > 0 && row % 3 == 0) className +=' su-top'
+            for(let col = 0; col < 9; col++) {
+                let colClass = ''
+                let id = row * 9 + col;
+                if (col > 0 && col % 3 == 0) colClass = ' su-left'
+  
+                let inputValue = board[row][col] > 0 ? board[row][col] : "";
+                let cellContent = `
+                              <div class="${className + colClass}"> 
+                                <input type="number" class="form-control su-input" id="su-input-${id}" name="fname" value = "${inputValue}" disabled> 
+                              </div>`;
+                tableHTML += cellContent;
+            }
+            tableHTML += '</div>';
+          }
+          board_container.innerHTML = tableHTML;
+        }
+  
+        // colour generated numbers
+        function colorSolved() {
+          for (let i = 0; i < indices.length; i++){
+            d = document.getElementById('su-input-' + String(indices[i]))
+            d.classList.add("su-input-new")
+          };
+        }
+        populateSudokuBoard(board);
+        if (success == "True") {
+          colorSolved()
+        } else {
+          showErrorModal()
+        }
+        
+  
+      </script>
+      
+    {% endblock %}
+  </body>
+</html>

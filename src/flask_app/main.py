@@ -1,7 +1,7 @@
 from flask import Flask
 from flask import render_template
 from flask import request, redirect
-from solver import solve, getSolvedCoordinates
+from solver import solve_randomly, getSolvedCoordinates
 from generator import generateRandomValidBoard
 from sudokucv.sudokucv import SudokuCV
 import os
@@ -44,7 +44,7 @@ def solver():
     print(tableJSON)
     board = json.loads(tableJSON)
     solvedCoordinates = getSolvedCoordinates(board)
-    success = solve(board)
+    success = solve_randomly(board)
     print("solve successful: ", success)
     return render_template("solution.html", solution=board, indices=solvedCoordinates, success=str(success))
 
@@ -59,7 +59,7 @@ def solver2():
     print(tableJSON)
     board = json.loads(tableJSON)
     solvedCoordinates = getSolvedCoordinates(board)
-    success = solve(board)
+    success = solve_randomly(board)
     print("solve successful: ", success)
     return render_template("solution2.html", solution=board, indices=solvedCoordinates, success=str(success))
 
@@ -67,6 +67,25 @@ def solver2():
 @app.route("/game")
 def game():
     return render_template("game.html")
+
+## returns the game that the user can play
+@app.route("/play", methods=["POST"])
+def play():
+    hints = request.form.get('hints')
+    print(hints)
+    board = generateRandomValidBoard(int(hints))
+    givenCoordinates = getSolvedCoordinates(board)
+    return render_template("play.html", gameBoard=board, indices=givenCoordinates)
+
+@app.route("/solver3", methods = ["POST"])
+def solver3():
+    tableJSON = request.form.get('tableJSON')
+    print(tableJSON)
+    board = json.loads(tableJSON)
+    solvedCoordinates = getSolvedCoordinates(board)
+    success = solve_randomly(board)
+    print("solve successful: ", success)
+    return render_template("solution3.html", solution=board, indices=solvedCoordinates)
 
 ## returns the instructions page for the flask app (should be within gamepage by revision 1)
 @app.route("/instructions")

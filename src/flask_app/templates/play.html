@@ -2,46 +2,30 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>SudoCrew: Game</title>
+    <title>SudoCrew: Play</title>
   </head>
   <body>
     {% extends "template.html" %}
     {% block content %}
 
-    <div class="main-container p-3 m-3">
-      <!-- difficulty selection -->
-      <div class="row">
-        <div class="col-sm-4">
-          <form id="solveForm" action="play" method="POST" enctype="multipart/form-data">
-            <input type="hidden" id="hints" value="60" name="hints">
-            <button type="submit" class="btn btn-success solve-button">Easy</button>
-          </form>
-        </div>
-        <div class="col-sm-4">
-          <form id="solveForm" action="play" method="POST" enctype="multipart/form-data">
-            <input type="hidden" id="hints" value="45" name="hints">
-            <button type="submit" class="btn btn-success solve-button">Medium</button>
-          </form>
-        </div>
-        <div class="col-sm-4">
-          <form id="solveForm" action="play" method="POST" enctype="multipart/form-data">
-            <input type="hidden" id="hints" value="30" name="hints">
-            <button type="submit" class="btn btn-success solve-button">Hard</button>
-          </form>
-        </div>
-      </div>
-
-      <div class="board-container p-3">
+    <div class="main-container p-3 m-3">      
+      <div class="board-container">
         <div class="board-card" >
           <div id="input-board" class="board-body shadow"></div>
         </div>
       </div>
+
+      <!-- form for submitting to solver -->
+      <form id="solveForm" action="solver3" method="POST" onsubmit="parseTable()" enctype="multipart/form-data">
+        <input type="hidden" id="tableJSON" value="" name="tableJSON">
+        <button type="submit" class="btn btn-success solve-button">I Give Up</button>
+      </form>
     </div>
 
     <script>
-      var board = [[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],
-                   [0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],
-                   [0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0]];
+      var original = {{ gameBoard }}
+      var board = {{ gameBoard }}
+      var given = {{ indices }}
 
       function showErrorModal() {
           let myModal = new bootstrap.Modal(document.getElementById('FailureModal'));
@@ -61,11 +45,21 @@
               if (col > 0 && col % 3 == 0) colClass = ' su-left'
 
               let inputValue = board[row][col] > 0 ? board[row][col] : "";
-              let cellContent = `
+              if (inputValue == "") {
+                let cellContent = `
+                            <div class="${className + colClass}"> 
+                              <input type="number" class="form-control su-input" id="su-input-${id}" onchange="updateBoard(${id})" name="fname" value = "${inputValue}" onKeyPress="if(this.value.length==1) return false;" min="1"> 
+                            </div>`;
+                tableHTML += cellContent;
+              }
+              else {
+                let cellContent = `
                             <div class="${className + colClass}"> 
                               <input type="number" class="form-control su-input" id="su-input-${id}" onchange="updateBoard(${id})" name="fname" value = "${inputValue}" onKeyPress="if(this.value.length==1) return false;" min="1" disabled> 
                             </div>`;
-              tableHTML += cellContent;
+                tableHTML += cellContent;
+              }
+              
           }
           tableHTML += '</div>';
         }
@@ -83,7 +77,7 @@
       }
 
       function parseTable() {
-        let boardJSON = JSON.stringify(board);
+        let boardJSON = JSON.stringify(original);
         document.getElementById('tableJSON').value = boardJSON;
       }
 
