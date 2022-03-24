@@ -14,13 +14,20 @@
         <span id="seconds"> 00 </span> : <span id="tens"> 00 </span>
       </div> 
       
+
+        <div id="liveToast" class="toast hide text-danger error-toast" role="alert" aria-live="assertive" aria-atomic="true">
+          <div class="toast-body">
+            <span id="errorMessage">error</span>
+          </div>
+        </div>
+
       <div class="board-container">
         <div class="board-card" >
-          <div id="input-board" class="board-body shadow"></div>
+          <div id="input-board" class="board-body shadow round-all-corners"></div>
         </div>
       </div>
         <!-- submitting solution -->
-        <form id="submitForm" action="solver3" method="POST" onsubmit="parseTable2()" enctype="multipart/form-data">
+        <form id="submitForm" action="solver3" method="POST" onsubmit="return parseTable2();" enctype="multipart/form-data">
           <input type="hidden" id="tableJSON2" value="" name="tableJSON">
           <button type="submit" class="btn btn-success solve-button">Submit</button>
         </form>
@@ -72,9 +79,10 @@
       var board = {{ gameBoard }}
       var given = {{ indices }}
 
-      function showErrorModal() {
-          let myModal = new bootstrap.Modal(document.getElementById('FailureModal'));
-          myModal.show()
+      function showErrorToast(msg) {
+          document.getElementById('errorMessage').innerHTML = msg;
+          let errorToast = new bootstrap.Toast(document.getElementById('liveToast'))
+          errorToast.show()
       }
       
       function generateSudokuBoard(board) {
@@ -127,8 +135,27 @@
       }
 
       function parseTable2() {
+        // check for incompletion
+        for(let row = 0; row < 9; row++) {
+          for(let col = 0; col < 9; col++) {
+            if(board[row][col] === 0){
+              let id = row * 9 + col;
+              let errorCell = document.getElementById('su-input-' + id);
+              showErrorToast("Please fill in all the blanks!");
+              errorCell.classList.add("input-error");
+              
+              setTimeout(function(){
+                errorCell.classList.remove("input-error");
+              }, 3000);
+
+              return false;
+            }
+          }
+        }
+
         let boardJSON = JSON.stringify(board);
         document.getElementById('tableJSON2').value = boardJSON;
+        return true
       }
 
       generateSudokuBoard(board);
