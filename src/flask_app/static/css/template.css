@@ -20,6 +20,18 @@ body {
   text-align: center;
   padding-bottom: 6rem;
 }
+
+.main-play {
+  width: 90%;
+  max-width: 600px;
+}
+
+.difficulty-container {
+  position: absolute;
+  top:25%;
+  /* display:inline-block; */
+  width: 100%;
+}
   
 .logo {
   padding: 10px;
@@ -148,6 +160,7 @@ body {
   width: 500px;
   height: 40px;
   font-size: large;
+  margin-bottom: 2rem;
 }
 
 .solve-button:hover {
@@ -180,8 +193,8 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
-.wrapper {
-  width: 800px;
+.timer-container {
+  width: 100%;
   margin: 30px auto;
   color: white;
   text-align:center;

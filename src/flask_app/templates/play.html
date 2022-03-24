@@ -10,8 +10,8 @@
 
     <div class="main-container p-3 m-3">
       <!-- stopwatch -->
-      <div class="wrapper m-3 text-center">
-        <p><span id="seconds"> 00 </span> : <span id="tens"> 00 </span></p>
+      <div class="timer-container m-3 text-center">
+        <span id="seconds"> 00 </span> : <span id="tens"> 00 </span>
       </div> 
       
       <div class="board-container">
@@ -19,16 +19,16 @@
           <div id="input-board" class="board-body shadow"></div>
         </div>
       </div>
-        <!-- giving up -->
-        <form id="solveForm" action="solver3" method="POST" onsubmit="parseTable()" enctype="multipart/form-data">
-          <input type="hidden" id="tableJSON" value="" name="tableJSON">
-          <button type="submit" class="btn btn-success solve-button">I Give Up</button>
-        </form>
-
         <!-- submitting solution -->
-        <form id="solveForm" action="solver3" method="POST" onsubmit="parseTable2()" enctype="multipart/form-data">
+        <form id="submitForm" action="solver3" method="POST" onsubmit="parseTable2()" enctype="multipart/form-data">
           <input type="hidden" id="tableJSON2" value="" name="tableJSON">
           <button type="submit" class="btn btn-success solve-button">Submit</button>
+        </form>
+
+        <!-- giving up -->
+        <form id="giveupForm" action="solver3" method="POST" onsubmit="parseTable()" enctype="multipart/form-data">
+          <input type="hidden" id="tableJSON" value="" name="tableJSON">
+          <button type="submit" class="btn btn-secondary solve-button">See Solution</button>
         </form>
     </div>
 
