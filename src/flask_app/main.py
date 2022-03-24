@@ -85,7 +85,7 @@ def solver3():
     solvedCoordinates = getSolvedCoordinates(board)
     success = solve_randomly(board)
     print("solve successful: ", success)
-    return render_template("solution3.html", solution=board, indices=solvedCoordinates)
+    return render_template("solution3.html", solution=board, indices=solvedCoordinates, outcome=success)
 
 ## returns the instructions page for the flask app (should be within gamepage by revision 1)
 @app.route("/instructions")
