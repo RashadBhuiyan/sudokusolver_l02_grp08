@@ -15,6 +15,7 @@ body {
   text-align: left;
 }
 
+
 .main-container {
   text-align: center;
   padding-bottom: 6rem;
@@ -29,6 +30,7 @@ body {
   font-weight: bold;
   padding: 0;
   font-size: 1.5rem;
+  /* text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em blue; */
 }
 
 .custom-nav-gradient {
@@ -59,7 +61,7 @@ body {
   background: #E16428;
   padding: 20px;
   width: 500px;
-  min-width: 500px;
+
   height: 500px;
   min-height: 500px;
   border-radius: 10px 10px 0 0;
@@ -73,6 +75,8 @@ body {
   text-align: left;
   font-size: large;
 }
+
+
 
 .su-row {
   justify-content: center;
@@ -112,7 +116,9 @@ body {
 .footer {
   position: fixed;
   bottom: 0px;
-  width: 100%;
+  right: 0px;
+  /* width: 100%; */
+  pointer-events: none;
 }
 
 .low-confidence {
@@ -172,4 +178,78 @@ input[type=number] {
   
   #seconds, #tens {
     font-size:2em;
+}
+
+.splash-container {
+  position: relative;
+  width: 80%;
+  margin: auto;
+  max-width: 500px;
+}
+
+.splash-img {
+  margin-top: 2rem;
+  width: 100%;
+  transform: rotate(5deg);
+}
+
+.splash-title {
+  position: absolute;
+  top: 5px;
+  right: 5%;
+  font-family: 'Sue Ellen Francisco', cursive;
+  font-size: 3em;
+  z-index: 5;
+  text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em blue;
+}
+
+
+@media only screen and (max-width: 600px) {
+  .upload-container {
+    width: 90%;
+    margin: 1.5rem auto;
+  }
+
+  .board-body {
+    padding: 15px;
+    width:100%;
+    min-width:100%;
+    height: auto;
+    min-height: auto;
+    border-radius: 10px 10px 0 0;
+  }
+
+  .su-input {
+    position: absolute;
+    z-index: 1;
+    top: 2px;
+    right: 2px;
+    bottom: 0px;
+    left: 2px;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    font-size: 1.4em;
+  }
+
+  .solve-button {
+    width: 90%;
+  }
+
+  .su-cell {
+    position: relative;
+    width: 100%;
+  }
+
+  .su-cell::after {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+  }
+
+  .board-card {
+    width: 100%;
+    margin: 0rem 1.5rem 1.5rem;
+  }
+
 }
