@@ -8,7 +8,12 @@
     {% extends "template.html" %}
     {% block content %}
 
-    <div class="main-container p-3 m-3">      
+    <div class="main-container p-3 m-3">
+      <!-- stopwatch -->
+      <div class="wrapper m-3 text-center">
+        <p><span id="seconds"> 00 </span> : <span id="tens"> 00 </span></p>
+      </div> 
+      
       <div class="board-container">
         <div class="board-card" >
           <div id="input-board" class="board-body shadow"></div>
@@ -20,9 +25,46 @@
         <input type="hidden" id="tableJSON" value="" name="tableJSON">
         <button type="submit" class="btn btn-success solve-button">I Give Up</button>
       </form>
+
+       
     </div>
 
     <script>
+      window.onload = function () {
+  
+        var seconds = 00; 
+        var tens = 00; 
+        var appendTens = document.getElementById("tens")
+        var appendSeconds = document.getElementById("seconds")
+        var buttonStart = document.getElementById('button-start');
+        var buttonStop = document.getElementById('button-stop');
+        var buttonReset = document.getElementById('button-reset');
+        var Interval ;
+    
+        clearInterval(Interval);
+        Interval = setInterval(startTimer, 10); 
+  
+        function startTimer () {
+          tens++; 
+          if(tens <= 9){
+            appendTens.innerHTML = "0" + tens;
+          }
+          if (tens > 9){
+            appendTens.innerHTML = tens; 
+          } 
+          if (tens > 99) {
+            console.log("seconds");
+            seconds++;
+            appendSeconds.innerHTML = "0" + seconds;
+            tens = 0;
+            appendTens.innerHTML = "0" + 0;
+          }
+          if (seconds > 9){
+            appendSeconds.innerHTML = seconds;
+          }
+        }
+      }
+
       var original = {{ gameBoard }}
       var board = {{ gameBoard }}
       var given = {{ indices }}

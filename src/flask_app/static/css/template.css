@@ -163,13 +163,13 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
-#output {
-  font-size: 8.0em;
-  width: 43%;
-  height: auto;
-  background-color: white;
-  border: 3px solid black;
-  margin-right: auto;
-  margin-left: auto;
-  margin-top: 45px;
+.wrapper {
+  width: 800px;
+  margin: 30px auto;
+  color: white;
+  text-align:center;
+}
+  
+  #seconds, #tens {
+    font-size:2em;
 }
