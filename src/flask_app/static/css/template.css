@@ -109,6 +109,12 @@ body {
   color: white;
 }
 
+.su-input:hover {
+  font-size: 2rem;
+  /* background-color: rgba(0,0,0,0.2); */
+  border-color: rgba(255,255,255,0.3);
+}
+
 .su-input-new {
   color: greenyellow;
 }
@@ -142,6 +148,11 @@ body {
   width: 500px;
   height: 40px;
   font-size: large;
+}
+
+.solve-button:hover {
+  box-shadow: 1px 1px 2px red, 0 0 1.2em green, 0 0 0.2em blue;
+  background-color: #11EE11;
 }
 
 .modal-content {
@@ -202,7 +213,6 @@ input[type=number] {
   z-index: 5;
   text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em blue;
 }
-
 
 @media only screen and (max-width: 600px) {
   .upload-container {
