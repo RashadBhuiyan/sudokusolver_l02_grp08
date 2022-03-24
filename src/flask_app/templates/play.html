@@ -19,14 +19,17 @@
           <div id="input-board" class="board-body shadow"></div>
         </div>
       </div>
+        <!-- giving up -->
+        <form id="solveForm" action="solver3" method="POST" onsubmit="parseTable()" enctype="multipart/form-data">
+          <input type="hidden" id="tableJSON" value="" name="tableJSON">
+          <button type="submit" class="btn btn-success solve-button">I Give Up</button>
+        </form>
 
-      <!-- form for submitting to solver -->
-      <form id="solveForm" action="solver3" method="POST" onsubmit="parseTable()" enctype="multipart/form-data">
-        <input type="hidden" id="tableJSON" value="" name="tableJSON">
-        <button type="submit" class="btn btn-success solve-button">I Give Up</button>
-      </form>
-
-       
+        <!-- submitting solution -->
+        <form id="solveForm" action="solver3" method="POST" onsubmit="parseTable2()" enctype="multipart/form-data">
+          <input type="hidden" id="tableJSON2" value="" name="tableJSON">
+          <button type="submit" class="btn btn-success solve-button">Submit</button>
+        </form>
     </div>
 
     <script>
@@ -121,6 +124,11 @@
       function parseTable() {
         let boardJSON = JSON.stringify(original);
         document.getElementById('tableJSON').value = boardJSON;
+      }
+
+      function parseTable2() {
+        let boardJSON = JSON.stringify(board);
+        document.getElementById('tableJSON2').value = boardJSON;
       }
 
       generateSudokuBoard(board);
