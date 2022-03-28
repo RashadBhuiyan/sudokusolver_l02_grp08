@@ -10,84 +10,25 @@
 
     <div class="main-container">
       <!-- difficulty selection -->
-      <div class="row">
-        <div class="col-sm-4">
+      <div class="difficulty-container">
           <form id="solveForm" action="play" method="POST" enctype="multipart/form-data">
             <input type="hidden" id="hints" value="60" name="hints">
-            <button type="submit" class="btn btn-success solve-button">Easy</button>
+            <button type="submit" class="btn btn-success my-4 solve-button">Easy</button>
           </form>
-        </div>
-        <div class="col-sm-4">
           <form id="solveForm" action="play" method="POST" enctype="multipart/form-data">
             <input type="hidden" id="hints" value="45" name="hints">
-            <button type="submit" class="btn btn-success solve-button">Medium</button>
+            <button type="submit" class="btn  btn-warning my-4 solve-button">Medium</button>
           </form>
-        </div>
-        <div class="col-sm-4">
           <form id="solveForm" action="play" method="POST" enctype="multipart/form-data">
             <input type="hidden" id="hints" value="30" name="hints">
-            <button type="submit" class="btn btn-success solve-button">Hard</button>
+            <button type="submit" class="btn btn-danger my-4 solve-button">Hard</button>
           </form>
-        </div>
-      </div>
-
-      <div class="board-container p-3">
-        <div class="board-card" >
-          <div id="input-board" class="board-body shadow"></div>
-        </div>
-      </div>
-    </div>
 
     <script>
-      var board = [[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],
-                   [0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],
-                   [0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0]];
-
       function showErrorModal() {
           let myModal = new bootstrap.Modal(document.getElementById('FailureModal'));
           myModal.show()
       }
-      
-      function generateSudokuBoard(board) {
-        let board_container = document.getElementById('input-board');
-        let tableHTML = ''
-        for(let row = 0; row < 9; row++) {
-          tableHTML += '<div class="su-row">';
-          let className = 'su-cell'
-          if (row > 0 && row % 3 == 0) className +=' su-top'
-          for(let col = 0; col < 9; col++) {
-              let colClass = ''
-              let id = row * 9 + col;
-              if (col > 0 && col % 3 == 0) colClass = ' su-left'
-
-              let inputValue = board[row][col] > 0 ? board[row][col] : "";
-              let cellContent = `
-                            <div class="${className + colClass}"> 
-                              <input type="number" class="form-control su-input" id="su-input-${id}" onchange="updateBoard(${id})" name="fname" value = "${inputValue}" onKeyPress="if(this.value.length==1) return false;" min="1" disabled> 
-                            </div>`;
-              tableHTML += cellContent;
-          }
-          tableHTML += '</div>';
-        }
-        board_container.innerHTML = tableHTML;
-      }
-
-      function updateBoard(id) {
-        // updates the changes in an input box to the board array
-        let inputbox = document.getElementById("su-input-" + String(id))
-        let col = id % 9;
-        let row = Math.floor(id / 9);
-        //TODO: add error checking here
-        //TODO: SOME SORT OF ERROR HERE THAT I CANT FIND D:
-        board[row][col] = inputbox.value == "" ? 0 : parseInt(inputbox.value)
-      }
-
-      function parseTable() {
-        let boardJSON = JSON.stringify(board);
-        document.getElementById('tableJSON').value = boardJSON;
-      }
-
-      generateSudokuBoard(board);
     </script>
       
     {% endblock %}

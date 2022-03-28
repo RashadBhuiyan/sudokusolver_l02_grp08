@@ -87,14 +87,18 @@ class SudokuCV:
             img = cv2.imread(image)
         else:
             img = cv2.imdecode(np.fromstring(image, np.uint8), cv2.IMREAD_UNCHANGED)
-
+        
         dimensions = img.shape
         if dimensions[0] < self.MIN_IMAGE_WIDTH or dimensions[1] < self.MIN_IMAGE_HEIGHT:
             return self.__error(err.ERR_IMG_TOO_SMALL)
 
         img = cv2.resize(img, (self.WIDTH, self.HEIGHT))
-        img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
+        # convert 16 bit images to 8 bit for cv processing
+        if img.dtype == np.uint16:
+            img = (img/256).astype('uint8')
+
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         imgThreshold = self.__preProcess(img)
 
         # find contours 
@@ -107,7 +111,7 @@ class SudokuCV:
         # find biggest contour
         biggestCorners, maxArea = self.__biggestContour(contours)
         if len(biggestCorners) == 0:
-            return self.Error(err.ERR_NO_GRID)
+            return self.__error(err.ERR_NO_GRID)
         elif maxArea < 63504:               # 324^2 = 9 * model size = 9 * 28
             return self.__error(err.ERR_GRID_TOO_SMALL)
 

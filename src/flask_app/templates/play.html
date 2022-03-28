@@ -8,63 +8,56 @@
     {% extends "template.html" %}
     {% block content %}
 
-    <div class="main-container p-3 m-3">
+    <div class="main-container">
       <!-- stopwatch -->
-      <div class="wrapper m-3 text-center">
-        <p><span id="seconds"> 00 </span> : <span id="tens"> 00 </span></p>
+      <div class="timer-container m-3 text-center">
+        <span id="timer">00 : 00 : 00</span>
       </div> 
       
+
+        <div id="liveToast" class="toast hide text-danger error-toast" role="alert" aria-live="assertive" aria-atomic="true">
+          <div class="toast-body">
+            <span id="errorMessage">error</span>
+          </div>
+        </div>
+
       <div class="board-container">
         <div class="board-card" >
-          <div id="input-board" class="board-body shadow"></div>
+          <div id="input-board" class="board-body shadow round-all-corners"></div>
         </div>
       </div>
-        <!-- giving up -->
-        <form id="solveForm" action="solver3" method="POST" onsubmit="parseTable()" enctype="multipart/form-data">
-          <input type="hidden" id="tableJSON" value="" name="tableJSON">
-          <button type="submit" class="btn btn-success solve-button">I Give Up</button>
-        </form>
-
         <!-- submitting solution -->
-        <form id="solveForm" action="solver3" method="POST" onsubmit="parseTable2()" enctype="multipart/form-data">
+        <form id="submitForm" action="solver3" method="POST" onsubmit="return parseTable2();" enctype="multipart/form-data">
           <input type="hidden" id="tableJSON2" value="" name="tableJSON">
           <button type="submit" class="btn btn-success solve-button">Submit</button>
+        </form>
+
+        <!-- giving up -->
+        <form id="giveupForm" action="solver3" method="POST" onsubmit="parseTable()" enctype="multipart/form-data">
+          <input type="hidden" id="tableJSON" value="" name="tableJSON">
+          <button type="submit" class="btn btn-secondary solve-button">See Solution</button>
         </form>
     </div>
 
     <script>
       window.onload = function () {
   
-        var seconds = 00; 
-        var tens = 00; 
-        var appendTens = document.getElementById("tens")
-        var appendSeconds = document.getElementById("seconds")
+        var elapsed_ten_ms = 0
+        var timerElement = document.getElementById("timer")
         var buttonStart = document.getElementById('button-start');
         var buttonStop = document.getElementById('button-stop');
         var buttonReset = document.getElementById('button-reset');
         var Interval ;
     
         clearInterval(Interval);
-        Interval = setInterval(startTimer, 10); 
+        Interval = setInterval(playTimer, 10); 
   
-        function startTimer () {
-          tens++; 
-          if(tens <= 9){
-            appendTens.innerHTML = "0" + tens;
-          }
-          if (tens > 9){
-            appendTens.innerHTML = tens; 
-          } 
-          if (tens > 99) {
-            console.log("seconds");
-            seconds++;
-            appendSeconds.innerHTML = "0" + seconds;
-            tens = 0;
-            appendTens.innerHTML = "0" + 0;
-          }
-          if (seconds > 9){
-            appendSeconds.innerHTML = seconds;
-          }
+        function playTimer () {
+          elapsed_ten_ms++; 
+          let minutes = String(Math.floor(elapsed_ten_ms / 6000));
+          let seconds = String(Math.floor(elapsed_ten_ms / 100) % 60).padStart(2, '0');
+          let ten_ms = String(elapsed_ten_ms % 100).padStart(2, '0');
+          timerElement.innerHTML = `${minutes > 0 ? minutes + " : " : ""}${seconds} : ${ten_ms}`
         }
       }
 
@@ -72,9 +65,12 @@
       var board = {{ gameBoard }}
       var given = {{ indices }}
 
-      function showErrorModal() {
-          let myModal = new bootstrap.Modal(document.getElementById('FailureModal'));
-          myModal.show()
+      function showErrorToast(msg) {
+          document.getElementById('errorMessage').innerHTML = msg;
+          toastElement = document.getElementById('liveToast');
+          let errorToast = new bootstrap.Toast(toastElement)
+          errorToast.show()
+          toastElement.scrollIntoView({behavior: 'smooth'});
       }
       
       function generateSudokuBoard(board) {
@@ -127,8 +123,27 @@
       }
 
       function parseTable2() {
+        // check for incompletion
+        for(let row = 0; row < 9; row++) {
+          for(let col = 0; col < 9; col++) {
+            if(board[row][col] === 0){
+              let id = row * 9 + col;
+              let errorCell = document.getElementById('su-input-' + id);
+              showErrorToast("Please fill in all the blanks!");
+              errorCell.classList.add("input-error");
+              
+              setTimeout(function(){
+                errorCell.classList.remove("input-error");
+              }, 3000);
+
+              return false;
+            }
+          }
+        }
+
         let boardJSON = JSON.stringify(board);
         document.getElementById('tableJSON2').value = boardJSON;
+        return true
       }
 
       generateSudokuBoard(board);

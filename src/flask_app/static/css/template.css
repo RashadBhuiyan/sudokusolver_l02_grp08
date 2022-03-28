@@ -10,7 +10,8 @@ body {
   margin: auto;
   background-color: #272121;
   border-radius: 10px;
-  width: 500px;
+  width: 100%;
+  max-width: 500px;
   margin: 2rem auto;
   text-align: left;
 }
@@ -18,7 +19,19 @@ body {
 
 .main-container {
   text-align: center;
-  padding-bottom: 6rem;
+  padding: 1em 1em 6em;
+  margin: 1em;
+}
+
+.main-play {
+  width: 90%;
+  max-width: 600px;
+}
+
+.difficulty-container {
+  position: relative;
+  top: 3rem;
+  width: 100%;
 }
   
 .logo {
@@ -109,6 +122,12 @@ body {
   color: white;
 }
 
+.su-input:hover {
+  font-size: 2rem;
+  /* background-color: rgba(0,0,0,0.2); */
+  border-color: rgba(255,255,255,0.3);
+}
+
 .su-input-new {
   color: greenyellow;
 }
@@ -116,9 +135,15 @@ body {
 .footer {
   position: fixed;
   bottom: 0px;
-  right: 0px;
+  right: 5px;
   /* width: 100%; */
   pointer-events: none;
+}
+
+.input-error {
+  outline-width: 3px;
+  outline-style: solid;
+  outline-color: rgba(255,0,0,0.4);;
 }
 
 .low-confidence {
@@ -139,9 +164,16 @@ body {
 }
 
 .solve-button {
-  width: 500px;
+  width: 100%;
+  max-width: 500px;
   height: 40px;
   font-size: large;
+  margin-bottom: 2rem;
+}
+
+.solve-button:hover {
+  box-shadow: 1px 1px 2px red, 0 0 1.2em green, 0 0 0.2em blue;
+  background-color: #11EE11;
 }
 
 .modal-content {
@@ -169,8 +201,8 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
-.wrapper {
-  width: 800px;
+.timer-container {
+  width: 100%;
   margin: 30px auto;
   color: white;
   text-align:center;
@@ -188,14 +220,14 @@ input[type=number] {
 }
 
 .splash-img {
-  margin-top: 2rem;
+  margin-top: 16px;
   width: 100%;
   transform: rotate(5deg);
 }
 
 .splash-title {
   position: absolute;
-  top: 5px;
+  top: -11px;
   right: 5%;
   font-family: 'Sue Ellen Francisco', cursive;
   font-size: 3em;
@@ -203,17 +235,29 @@ input[type=number] {
   text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em blue;
 }
 
+.error-toast {
+  margin: 1rem auto;
+}
+
+.round-all-corners {
+  border-radius: 10px;
+}
+
+#timer {
+  font-family: 'Inconsolata', monospace;
+  font-size: 1.5em;
+}
 
 @media only screen and (max-width: 600px) {
+
   .upload-container {
-    width: 90%;
     margin: 1.5rem auto;
   }
 
   .board-body {
     padding: 15px;
     width:100%;
-    min-width:100%;
+
     height: auto;
     min-height: auto;
     border-radius: 10px 10px 0 0;
@@ -232,8 +276,8 @@ input[type=number] {
     font-size: 1.4em;
   }
 
-  .solve-button {
-    width: 90%;
+  .su-input:hover {
+    font-size: 1.6em;
   }
 
   .su-cell {
@@ -249,7 +293,26 @@ input[type=number] {
 
   .board-card {
     width: 100%;
-    margin: 0rem 1.5rem 1.5rem;
+    margin: 0 0 1.5rem;
   }
 
+  .round-all-corners {
+    border-radius: 10px;
+  }
+}
+
+
+@media only screen and (max-width: 320px) {
+  .main-container {
+    padding: 0.5em 0.5em 6em;
+    margin: 0.5em;
+  }
+
+  .su-input {
+    font-size: 1.2em;
+  }
+
+  .su-input:hover {
+    font-size: 1.4em;
+  }
 }
