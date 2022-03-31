@@ -122,6 +122,61 @@
         document.getElementById('tableJSON').value = boardJSON;
       }
 
+      function findInvalidCoordinates() {
+        let foundInvalidCoordiante = false;
+        for(let row = 0; row < 9; row++) {
+           for(let col = 0; col < 9; col++) {
+              var invalid = false;
+              const num = board[row][col];
+
+              for(let i = 0; i < 9; i++) {
+                if(num == board[row][i] && col != i) {
+                  const id = row * 9 + col;
+                  const errorCell = document.getElementById('su-input-' + id);
+                  if(!errorCell.disabled) {
+                    errorCell.classList.add("input-error");
+                  }
+                  foundInvalidCoordinate = true;
+                  invalid = true;
+                }
+
+                if(num == board[i][col] && row != i) {
+                  const id = row * 9 + col;
+                  const errorCell = document.getElementById('su-input-' + id);
+                  if(!errorCell.disabled) {
+                    errorCell.classList.add("input-error");
+                  }
+                  foundInvalidCoordinate = true;
+                  invalid = true;
+                }
+              }
+
+              const boxX = Math.floor(col/3);
+              const boxY = Math.floor(row/3);
+
+              for(let i = boxY * 3; i < boxY * 3 + 3; i++) {
+                for(let j = boxX * 3; j < boxX * 3 + 3; j++) {
+                  if(board[i][j] == num && !(i == row && j == col)) {
+                    const id = row * 9 + col;
+                    const errorCell = document.getElementById('su-input-' + id);
+                    if(!errorCell.disabled) {
+                      errorCell.classList.add("input-error");
+                    }
+                    foundInvalidCoordinate = true;
+                    invalid = true;
+                  }
+                }
+              }
+              if(!invalid) {
+                const id = row * 9 + col;
+                const cell = document.getElementById('su-input-' + id);
+                cell.classList.remove("input-error");
+              }
+          }
+        }
+        return foundInvalidCoordinate;
+      }
+
       function parseTable2() {
         // check for incompletion
         for(let row = 0; row < 9; row++) {
@@ -139,6 +194,11 @@
               return false;
             }
           }
+        }
+
+        if(findInvalidCoordinates()) {
+          showErrorToast("The Sudoku board is invalid. Please fix any errors before submitting!");
+          return false;
         }
 
         let boardJSON = JSON.stringify(board);
