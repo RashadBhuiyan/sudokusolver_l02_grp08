@@ -106,6 +106,11 @@ class Testgenerator:
         with pytest.raises(Exception):
             generator.hasUniqueSolution(self.no_solution_board) 
 
+    def testIsBoardValid(self):
+        assert generator.isBoardValid(self.valid_board) == True
+        assert generator.isBoardValid(self.valid_board2) == True
+        assert generator.isBoardValid(self.invalid_board) == False
+
     def testGenerateRandomValidBoard(self):
         board = generator.generateRandomValidBoard(32)
         board2 = generator.generateRandomValidBoard(34)

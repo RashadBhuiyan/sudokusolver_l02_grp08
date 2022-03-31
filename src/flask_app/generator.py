@@ -23,29 +23,21 @@ def hasSolution(board):
     
 #     return True
 
-# def isBoardValid(board):
-#     """
-#     Function that checks if the completed Sudoku board follows all Sudoku rules.
-#     :param board: The input board.
-#     :raises Exception: if the board is incomplete, an exception is raised
-#     :return: boolean
-#     """
-#     for row in range(0, len(board)):
-#         for column in range(0, len(board)):
-#             if board[row][column] == 0:
-#                 raise Exception("The inputted sudoku board is not complete")
-#             if not checkRowAndColumn(board[row][column], row, column, board):
-#                 return False
+def isBoardValid(board):
+    """
+    Function that checks if the completed Sudoku board follows all Sudoku rules.
+    :param board: The input board.
+    :raises Exception: if the board is incomplete, an exception is raised
+    :return: boolean
+    """
+    for row in range(0, len(board)):
+        for column in range(0, len(board)):
+            if board[row][column] == 0:
+                raise Exception("The inputted sudoku board is not complete")
+            if not valid(board, (row, column), board[row][column]):
+                return False
 
-#             box_x = column//3
-#             box_y = row//3
-
-#             for i in range(box_y*3, box_y*3 + 3):
-#                 for j in range(box_x*3, box_x*3 + 3):
-#                     if board[i][j] == board[row][column] and (i,j) != (row, column):
-#                         return False
-
-#     return True
+    return True
 
 # def hasUniqueSolution(board, attempts=5):
 #     """
@@ -111,7 +103,6 @@ def generateRandomValidBoard(hints):
     """
     Generates a random valid unique board
     :param hints: The number of hints on the sudoku board
-    :param uniquenessLikelihood: The amount of times to check for multiple solutions in each iteration of the random board generation. The higher the number, the greater the likelihood of generating a board with one solution.
     :raises Exception: If the number of hints is less than 26, an exception is raised.
     :return: board
     """
