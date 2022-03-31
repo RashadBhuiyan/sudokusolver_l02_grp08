@@ -23,22 +23,6 @@ def hasSolution(board):
     
 #     return True
 
-def isBoardValid(board):
-    """
-    Function that checks if the completed Sudoku board follows all Sudoku rules.
-    :param board: The input board.
-    :raises Exception: if the board is incomplete, an exception is raised
-    :return: boolean
-    """
-    for row in range(0, len(board)):
-        for column in range(0, len(board)):
-            if board[row][column] == 0:
-                raise Exception("The inputted sudoku board is not complete")
-            if not valid(board, (row, column), board[row][column]):
-                return False
-
-    return True
-
 # def hasUniqueSolution(board, attempts=5):
 #     """
 #     Function that checks if the inputted board is unique (i.e. has only one solution)
