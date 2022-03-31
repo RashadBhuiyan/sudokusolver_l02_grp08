@@ -1,0 +1,83 @@
+<div class="board-container">
+    <div class="board-card">
+        <div id="input-image" class="board-body shadow">
+            <img id="recognizedImage" src="" class="img-fluid" alt="" />
+        </div>
+        <div class="board-footer shadow">
+            Extracted Sudoku Board
+        </div>
+    </div>
+
+    <div class="board-card">
+        <div id="input-board" class="board-body shadow"></div>
+        <div class="board-footer shadow">
+            Recognized Digits
+        </div>
+    </div>
+</div>
+
+<!-- form for submitting to solver -->
+<form id="solveForm" action="" method="POST" onsubmit="parseTable()" enctype="multipart/form-data">
+    <input type="hidden" value="solve" name="action">
+    <input type="hidden" id="tableJSON" value="" name="tableJSON">
+    <button type="submit" class="btn btn-success solve-button">Solve</button>
+</form>
+
+<script>
+    var board = {{ inputBoard }}
+    var confidence = {{ inputConfidence }}
+    var image = '{{ inputImage}}';
+
+    const LOW_CONFIDENCE = 0.75;
+    const MID_CONFIDENCE = 0.85;
+
+
+    function populateSudokuBoard(board) {
+        let board_container = document.getElementById('input-board');
+        let tableHTML = ''
+        for (let row = 0; row < 9; row++) {
+            tableHTML += '<div class="su-row">';
+            let className = 'su-cell'
+            if (row > 0 && row % 3 == 0) className += ' su-top'
+            for (let col = 0; col < 9; col++) {
+                let colClass = ''
+                let confidenceClass = 'high-confidence'
+                let id = row * 9 + col;
+                if (col > 0 && col % 3 == 0) colClass = ' su-left'
+                if (confidence[row][col] < LOW_CONFIDENCE) confidenceClass = 'low-confidence'
+                else if (confidence[row][col] < MID_CONFIDENCE) confidenceClass = 'mid-confidence'
+
+                let inputValue = board[row][col] > 0 ? board[row][col] : "";
+                let cellContent = `
+                            <div class="${className + colClass}"> 
+                              <input type="number" class="form-control su-input ${confidenceClass} outline-2" onchange="updateBoard(${id})" id="su-input-${id}" name="fname" value = "${inputValue}" onKeyPress="if(this.value.length==1) return false;" min="1"> 
+                            </div>`;
+                tableHTML += cellContent;
+            }
+            tableHTML += '</div>';
+        }
+        board_container.innerHTML = tableHTML;
+    }
+
+    function displayRecognizedImage() {
+        recognizedImage.src = "data:image/png;base64," + image;
+    }
+
+    function updateBoard(id) {
+        // updates the changes in an input box to the board array
+        let inputbox = document.getElementById("su-input-" + String(id))
+        let col = id % 9;
+        let row = Math.floor(id / 9);
+        //TODO: add error checking here
+        //TODO: SOME SORT OF ERROR HERE THAT I CANT FIND D:
+        board[row][col] = inputbox.value == "" ? 0 : parseInt(inputbox.value)
+    }
+
+    function parseTable() {
+        let boardJSON = JSON.stringify(board);
+        document.getElementById('tableJSON').value = boardJSON;
+    }
+
+    populateSudokuBoard(board);
+    displayRecognizedImage();
+</script>

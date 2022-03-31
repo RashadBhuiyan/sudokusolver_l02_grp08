@@ -218,14 +218,13 @@ input[type=number] {
 }
 
 .splash-img {
-  margin-top: 2rem;
   width: 100%;
   transform: rotate(5deg);
 }
 
 .splash-title {
   position: absolute;
-  top: 5px;
+  top: -20px;
   right: 5%;
   font-family: 'Sue Ellen Francisco', cursive;
   font-size: 3em;
@@ -239,6 +238,11 @@ input[type=number] {
 
 .round-all-corners {
   border-radius: 10px;
+}
+
+#timer {
+  font-family: 'Inconsolata', monospace;
+  font-size: 1.5em;
 }
 
 @media only screen and (max-width: 600px) {

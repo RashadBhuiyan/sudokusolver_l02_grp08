@@ -1,0 +1,33 @@
+<!-- Error message modal -->
+<div class="modal fade" id="FailureModal" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false"
+    tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content shadow">
+            <div class="modal-header">
+                <h5 class="modal-title">Uh oh!</h5>
+            </div>
+            <div class="modal-body">
+                <p class="text-start" id="errorMEssage"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" onclick="history.back()">Go Back</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let errorMsg = "{{ error }}"
+
+    function showErrorModal(err) {
+        let errorblurb = document.getElementById('errorMEssage');
+        errorblurb.innerHTML = err
+        let myModal = new bootstrap.Modal(document.getElementById('FailureModal'));
+        myModal.show()
+    }
+
+    if (errorMsg != '') {
+      showErrorModal(errorMsg)
+    }
+
+  </script>

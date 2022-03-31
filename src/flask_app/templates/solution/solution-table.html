@@ -1,0 +1,53 @@
+<div class="board-container">
+    <div class="board-card">
+        <div id="input-board" class="board-body shadow"></div>
+        <div class="board-footer shadow">
+            Solution
+        </div>
+    </div>
+</div>
+
+<script>
+    var board = {{ solution }};
+    var indices = {{ indices }};
+    var success = '{{ success }}'
+
+   
+    function populateSudokuBoard(board) {
+      let board_container = document.getElementById('input-board');
+      let tableHTML = ''
+      for(let row = 0; row < 9; row++) {
+        tableHTML += '<div class="su-row">';
+        let className = 'su-cell'
+        if (row > 0 && row % 3 == 0) className +=' su-top'
+        for(let col = 0; col < 9; col++) {
+            let colClass = ''
+            let id = row * 9 + col;
+            if (col > 0 && col % 3 == 0) colClass = ' su-left'
+
+            let inputValue = board[row][col] > 0 ? board[row][col] : "";
+            let cellContent = `
+                          <div class="${className + colClass}"> 
+                            <input type="number" class="form-control su-input" id="su-input-${id}" name="fname" value = "${inputValue}" disabled> 
+                          </div>`;
+            tableHTML += cellContent;
+        }
+        tableHTML += '</div>';
+      }
+      board_container.innerHTML = tableHTML;
+    }
+
+    // colour generated numbers
+    function colorSolved() {
+      for (let i = 0; i < indices.length; i++){
+        d = document.getElementById('su-input-' + String(indices[i]))
+        d.classList.add("su-input-new")
+      };
+    }
+    
+    populateSudokuBoard(board);
+    if (success == "True") {
+      colorSolved()
+    }
+    
+  </script>
