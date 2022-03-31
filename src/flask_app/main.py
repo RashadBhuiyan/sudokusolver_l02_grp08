@@ -16,37 +16,37 @@ def home():
     return render_template("home.html")
 
 ## load upload page of flask app    
-@app.route("/upload")
+@app.route("/upload", methods = ["GET", "POST"])
 def upload():
-    return render_template("upload.html", error = "")
+    action = request.form.get('action')
+    if action == None:      # default to display upload page
+        return render_template("upload.html", error = "")
 
-## takes the Sudoku board and returns the best classification of it or an error
-@app.route("/recognize", methods = ["POST"])
-def recognize():
-    # store the file in an image
-    image = request.files['formFile'].read()
+    elif action == "recognize": # request is for recognition
+        # store the file in an image
+        image = request.files['formFile'].read()
 
-    # store the results of that model analysis
-    results = cv.recognize(image, is_file=False)
+        # store the results of that model analysis
+        results = cv.recognize(image, is_file=False)
 
-    if (not results.error):
-        board = results.getConfidentResults(0.75)
-        confidence = results.getConfidence()
-        image = results.getImage()
-        return render_template("recognize.html", inputBoard=board, inputConfidence=confidence, inputImage=image)
-    else:
-        return render_template("upload.html", error=results.error)
+        if (not results.error):
+            board = results.getConfidentResults(0.75)
+            confidence = results.getConfidence()
+            image = results.getImage()
+            return render_template("upload.html", action=action, inputBoard=board, inputConfidence=confidence, inputImage=image)
+        else:
+            return render_template("upload.html", error=results.error)
 
-## takes the Sudoku board from the table, solves it, then renders the solutions page with it
-@app.route("/solver", methods = ["POST"])
-def solver():
-    tableJSON = request.form.get('tableJSON')
-    print(tableJSON)
-    board = json.loads(tableJSON)
-    solvedCoordinates = getSolvedCoordinates(board)
-    success = solve_randomly(board)
-    print("solve successful: ", success)
-    return render_template("solution.html", solution=board, indices=solvedCoordinates, success=str(success))
+    elif action == "solve": # request is for recognized board solution
+        error = ""
+        tableJSON = request.form.get('tableJSON')
+        board = json.loads(tableJSON)
+        solvedCoordinates = getSolvedCoordinates(board)
+        success = solve_randomly(board)
+        if (not success):
+            error = "The solver was unable to produce a solution for your puzzle.<br>Please check the supplied input digits for correctness."
+        return render_template("upload.html", action=action, error=error, solution=board, indices=solvedCoordinates, success=str(success))
+
 
 ## loads the manual input page for the flask app
 @app.route("/manual")

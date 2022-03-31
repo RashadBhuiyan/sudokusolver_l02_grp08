@@ -1,98 +1,31 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>SudoCrew:Upload</title>
-  </head>
-  <body>
-    {% extends "template.html" %}
-    {% block content %}
 
-    <div class="main-container">
-      <!-- image upload container -->
-      <div class="p-3 upload-container shadow">
-        <form id="imageForm" action="recognize" method="POST" enctype="multipart/form-data">
-            <label for="formFile" class="form-label text-light h6">Upload Sudoku Board</label>
-            <input class="form-control" type="file" id="formFile" name="formFile" accept="image/png, image/jpeg" onchange="preview()" required>
-        </form>
-      </div>
+<head>
+  <meta charset="utf-8">
+  <title>Sudoku Suite - Upload</title>
+</head>
 
-      <!-- image confirmation modal -->
-      <div class="modal fade" id = "imageModal" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content shadow">
-            <div class="modal-header">
-              <h5 class="modal-title">Image Upload Confirmation</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="clearImage()" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <img id="frame" src="" class="img-fluid" alt="" />
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="clearImage()">Cancel</button>
-              <button type="submit" data-bs-target="#uploadingModel" data-bs-toggle="modal" data-bs-dismiss="modal" class="btn btn-success" form="imageForm">Submit</button>
-            </div>
-          </div>
-        </div>
-      </div>
+<body>
+  {% extends "template.html" %}
+  {% block content %}
 
-      <!-- loading screen modal -->
-      <div class="modal fade" id = "uploadingModel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered modal-sm">
-          <div class="modal-content shadow">
-            <div class="modal-body text-center">
-              <p>Processing your uploaded image</p>
-              <div class="spinner-border" role="status">
-                <span class="visually-hidden">Loading...</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+  <div class="main-container">
+    {% include "upload/upload-box.html" %}
 
-    <!-- Error message modal -->
-    <div class="modal fade" id = "FailureModal" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content shadow">
-          <div class="modal-header">
-            <h5 class="modal-title">Uh oh!</h5>
-          </div>
-          <div class="modal-body">
-            <p class="text-start" id="errorMEssage">The solver was unable to produce a solution for your puzzle. Please check the supplied input digits for correctness.</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Ok</button>
-          </div>
-        </div>
-      </div>
-    </div>
+    {% include "upload/upload-loadscreen.html" %}
 
-    <script>
-      let errorMsg = "{{ error }}"
-      function preview() {
-          frame.src = URL.createObjectURL(event.target.files[0]);
-          var myModal = new bootstrap.Modal(document.getElementById('imageModal'));
-          myModal.show()
-      }
-      function clearImage() {
-          document.getElementById('formFile').value = null;
-          frame.src = '';
-      }
+    {% include "upload/upload-error.html" %}
 
-      function showErrorModal(err) {
-          let errorblurb = document.getElementById('errorMEssage');
-          errorblurb.innerHTML = err
-          let myModal = new bootstrap.Modal(document.getElementById('FailureModal'));
-          myModal.show()
-      }
+    {% if action == 'recognize' %}
+      {% include "upload/upload-recogboards.html" %}
+    {% elif action == 'solve' %}
+      {% include "solution/solution-table.html" %}
+  {% endif %}
 
-      if (errorMsg != '') {
-        showErrorModal(errorMsg)
-      }
+  </div>
 
-    </script>
-      
-    {% endblock %}
-  </body>
+  {% endblock %}
+</body>
+
 </html>

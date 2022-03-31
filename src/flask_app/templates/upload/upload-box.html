@@ -1,0 +1,44 @@
+<!-- image upload container -->
+<div class="p-3 upload-container shadow">
+    <form id="imageForm" action="" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="action" value="recognize"/>
+        <label for="formFile" class="form-label text-light h6">Upload Sudoku Board</label>
+        <input class="form-control" type="file" id="formFile" name="formFile" accept="image/png, image/jpeg"
+            onchange="preview()" required>
+    </form>
+</div>
+
+<!-- image confirmation modal -->
+<div class="modal fade" id="imageModal" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false"
+    tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content shadow">
+            <div class="modal-header">
+                <h5 class="modal-title">Image Upload Confirmation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="clearImage()"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img id="frame" src="" class="img-fluid" alt="" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    onclick="clearImage()">Cancel</button>
+                <button type="submit" data-bs-target="#uploadingModel" data-bs-toggle="modal" data-bs-dismiss="modal"
+                    class="btn btn-success" form="imageForm">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function preview() {
+        frame.src = URL.createObjectURL(event.target.files[0]);
+        var myModal = new bootstrap.Modal(document.getElementById('imageModal'));
+        myModal.show()
+    }
+    function clearImage() {
+        document.getElementById('formFile').value = null;
+        frame.src = '';
+    }
+</script>

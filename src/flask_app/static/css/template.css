@@ -220,14 +220,13 @@ input[type=number] {
 }
 
 .splash-img {
-  margin-top: 16px;
   width: 100%;
   transform: rotate(5deg);
 }
 
 .splash-title {
   position: absolute;
-  top: -11px;
+  top: -20px;
   right: 5%;
   font-family: 'Sue Ellen Francisco', cursive;
   font-size: 3em;
