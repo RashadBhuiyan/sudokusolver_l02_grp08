@@ -1,0 +1,57 @@
+<p class="lead text-start">
+    <!-- Button to Open Modal -->
+    <button type="button" class="btn infoButton" data-bs-toggle="modal" data-bs-target="#myModal">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-square" viewBox="0 0 16 16">
+            <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+            <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+        </svg>
+    </button>
+
+    For help using the upload page, please click the following button
+</p>
+
+
+<!-- Instructions Modal -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+  
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Upload Instructions</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+  
+        <!-- Modal body -->
+        <div class="modal-body text-start">
+          <h5>Step 1: Image Upload</h5>
+          Click on the 'Choose file' button to select a file from your local storage. Please ensure that you
+          select an image of a sudoku board that fits within the size requirement and that has enough clarity 
+          so that it can be interpreted by the program. 
+          <hr class="paraSolid">
+          <h5>Step 2: Upload Confirmation</h5>
+          Once your file has been selected, you will be shown a preview of the image and, if the image is the one 
+          that you wish to upload, click the 'Submit' button. Otherwise, click on the 'Cancel' button or the 'X' 
+          in the top right corner in order to go back to selecting your image.
+          <hr class="paraSolid">
+          <h5>Step 3: Upload Verification</h5>
+          Once your submitted image has been processed, you will be shown the extracted sudoku board from the image
+          as well as the digits extracted onto the web-app's board. From here, you can make any necessary edits to the 
+          cells of the board if there are any discrepencies between the extracted image and the loaded board. After you 
+          have confirmed all of your desired changes, if any, press the 'Solve' button to submit your board.
+          <hr class="paraSolid">
+          <h5>Step 4: View Solution</h5>
+          You will be taken to a screen that showcases the solved board with all the new numbers highlighted as green 
+          text. This way, you can distinguish between the original numbers of the board and the solution to the supplied 
+          board. Afterwards, you can choose to upload another board, or go ahead and use one of the other functions in our
+          Sudoku Suite!
+        </div>
+  
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        </div>
+  
+      </div>
+    </div>
+</div>

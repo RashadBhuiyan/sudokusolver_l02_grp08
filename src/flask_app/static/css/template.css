@@ -315,3 +315,15 @@ input[type=number] {
     font-size: 1.4em;
   }
 }
+
+.infoButton {
+  background: #E16428;
+}
+
+p {
+  color: white;
+}
+
+.paraSolid {
+  border-top: 3px solid #FFF;
+}
