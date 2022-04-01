@@ -2,7 +2,8 @@
 <div class="p-3 upload-container shadow">
     <form id="imageForm" action="" method="POST" enctype="multipart/form-data">
         <input type="hidden" name="action" value="recognize"/>
-        <label for="formFile" class="form-label text-light h6">Upload Sudoku Board</label>
+        <label for="formFile" style="display:inline-block" class="form-label text-light">Upload Sudoku Board</label>
+        {% include "upload/upload-info.html" %}
         <input class="form-control" type="file" id="formFile" name="formFile" accept="image/png, image/jpeg"
             onchange="preview()" required>
     </form>

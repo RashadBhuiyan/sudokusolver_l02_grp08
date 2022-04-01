@@ -4,6 +4,9 @@ from tensorflow.keras.models import load_model
 from sudokucv.cvresult import CVResult
 import sudokucv.cverrors as err
 
+from PIL import Image, ExifTags
+import io
+
 class SudokuCV:
     WIDTH = 900
     HEIGHT = 900
@@ -81,12 +84,23 @@ class SudokuCV:
     def __error(self, error):
         return CVResult(None, None, None, err.getErrorMessage(error))
 
+    def __orientationCorrection(self, img):
+        if 274 in img.getexif():                    # exif has orientation tag
+            orientation = img.getexif()[274]
+            if orientation == 3:
+                img=img.rotate(180, expand=True)
+            elif orientation == 6:
+                img=img.rotate(270, expand=True)
+            elif orientation == 8:
+                img=img.rotate(90, expand=True)
+        return np.array(img)
+
     ## performs recognition on an image and returns a result object. The input image can be a file or directly from HTTP request (is_file = False)
     def recognize(self, image, is_file = True,show_image = False):
         if is_file:
-            img = cv2.imread(image)
+            img = self.__orientationCorrection(Image.open(image))
         else:
-            img = cv2.imdecode(np.fromstring(image, np.uint8), cv2.IMREAD_UNCHANGED)
+            img = self.__orientationCorrection(Image.open(io.BytesIO(image)))
         
         dimensions = img.shape
         if dimensions[0] < self.MIN_IMAGE_WIDTH or dimensions[1] < self.MIN_IMAGE_HEIGHT:

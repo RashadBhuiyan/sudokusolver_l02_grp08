@@ -8,7 +8,7 @@ import os
 import json
 
 app = Flask(__name__)
-cv = SudokuCV(os.path.dirname(__file__) + "\\" + "\\sudokucv\\model\\handwritten_printed.h5")
+cv = SudokuCV(os.path.dirname(__file__) + "/sudokucv/model/handwritten_printed.h5")
 
 ## load homepage of flask app
 @app.route("/")

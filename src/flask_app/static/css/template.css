@@ -7,6 +7,7 @@ body {
 }
 
 .upload-container {
+  position: relative;
   margin: auto;
   background-color: #272121;
   border-radius: 10px;
@@ -316,8 +317,12 @@ input[type=number] {
   }
 }
 
-.infoButton {
-  background: #E16428;
+.info-button {
+  color: #198754
+}
+
+.info-button:hover {
+  color: white;
 }
 
 p {
