@@ -346,3 +346,7 @@ p {
 .paraSolid {
   border-top: 3px solid #FFF;
 }
+
+.instruct {
+  color: #000;
+}

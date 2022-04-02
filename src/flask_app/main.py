@@ -1,7 +1,7 @@
 from flask import Flask
 from flask import render_template
 from flask import request, redirect
-from solver import solve_randomly, getSolvedCoordinates
+from solver import solve, solve_randomly, getSolvedCoordinates
 from generator import generateRandomValidBoard
 from sudokucv.sudokucv import SudokuCV
 import os
@@ -55,19 +55,26 @@ def upload():
 
 
 ## loads the manual input page for the flask app
-@app.route("/manual")
+@app.route("/manual", methods = ["GET", "POST"])
 def manual():
-    return render_template("manual.html")
+    action = request.form.get('action')
 
-@app.route("/solver2", methods = ["POST"])
-def solver2():
-    tableJSON = request.form.get('tableJSON')
-    print(tableJSON)
-    board = json.loads(tableJSON)
-    solvedCoordinates = getSolvedCoordinates(board)
-    success = solve_randomly(board)
-    print("solve successful: ", success)
-    return render_template("solution2.html", solution=board, indices=solvedCoordinates, success=str(success))
+    if action == None:
+        return render_template("manual.html")   # default to display manual page
+
+    # check if table can be solved
+    elif action == "solve":
+        error = ""
+        tableJSON = request.form.get('tableJSON')
+        print(tableJSON)
+        board = json.loads(tableJSON)
+        print(board)
+        solvedCoordinates = getSolvedCoordinates(board)
+        success = solve_randomly(board)
+        print(success)
+        if (not success):
+            error = "The solver was unable to produce a solution for your puzzle. Please check the supplied input digits for correctness."
+        return render_template("manual.html", action=action, error=error, solution=board, indices=solvedCoordinates, success=str(success))
 
 ## returns the play game page for the flask app (should have pencil function by revision 1)
 @app.route("/game")
