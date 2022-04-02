@@ -9,6 +9,8 @@
     {% block content %}
 
     <div class="main-container">
+      {% include "gameplay/gameplay-info.html" %}
+
       <!-- difficulty selection -->
       <div class="difficulty-container">
           <form id="solveForm" action="play" method="POST" enctype="multipart/form-data">
