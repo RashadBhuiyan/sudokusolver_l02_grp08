@@ -10,7 +10,12 @@
                 <p class="text-start" id="errorMEssage"></p>
             </div>
             <div class="modal-footer">
+                {% if action == 'solve' %}
                 <button type="button" class="btn btn-warning" onclick="history.back()">Go Back</button>
+                {% else %}
+                <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Ok</button>
+                {% endif %}
+                
             </div>
         </div>
     </div>

@@ -24,6 +24,8 @@
 </form>
 
 <script>
+
+
     var board = {{ inputBoard }}
     var confidence = {{ inputConfidence }}
     var image = '{{ inputImage}}';
@@ -31,6 +33,14 @@
     const LOW_CONFIDENCE = 0.75;
     const MID_CONFIDENCE = 0.85;
 
+    // blocks non-numeric input
+    function validateInput(keyCode)
+    {
+        if (keyCode > 57 || keyCode < 49) {
+            event.preventDefault();
+            return false;
+        }
+    }
 
     function populateSudokuBoard(board) {
         let board_container = document.getElementById('input-board');
@@ -50,7 +60,7 @@
                 let inputValue = board[row][col] > 0 ? board[row][col] : "";
                 let cellContent = `
                             <div class="${className + colClass}"> 
-                              <input type="number" class="form-control su-input ${confidenceClass} outline-2" onchange="updateBoard(${id})" id="su-input-${id}" name="fname" value = "${inputValue}" onKeyPress="if(this.value.length==1) return false;" min="1"> 
+                              <input type="text" class="form-control su-input ${confidenceClass} outline-2" maxlength="1" onchange="updateBoard(${id})" id="su-input-${id}" name="fname" onKeyPress="validateInput(event.keyCode)" value = "${inputValue}"> 
                             </div>`;
                 tableHTML += cellContent;
             }

@@ -1,32 +1,90 @@
 <!-- image upload container -->
 <div class="p-3 upload-container shadow">
-    <form id="imageForm" action="" method="POST" enctype="multipart/form-data">
-        <input type="hidden" name="action" value="recognize"/>
-        <label for="formFile" style="display:inline-block" class="form-label text-light">Upload Sudoku Board</label>
+    <form id="imageForm" action="/upload" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="action" value="recognize" />
+        <input type="hidden" id="cropCoords" name="cropCoords" value="" />
+        <label
+            for="formFile"
+            style="display: inline-block"
+            class="form-label text-light"
+            >Upload Sudoku Board</label
+        >
         {% include "upload/upload-info.html" %}
-        <input class="form-control" type="file" id="formFile" name="formFile" accept="image/png, image/jpeg"
-            onchange="preview()" required>
+        <input
+            class="form-control"
+            type="file"
+            id="formFile"
+            name="formFile"
+            accept="image/png, image/jpeg"
+            onchange="preview()"
+            required
+        />
     </form>
 </div>
 
 <!-- image confirmation modal -->
-<div class="modal fade" id="imageModal" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false"
-    tabindex="-1">
+<div
+    class="modal fade"
+    id="imageModal"
+    aria-hidden="true"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+>
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content shadow">
             <div class="modal-header">
                 <h5 class="modal-title">Image Upload Confirmation</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="clearImage()"
-                    aria-label="Close"></button>
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    onclick="clearImage()"
+                    aria-label="Close"
+                ></button>
             </div>
             <div class="modal-body">
-                <img id="frame" src="" class="img-fluid" alt="" />
+                <div id="frameContainer" class="frame-container">
+                    <!-- Picture frame -->
+                    <img id="frame" src="" class="img-fluid" alt="" />
+                    <!-- Cropping Controller -->
+                    <canvas {% if not manualCropState %} hidden {% endif %} id="canvas" width="200" height="200"></canvas>
+                </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                    onclick="clearImage()">Cancel</button>
-                <button type="submit" data-bs-target="#uploadingModel" data-bs-toggle="modal" data-bs-dismiss="modal"
-                    class="btn btn-success" form="imageForm">Submit</button>
+                <!-- Automatic Position checkbox -->
+                <div class="form-check position-absolute start-0 ms-3">
+                    <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value=""
+                        id="manualCrop"
+                        {% if not manualCropState %} checked {% endif %}
+                        form="imageForm"
+                        onChange="handleCropCheck(this);"
+                    />
+                    <label class="form-check-label" for="manualCrop">
+                        Automatic Cropping
+                    </label>
+                </div>
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                    onclick="clearImage()"
+                >
+                    Cancel
+                </button>
+                <button
+                    type="submit"
+                    data-bs-target="#uploadingModel"
+                    data-bs-toggle="modal"
+                    data-bs-dismiss="modal"
+                    class="btn btn-success"
+                    form="imageForm"
+                >
+                    Submit
+                </button>
             </div>
         </div>
     </div>
@@ -35,11 +93,176 @@
 <script>
     function preview() {
         frame.src = URL.createObjectURL(event.target.files[0]);
-        var myModal = new bootstrap.Modal(document.getElementById('imageModal'));
-        myModal.show()
+        var myModal = new bootstrap.Modal(
+            document.getElementById("imageModal")
+        );
+        document.getElementById("imageModal").addEventListener("shown.bs.modal", ()=>{resizeCanvas()})
+        myModal.show();
     }
     function clearImage() {
-        document.getElementById('formFile').value = null;
-        frame.src = '';
+        document.getElementById("formFile").value = null;
+        frame.src = "";
     }
+
+    // crop canvas controls
+
+    var canvas = document.getElementById("canvas");
+    var canvasEnabled = "True" === "{{ manualCropState }}";
+    var ctx = canvas.getContext("2d");
+    var borders = { left: 0, right: 1, top: 0, bottom: 1 };
+
+    mouse = { x: 0, y: 0, button: 0, update: true };
+
+    function clamp(num, low, high) {
+        return Math.max(low, Math.min(num, high));
+    }
+
+    function handleCropCheck(checkbox) {
+        canvasEnabled = !checkbox.checked;
+        canvas.hidden = checkbox.checked;
+        resizeCanvas();
+        if (canvasEnabled) {
+            selectionBox.draw();
+            requestAnimationFrame(updateFrame);
+        }
+        updateCoords();
+    }
+
+    function resizeCanvas() {
+        canvas.width = frameContainer.offsetWidth;
+        canvas.height = frameContainer.offsetHeight;
+        borders = canvas.getBoundingClientRect();
+        canvasWidth = borders.right - borders.left;
+        canvasHeight = borders.bottom - borders.top
+        if (canvasEnabled) {
+            selectionBox.draw();
+            requestAnimationFrame(updateFrame);
+        }
+    }
+
+    function mouseEvents(e) {
+        mouse.x = (e.pageX - borders.left) / canvasWidth;
+        mouse.y = (e.pageY - borders.top) / canvasHeight;
+        mouse.button =
+            e.type === "mousedown"
+                ? true
+                : e.type === "mouseup"
+                ? false
+                : mouse.button;
+        mouse.update = true;
+    }
+
+    const point = (x, y) => ({ x, y });
+    const selectionBox = ({
+        points: [
+            { x: 0.01, y: 0.01 },
+            { x: 0.99, y: 0.01 },
+            { x: 0.99, y: 0.99 },
+            { x: 0.01, y: 0.99 },
+        ],
+        draw() {
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = "blue";
+            ctx.font = "20px arial";
+            ctx.fillStyle = "blue";
+            ctx.beginPath();
+            this.points.forEach((point) => {
+                ctx.lineTo(
+                    point.x * canvasWidth,
+                    point.y * canvasHeight
+                );
+            });
+            ctx.closePath();
+            // draw handles
+            this.points.forEach((point) => {
+                const realx = point.x * canvasWidth;
+                const realy = point.y * canvasHeight;
+                ctx.rect(realx - 2, realy - 2, 4, 4);
+            });
+            ctx.stroke();
+            // draw labels
+            ctx.fillText(
+                "Top Left",
+                this.points[0].x * canvasWidth + 3,
+                this.points[0].y * canvasHeight + 20
+            );
+            ctx.fillText(
+                "Top Right",
+                this.points[1].x * canvasWidth - 90,
+                this.points[1].y * canvasHeight + 20
+            );
+        },
+        nearestVertex(pos, dist = 0.05) {
+            var i = 0, index = -1;
+            dist *= dist;
+            for (const p of this.points) {
+                var x = pos.x - p.x;
+                var y = pos.y - p.y;
+                var d2 = x * x + y * y;
+                if (d2 < dist) {
+                    dist = d2;
+                    index = i;
+                }
+                i++;
+            }
+            if (index > -1) {
+                return this.points[index];
+            }
+        },
+    });
+
+    var activePoint, cursor;
+    var dragging = false;
+    function updateFrame() {
+        if (!canvasEnabled) return;
+        if (mouse.update) {
+            cursor = "default";
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            if (!dragging) {
+                activePoint = selectionBox.nearestVertex(mouse);
+            }
+            if (activePoint === undefined && mouse.button) {
+                mouse.button = false;
+            } else if (activePoint) {
+                if (mouse.button) {
+                    if (dragging) {
+                        activePoint.x = clamp(mouse.x, 0, 1);
+                        activePoint.y = clamp(mouse.y, 0, 1);
+                        updateCoords();
+                    } else {
+                        dragging = true;
+                    }
+                } else {
+                    dragging = false;
+                }
+            }
+            selectionBox.draw();
+            if (activePoint) {
+                cursor = "crosshair";
+            }
+            canvas.style.cursor = cursor;
+            mouse.update = false;
+        }
+        requestAnimationFrame(updateFrame);
+    }
+
+    function  updateCoords() {
+        var coords = selectionBox.points.map((point) => [point.x, point.y]);
+        if (canvasEnabled) {
+            cropCoords.value = JSON.stringify(coords);
+        }
+        else {
+            cropCoords.value = "";
+        }
+    }
+
+    window.addEventListener("resize", resizeCanvas);
+    
+    window.addEventListener("mousedown", mouseEvents);
+    window.addEventListener("mouseup", mouseEvents);
+    window.addEventListener("mousemove", mouseEvents);
+
+
+    resizeCanvas();
+    updateCoords();
 </script>

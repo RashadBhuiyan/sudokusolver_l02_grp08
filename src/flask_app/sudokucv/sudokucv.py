@@ -95,44 +95,59 @@ class SudokuCV:
                 img=img.rotate(90, expand=True)
         return np.array(img)
 
-    ## performs recognition on an image and returns a result object. The input image can be a file or directly from HTTP request (is_file = False)
-    def recognize(self, image, is_file = True,show_image = False):
-        if is_file:
-            img = self.__orientationCorrection(Image.open(image))
-        else:
-            img = self.__orientationCorrection(Image.open(io.BytesIO(image)))
-        
-        dimensions = img.shape
-        if dimensions[0] < self.MIN_IMAGE_WIDTH or dimensions[1] < self.MIN_IMAGE_HEIGHT:
-            return self.__error(err.ERR_IMG_TOO_SMALL)
-
-        img = cv2.resize(img, (self.WIDTH, self.HEIGHT))
-
+    def __convertImageColourSpace(self, img):
         # convert 16 bit images to 8 bit for cv processing
         if img.dtype == np.uint16:
             img = (img/256).astype('uint8')
 
-        img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        imgThreshold = self.__preProcess(img)
+        # only convert to grayscale if not already gray
+        if img.ndim > 2:
+            img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        return img
 
-        # find contours 
+    ## performs recognition on an image and returns a result object. The input image can be a file or directly from HTTP request (is_file = False)
+    def recognize(self, image, is_file = True, show_image = False, crop_coords = None):
+        if is_file:
+            img = self.__convertImageColourSpace(self.__orientationCorrection(Image.open(image)))
+        else:
+            img = self.__convertImageColourSpace(self.__orientationCorrection(Image.open(io.BytesIO(image))))
+        
+        dimensions = img.shape
+        print("dimensions", dimensions)
+        if dimensions[0] < self.MIN_IMAGE_HEIGHT or dimensions[1] < self.MIN_IMAGE_WIDTH:
+            return self.__error(err.ERR_IMG_TOO_SMALL)
 
-        imgContours = img.copy()
-        imgBigContour = img.copy()
-        contours, hierarchy = cv2.findContours(imgThreshold, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-        cv2.drawContours(imgContours, contours, -1, (0, 255, 0), 3)
+        if crop_coords:
+            for i, coord in enumerate(crop_coords):
+                crop_coords[i][0] = coord[0] * dimensions[1]
+                crop_coords[i][1] = coord[1] * dimensions[0]
+            img = self.__removePerspective(img, [crop_coords[3], crop_coords[2], crop_coords[1], crop_coords[0]])
+            imgFlattened = img
+        else:
+            img = cv2.resize(img, (self.WIDTH, self.HEIGHT))
 
-        # find biggest contour
-        biggestCorners, maxArea = self.__biggestContour(contours)
-        if len(biggestCorners) == 0:
-            return self.__error(err.ERR_NO_GRID)
-        elif maxArea < 63504:               # 324^2 = 9 * model size = 9 * 28
-            return self.__error(err.ERR_GRID_TOO_SMALL)
+            imgThreshold = self.__preProcess(img)
 
-        biggestCorners = self.__getOrderedCorners(biggestCorners)
-        cv2.drawContours(imgBigContour, biggestCorners, -1, (255, 0, 0), 3)
+            # find contours 
 
-        imgFlattened = self.__removePerspective(img, biggestCorners)
+            imgContours = img.copy()
+            imgBigContour = img.copy()
+            contours, hierarchy = cv2.findContours(imgThreshold, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+            cv2.drawContours(imgContours, contours, -1, (0, 255, 0), 3)
+
+            # find biggest contour
+            biggestCorners, maxArea = self.__biggestContour(contours)
+            if len(biggestCorners) == 0:
+                return self.__error(err.ERR_NO_GRID)
+            elif maxArea < 63504:               # 324^2 = 9 * model size = 9 * 28
+                return self.__error(err.ERR_GRID_TOO_SMALL)
+
+            biggestCorners = self.__getOrderedCorners(biggestCorners)
+            cv2.drawContours(imgBigContour, biggestCorners, -1, (255, 0, 0), 3)
+
+            imgFlattened = self.__removePerspective(img, biggestCorners)
+            
+
         t = cv2.adaptiveThreshold(imgFlattened, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 21, 15)
         imgFlattened[t==255] = 255
 
@@ -143,9 +158,10 @@ class SudokuCV:
 
         if (show_image):
             cv2.imshow("input", img)
-            cv2.imshow("threshold", imgThreshold)
-            cv2.imshow("Contours", imgContours)
-            cv2.imshow("DetectedGrid", imgBigContour)
+            if (not crop_coords):
+                cv2.imshow("threshold", imgThreshold)
+                cv2.imshow("Contours", imgContours)
+                cv2.imshow("DetectedGrid", imgBigContour)
             cv2.imshow("Flattened", imgFlattened)
             cv2.waitKey(0)
 

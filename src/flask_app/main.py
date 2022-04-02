@@ -20,14 +20,20 @@ def home():
 def upload():
     action = request.form.get('action')
     if action == None:      # default to display upload page
-        return render_template("upload.html", error = "")
+        return render_template("upload.html", error = "", manualCropState=False)
 
     elif action == "recognize": # request is for recognition
         # store the file in an image
         image = request.files['formFile'].read()
+        cropCoords = request.form.get('cropCoords')
+        # check if manual crop enabled
+        if cropCoords:
+            cropCoords = json.loads(cropCoords)
+        else:
+            cropCoords = None
 
         # store the results of that model analysis
-        results = cv.recognize(image, is_file=False)
+        results = cv.recognize(image, is_file=False, crop_coords = cropCoords)
 
         if (not results.error):
             board = results.getConfidentResults(0.75)
@@ -35,7 +41,7 @@ def upload():
             image = results.getImage()
             return render_template("upload.html", action=action, inputBoard=board, inputConfidence=confidence, inputImage=image)
         else:
-            return render_template("upload.html", error=results.error)
+            return render_template("upload.html", error=results.error, manualCropState=True, image=image)
 
     elif action == "solve": # request is for recognized board solution
         error = ""

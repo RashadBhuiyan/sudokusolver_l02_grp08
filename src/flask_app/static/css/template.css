@@ -317,6 +317,20 @@ input[type=number] {
   }
 }
 
+.frame-container {
+  margin: auto;
+  width: fit-content;
+  position: relative;
+}
+
+#canvas{
+  position: absolute;
+  left:0;
+  top:0;
+  border:1px solid black;
+  z-index: 999;
+}
+
 .info-button {
   color: #198754
 }
