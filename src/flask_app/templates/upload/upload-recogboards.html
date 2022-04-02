@@ -78,12 +78,12 @@
         let inputbox = document.getElementById("su-input-" + String(id))
         let col = id % 9;
         let row = Math.floor(id / 9);
-        //TODO: add error checking here
-        //TODO: SOME SORT OF ERROR HERE THAT I CANT FIND D:
         board[row][col] = inputbox.value == "" ? 0 : parseInt(inputbox.value)
     }
 
     function parseTable() {
+        // re-updateBoard in case history.back() was called
+        for (let i = 0; i < 81; i++) updateBoard(i);
         let boardJSON = JSON.stringify(board);
         document.getElementById('tableJSON').value = boardJSON;
     }

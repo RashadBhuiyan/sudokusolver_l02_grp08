@@ -50,7 +50,7 @@ def upload():
         solvedCoordinates = getSolvedCoordinates(board)
         success = solve_randomly(board)
         if (not success):
-            error = "The solver was unable to produce a solution for your puzzle.<br>Please check the supplied input digits for correctness."
+            error = "The solver was unable to produce a solution for your puzzle. Please check the supplied input digits for correctness."
         return render_template("upload.html", action=action, error=error, solution=board, indices=solvedCoordinates, success=str(success))
 
 
