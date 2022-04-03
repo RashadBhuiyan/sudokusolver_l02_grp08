@@ -255,6 +255,22 @@ input[type=number] {
 
 }
 
+.home-buttons {
+  color: #AAA;
+  background-color: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  width: 100%;
+  text-align: center;
+}
+
+.home-buttons:hover {
+  color:rgb(255, 193, 7);
+}
+
+.home-container {
+  max-width: 800px;
+}
+
 .splash-title {
   position: absolute;
   top: -20px;
@@ -306,6 +322,10 @@ input[type=number] {
     height: auto;
     min-height: auto;
     border-radius: 10px 10px 0 0;
+  }
+
+  .home-buttons {
+    font-size: 14px;
   }
 
   .su-input {

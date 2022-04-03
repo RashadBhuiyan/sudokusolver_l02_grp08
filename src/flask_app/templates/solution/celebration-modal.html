@@ -10,7 +10,7 @@
                 <div>
                     <h5>Congratulations!</h5>
                     {% if time is defined %}
-                        <p>You solved this <span class="{{ difficulty }}">{{ difficulty }}</span> puzzle in <span id="timeDisplay">{{ time }}</span></p>
+                        <p>You solved this <span class="badge bg-dark {{ difficulty }}">{{ difficulty }}</span> puzzle in <span id="timeDisplay">{{ time }}</span></p>
                     {% else %}
                         <p>Your uploaded solution is CORRECT!</p>
                     {% endif %}

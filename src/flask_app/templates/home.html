@@ -9,7 +9,7 @@
     {% extends "template.html" %}
     {% block content %}
 
-    <section class="py-5 text-center container">
+    <section class="py-5 text-center container home-container">
       <div class="row py-lg-4">
         <div class="splash-container">
           <div class="fw-light text-white text-start splash-title">Sudoku Suite</div>
@@ -17,7 +17,19 @@
 
         </div>
       </div>
+      <div class="row p-5">
+        <div class="col-sm-4">
+          <a class="btn btn-lg btn-outline-secondary home-buttons m-2" href="{{ url_for('upload') }}"><i class="fa-solid fa-upload"></i><br>Upload</a>
+      </div>
+      <div class="col-sm-4">
+        <a class="btn btn-lg btn-outline-secondary home-buttons m-2" href="{{ url_for('game') }}"><i class="fa-solid fa-gamepad"></i><br>Play</a>
+      </div>
+      <div class="col-sm-4">
+        <a class="btn btn-lg btn-outline-secondary home-buttons m-2" data-bs-toggle="modal" data-bs-target="#instructionModal" href=""><i class="fa-solid fa-circle-question"></i><br>Instructions</a>
+      </div>
+      </div>
     </section>
+
     
     {% endblock %}
   <!-- </body>
