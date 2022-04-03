@@ -123,6 +123,16 @@
         board[row][col] = inputbox.value == "" ? 0 : parseInt(inputbox.value)
       }
 
+      function clearUserInputs(id) {
+        // updates the changes in an input box to the board array
+        let inputbox = document.getElementById("su-input-" + String(id))
+        let col = id % 9;
+        let row = Math.floor(id / 9);
+        if(!inputbox.disabled) {
+          board[row][col] = 0;
+        }
+      }
+
       function parseTable(complete) {
         if(complete) {
           for (let i = 0; i < 81; i++) updateBoard(i);
@@ -147,6 +157,8 @@
             showErrorToast("The Sudoku board is invalid. Please fix any errors before submitting!");
             return false;
           }
+        }else{
+          for(let i = 0; i < 81; i++) clearUserInputs(i);
         }
         let boardJSON = JSON.stringify(board);
         document.getElementById('tableJSON').value = boardJSON;
