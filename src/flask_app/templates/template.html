@@ -34,10 +34,10 @@
                 <a class="nav-link" href="{{ url_for('upload') }}">Upload</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('manual') }}">Create</a>
+                <a class="nav-link" href="{{ url_for('game') }}">Play</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('game') }}">Play</a>
+                <a data-bs-toggle="modal" data-bs-target="#instructionModal" class="nav-link" href="">Instructions</a>
               </li>
             </ul>
           </div>
@@ -47,6 +47,8 @@
 
     {% block content %}
     {% endblock %}
+    
+    {% include "instructions.html" %}
 
     <footer id="sticky-footer" class="flex-shrink-0 p-1 text-white-50 footer">
       <div class="container text-center">

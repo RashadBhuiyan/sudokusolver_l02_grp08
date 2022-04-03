@@ -20,7 +20,7 @@ def home():
 def upload():
     action = request.form.get('action')
     if action == None:      # default to display upload page
-        return render_template("upload.html", error = "", manualCropState=False)
+        return render_template("upload.html", action="", error = "", manualCropState=False)
 
     elif action == "recognize": # request is for recognition
         # store the file in an image

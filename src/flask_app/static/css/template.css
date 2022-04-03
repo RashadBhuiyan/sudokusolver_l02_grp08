@@ -223,6 +223,8 @@ input[type=number] {
 .splash-img {
   width: 100%;
   transform: rotate(5deg);
+  filter: drop-shadow(10px 10px 10px #222);
+
 }
 
 .splash-title {
@@ -321,6 +323,31 @@ input[type=number] {
   margin: auto;
   width: fit-content;
   position: relative;
+}
+
+.separator {
+  color: #DDD;
+  margin: auto;
+  width: 85%;
+  max-width: 500px;
+}
+
+.section-title {
+  margin-bottom: 2rem;
+}
+
+.section-title:before, .section-title:after {
+  content: "";
+  display: inline-block;
+  width: 100%;
+  max-width: 45%;
+  margin: 0 .5em 0 -55%;
+  vertical-align: middle;
+  border-bottom: 1px solid;
+}
+
+.section-title:after {
+  margin: 0 -55% 0 .5em;
 }
 
 #canvas{

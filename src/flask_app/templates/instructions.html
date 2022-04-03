@@ -1,0 +1,62 @@
+<!-- Instructions Modal -->
+<div class="modal fade" id="instructionModal">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Sudoku Rules</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body text-start">
+                <h5><span class="badge bg-success">1</span> Use Numbers 1-9</h5>
+                <p>
+                    Sudoku is played on a 9 x 9 grid, divided into nine 3 x 3 boxes). Each row, column, and box
+                    (9 cells each) needs to be filled with a number between 1-9.
+                </p>
+                <p>
+                    Each game starts with a few cells already filled; the more cells are filled, the
+                    easier the game.
+                </p>
+                <hr class="paraSolid" />
+                <h5><span class="badge bg-success">2</span> No Repeated Numbers</h5>
+                <div class="text-center">
+                    <img src="{{url_for('static', filename='sudokuRules.jpg')}}" class="img-fluid p-2 rounded" alt="" />
+                </div>
+                <p>
+                    No digit can appear twice in the same row, column, or box.
+                </p>
+                <p>
+                    As illustrated, the upper left box (circled in blue) has 2 unfilled cells. The only numbers that can
+                    be used without repeats are 5 and 6. By applying the same process of elimination for each row,
+                    column, and box we can deduce the rest of the unfilled cells.
+                </p>
+                <hr class="paraSolid" />
+                <h5><span class="badge bg-success">3</span> Don't Guess</h5>
+                <p>
+                    Sudoku is a game of logic and reasoning, so you shouldn't have to guess. If you
+                    don't know what number to put in a certain space, keep scanning the other areas
+                    of the grid until you see an opportunity to place a number. </p>
+                <p>
+                    Sudoku rewards patience, insights, and recognition of patterns, not blind
+                    luck or guessing.
+                </p>
+                <hr class="paraSolid" />
+                <p>
+                    Source:
+                    <a href="https://sudoku.com/how-to-play/sudoku-rules-for-complete-beginners/">
+                        Sudoku.com
+                    </a>.
+                </p>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
