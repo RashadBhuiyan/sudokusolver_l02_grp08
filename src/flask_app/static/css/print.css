@@ -71,6 +71,10 @@ body {
   Display: none;
 }
 
+#difficultyDisplay {
+  Display: none;
+}
+
 .print-button {
   Display: none;
 }
@@ -79,7 +83,7 @@ body {
   border-radius: 0;
 }
 
-#timer {
+.timer-container {
   Display: none;
 }
 
