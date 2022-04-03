@@ -21,6 +21,8 @@
       {% include "upload/upload-recogboards.html" %}
     {% elif action == 'solve' %}
       {% include "solution/solution-table.html" %}
+    {% elif action == '' %}
+      {% include "manual/manual-input.html" %}
     {% endif %}
   </div>
 

@@ -6,6 +6,7 @@ from generator import generateRandomValidBoard
 from sudokucv.sudokucv import SudokuCV
 import os
 import json
+import copy
 
 app = Flask(__name__)
 cv = SudokuCV(os.path.dirname(__file__) + "/sudokucv/model/handwritten_printed.h5")
@@ -20,7 +21,7 @@ def home():
 def upload():
     action = request.form.get('action')
     if action == None:      # default to display upload page
-        return render_template("upload.html", error = "", manualCropState=False)
+        return render_template("upload.html", action="", error = "", manualCropState=False)
 
     elif action == "recognize": # request is for recognition
         # store the file in an image
@@ -53,25 +54,17 @@ def upload():
             error = "The solver was unable to produce a solution for your puzzle. Please check the supplied input digits for correctness."
         return render_template("upload.html", action=action, error=error, solution=board, indices=solvedCoordinates, success=str(success))
 
-
-## loads the manual input page for the flask app
-@app.route("/manual", methods = ["GET", "POST"])
-def manual():
-    action = request.form.get('action')
-
-    if action == None:
-        return render_template("manual.html")   # default to display manual page
-
-    # check if table can be solved
-    elif action == "solve":
+    elif action == "play":
         error = ""
         tableJSON = request.form.get('tableJSON')
         board = json.loads(tableJSON)
+        unsolvedboard = copy.deepcopy(board)
         solvedCoordinates = getSolvedCoordinates(board)
         success = solve_randomly(board)
         if (not success):
             error = "The solver was unable to produce a solution for your puzzle. Please check the supplied input digits for correctness."
-        return render_template("manual.html", action=action, error=error, solution=board, indices=solvedCoordinates, success=str(success))
+            return render_template("upload.html", action="solve", error=error, solution=board, indices=solvedCoordinates, success=str(success))
+        return render_template("play.html", gameBoard=unsolvedboard, indices=solvedCoordinates)
 
 ## returns the play game page for the flask app (should have pencil function by revision 1)
 @app.route("/game")

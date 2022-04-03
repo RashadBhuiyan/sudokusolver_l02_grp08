@@ -9,21 +9,14 @@
     {% block content %}
 
     <div class="main-container">
-      {% include "gameplay/gameplay-info.html" %}
 
       <!-- difficulty selection -->
       <div class="difficulty-container">
           <form id="solveForm" action="play" method="POST" enctype="multipart/form-data">
-            <input type="hidden" id="hints" value="60" name="hints">
-            <button type="submit" class="btn btn-success my-4 solve-button">Easy</button>
-          </form>
-          <form id="solveForm" action="play" method="POST" enctype="multipart/form-data">
             <input type="hidden" id="hints" value="45" name="hints">
-            <button type="submit" class="btn  btn-warning my-4 solve-button">Medium</button>
-          </form>
-          <form id="solveForm" action="play" method="POST" enctype="multipart/form-data">
-            <input type="hidden" id="hints" value="30" name="hints">
-            <button type="submit" class="btn btn-danger my-4 solve-button">Hard</button>
+            <button type="submit" class="btn btn-success my-4 solve-button" onclick="hints.value=54;">Easy</button><br>
+            <button type="submit" class="btn  btn-warning my-4 solve-button" onclick="hints.value=40;">Medium</button><br>
+            <button type="submit" class="btn btn-danger my-4 solve-button" onclick="hints.value=28;">Hard</button>
           </form>
       </div>
     </div>
