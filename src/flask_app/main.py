@@ -66,12 +66,9 @@ def manual():
     elif action == "solve":
         error = ""
         tableJSON = request.form.get('tableJSON')
-        print(tableJSON)
         board = json.loads(tableJSON)
-        print(board)
         solvedCoordinates = getSolvedCoordinates(board)
         success = solve_randomly(board)
-        print(success)
         if (not success):
             error = "The solver was unable to produce a solution for your puzzle. Please check the supplied input digits for correctness."
         return render_template("manual.html", action=action, error=error, solution=board, indices=solvedCoordinates, success=str(success))
@@ -82,28 +79,29 @@ def game():
     return render_template("game.html")
 
 ## returns the game that the user can play
-@app.route("/play", methods=["POST"])
+@app.route("/play", methods=["GET", "POST"])
 def play():
-    hints = request.form.get('hints')
-    print(hints)
-    board = generateRandomValidBoard(int(hints))
-    givenCoordinates = getSolvedCoordinates(board)
-    return render_template("play.html", gameBoard=board, indices=givenCoordinates)
+    action = request.form.get("action") 
 
-@app.route("/solver3", methods = ["POST"])
-def solver3():
-    tableJSON = request.form.get('tableJSON')
-    print(tableJSON)
-    board = json.loads(tableJSON)
-    solvedCoordinates = getSolvedCoordinates(board)
-    success = solve_randomly(board)
-    print("solve successful: ", success)
-    return render_template("solution3.html", solution=board, indices=solvedCoordinates, outcome=success)
+    if action == None:
+        hints = request.form.get('hints')
+        board = generateRandomValidBoard(int(hints))
+        givenCoordinates = getSolvedCoordinates(board)
+        return render_template("play.html", gameBoard=board, indices=givenCoordinates)
 
-## returns the instructions page for the flask app (should be within gamepage by revision 1)
-@app.route("/instructions")
-def instructions():
-    return render_template("instructions.html")
+    elif action == "solve":
+        tableJSON = request.form.get('tableJSON2')
+        board = json.loads(tableJSON)
+        solvedCoordinates = getSolvedCoordinates(board)
+        success = solve_randomly(board)
+        return render_template("success.html", action=action, solution=board, indices=solvedCoordinates, success=str(success))
+    
+    elif action == "submit":
+        tableJSON = request.form.get('tableJSON')
+        time = request.form.get('time')
+        board = json.loads(tableJSON)
+        solvedCoordinates = getSolvedCoordinates(board)
+        return render_template("success.html", action=action, solution=board, indices=solvedCoordinates, success="True", time=time)
 
 ## runs the flask app
 if __name__ == "__main__":

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Sudoku Suite - Gameplay</title>
+
+  <!-- CONFETTI -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+</head>
+
+<body>
+  {% extends "template.html" %}
+  {% block content %}
+
+  <div class="main-container">
+    {% include "gameplay/gameplay-info.html" %}
+
+    {% if action == 'solve' %}
+      {% include "solution/solution-table.html" %}
+    {% elif action == 'submit' %}
+      {% include "solution/celebration.html" %}
+    {% endif %}
+  </div>
+
+  {% endblock %}
+</body>
+
+</html>
