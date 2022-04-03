@@ -1,7 +1,7 @@
 from flask import Flask
 from flask import render_template
 from flask import request, redirect
-from solver import solve, solve_randomly, getSolvedCoordinates
+from solver import solve_randomly, getUnfilledCoordinates, validateBoard
 from generator import generateRandomValidBoard
 from sudokucv.sudokucv import SudokuCV
 import os
@@ -41,7 +41,7 @@ def upload():
         else:
             cropCoords = None
 
-        # store the results of that model analysis
+        # store the results of model analysis
         results = cv.recognize(image, is_file=False, crop_coords = cropCoords)
 
         if (not results.error):
@@ -56,25 +56,27 @@ def upload():
         error = ""
         tableJSON = request.form.get('tableJSON')
         board = json.loads(tableJSON)
-        solvedCoordinates = getSolvedCoordinates(board)
-        print("start solve")
-        success = solve_randomly(board)
+        solvedCoordinates = getUnfilledCoordinates(board)
+        success = validateBoard(board)
         if (not success):
             error = configs["errors"]["no_solution"]
-        print("end solve")
         return render_template("upload.html", action=action, error=error, solution=board, indices=solvedCoordinates, success=str(success))
 
     elif action == "play":
         error = ""
         tableJSON = request.form.get('tableJSON')
         board = json.loads(tableJSON)
+        emptyCells = getUnfilledCoordinates(board)
+        if len(emptyCells) == 0:
+            # all boxes already filled, can't play
+            return render_template("upload.html", action="solve", error=configs["errors"]["no_space"], solution=board, indices=emptyCells, success=str(False))
         unsolvedboard = copy.deepcopy(board)
-        solvedCoordinates = getSolvedCoordinates(board)
-        success = solve_randomly(board)
+        success = validateBoard(board)
         if (not success):
-            error = configs["errors"]["no_solution"]
-            return render_template("upload.html", action="solve", error=error, solution=board, indices=solvedCoordinates, success=str(success))
-        return render_template("play.html", gameBoard=unsolvedboard, indices=solvedCoordinates, difficulty="Uploaded")
+            # board is unsolvable
+            return render_template("upload.html", action="solve", error=configs["errors"]["no_solution"], solution=board, indices=emptyCells, success=str(success))
+        # redirect to play if valid unfilled board
+        return render_template("play.html", gameBoard=unsolvedboard, indices=emptyCells, difficulty="Uploaded")
 
 ## returns the play game page for the flask app (should have pencil function by revision 1)
 @app.route("/game")
@@ -89,15 +91,15 @@ def play():
     if action == None:
         difficulty = request.form.get('difficulty')
         board = generateRandomValidBoard(configs["difficulties"][difficulty])
-        givenCoordinates = getSolvedCoordinates(board)
-        return render_template("play.html", gameBoard=board, indices=givenCoordinates, difficulty=difficulty)
+        emptyCells = getUnfilledCoordinates(board)
+        return render_template("play.html", gameBoard=board, indices=emptyCells, difficulty=difficulty)
 
     else:
         difficulty = request.form.get('difficulty')
         tableJSON = request.form.get('tableJSON')
         time = request.form.get('time')
         board = json.loads(tableJSON)
-        solvedCoordinates = getSolvedCoordinates(board)
+        solvedCoordinates = getUnfilledCoordinates(board)
         success = (action == "submit") or solve_randomly(board)
         return render_template("success.html", action=action, solution=board, indices=solvedCoordinates, success=str(success), time=time, difficulty=difficulty)
 

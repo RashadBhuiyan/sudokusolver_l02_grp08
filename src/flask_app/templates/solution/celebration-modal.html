@@ -9,7 +9,11 @@
                 
                 <div>
                     <h5>Congratulations!</h5>
-                    <p>You solved this puzzle in <span id="timeDisplay"></span></p>
+                    {% if time is defined %}
+                        <p>You solved this <span class="{{ difficulty }}">{{ difficulty }}</span> puzzle in <span id="timeDisplay">{{ time }}</span></p>
+                    {% else %}
+                        <p>Your uploaded solution is CORRECT!</p>
+                    {% endif %}
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
                         Close
                     </button>
@@ -21,7 +25,6 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function (event) {
-        timeDisplay.innerHTML = time
         let myModal = new bootstrap.Modal(document.getElementById('successModal'));
         myModal.show()
     });

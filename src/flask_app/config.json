@@ -7,6 +7,7 @@
     "model_path": "/sudokucv/model/handwritten_printed.h5",
     "confidence_cutoff": 0.75,
     "errors": {
-        "no_solution": "The solver was unable to produce a solution for your puzzle. Please check the supplied input digits for correctness."
+        "no_solution": "The solver was unable to produce a solution for your puzzle. Please check the supplied input digits for correctness.",
+        "no_space": "All cells on this puzzle have been filled. There is nothing to play!"
     }
 }

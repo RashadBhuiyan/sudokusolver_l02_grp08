@@ -96,7 +96,7 @@ def solve_randomly(bo):
 
     return False
 
-def getSolvedCoordinates(board):
+def getUnfilledCoordinates(board):
     """
     Generates a list of coordinates that correspond to areas of the board that were filled in via the solver algorithm.
     For example:
@@ -121,21 +121,17 @@ def getSolvedCoordinates(board):
                 coordinates.append(row * 9 + col)
     return coordinates
 
-
-def __print_board(bo):
-    """
-    prints the board
-    :param bo: 2d List of ints
-    :return: None
-    """
-    for i in range(len(bo)):
-        if i % 3 == 0 and i != 0:
-            print("- - - - - - - - - - - - - -")
-        for j in range(len(bo[0])):
-            if j % 3 == 0:
-                print(" | ",end="")
-
-            if j == 8:
-                print(bo[i][j], end="\n")
+# checks board for invalid filled squares before attempting to solve.
+def validateBoard(board):
+    completed = True
+    for row in range(9):
+        for col in range(9):
+            if board[row][col] > 0:
+                if not valid(board, (row, col), board[row][col]):
+                    return False
             else:
-                print(str(bo[i][j]) + " ", end="")
+                completed = False
+    if not completed:
+        return solve_randomly(board)
+    return True
+    
