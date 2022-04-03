@@ -14,8 +14,6 @@
   {% block content %}
 
   <div class="main-container">
-    {% include "gameplay/gameplay-info.html" %}
-
     {% if action == 'solve' %}
       {% include "solution/solution-table.html" %}
     {% elif action == 'submit' %}
