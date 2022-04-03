@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Sudoku Suite</title>
+    <title>Sudoku Suite - Play</title>
   </head>
   <body>
     {% extends "template.html" %}
@@ -11,8 +11,8 @@
     <div class="main-container">
 
       <!-- stopwatch -->
-      <div class="timer-container m-3 text-center">
-        <span id="timer">00 : 00 : 00</span>
+      <div class="d-flex justify-content-between timer-container">
+        <div class="text-nowrap">Difficulty: <span id="difficultyDisplay" class="{{ difficulty }}">{{ difficulty }}</span></div><div class="text-nowrap"><span id="timer">00 : 00 : 00</span></div>
       </div> 
       
 
@@ -28,18 +28,13 @@
         </div>
       </div>
         <!-- submitting solution -->
-        <form id="submitForm" action="" method="POST" onsubmit="return parseTable(true);" enctype="multipart/form-data">
-          <input type="hidden" value="submit" name="action">
+        <form id="submitForm" action="" method="POST" onsubmit="return parseTable(actionField.value==='submit');" enctype="multipart/form-data">
+          <input type="hidden" value="submit" name="action" id="actionField">
           <input type="hidden" id="time" value="" name="time">
           <input type="hidden" id="tableJSON" value="" name="tableJSON">
-          <button type="submit" class="btn btn-success solve-button">Submit</button>
-        </form>
-
-        <!-- giving up -->
-        <form id="solveForm" action="play" method="POST" onsubmit="return parseTable(false);" enctype="multipart/form-data">
-          <input type="hidden" value="solve" name="action">
-          <input type="hidden" id="tableJSON2" value="" name="tableJSON2">
-          <button type="submit" class="btn btn-secondary solve-button">See Solution</button>
+          <input type="hidden" id="difficulty" value="{{ difficulty }}" name="difficulty">
+          <button type="submit" class="btn btn-success solve-button" onclick="actionField.value='submit'">Submit</button><br>
+          <button type="submit" class="btn btn-secondary solve-button" onclick="actionField.value='solve'">See Solution</button>
         </form>
 
         <i title="print" class="fa-solid fa-print print-button" onclick="print()"></i>
@@ -100,14 +95,14 @@
               if (inputValue == "") {
                 let cellContent = `
                             <div class="${className + colClass}"> 
-                              <input type="text" class="form-control su-input" id="su-input-${id}" onchange="updateBoard(${id})" name="fname" value = "${inputValue}" onKeyPress="validateInput(event.keyCode)" maxlength="1"> 
+                              <input type="text" class="form-control su-input" id="su-input-${id}" onchange="updateBoard(${id})" name="fname" value = "${inputValue}" onclick="this.select()" onKeyPress="validateInput(event.keyCode)" maxlength="1"> 
                             </div>`;
                 tableHTML += cellContent;
               }
               else {
                 let cellContent = `
                             <div class="${className + colClass}"> 
-                              <input type="number" class="form-control su-input" id="su-input-${id}" onchange="updateBoard(${id})" name="fname" value = "${inputValue}" onKeyPress="if(this.value.length==1) return false;" min="1" disabled> 
+                              <input type="number" class="form-control su-input" id="su-input-${id}" name="fname" value = "${inputValue}" disabled> 
                             </div>`;
                 tableHTML += cellContent;
               }
@@ -152,16 +147,11 @@
             showErrorToast("The Sudoku board is invalid. Please fix any errors before submitting!");
             return false;
           }
-
-          let boardJSON = JSON.stringify(board);
-          document.getElementById('tableJSON').value = boardJSON;
-          document.getElementById('time').value = document.getElementById("timer").innerHTML;
-          return true;
-        } else {
-          let boardJSON = JSON.stringify(original);
-          document.getElementById('tableJSON2').value = boardJSON;
-          return true;
         }
+        let boardJSON = JSON.stringify(board);
+        document.getElementById('tableJSON').value = boardJSON;
+        document.getElementById('time').value = document.getElementById("timer").innerHTML;
+        return true;
         
       }
 

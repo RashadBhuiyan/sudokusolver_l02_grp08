@@ -8,8 +8,16 @@ import os
 import json
 import copy
 
+print("Initializing...")
+
+with open(os.path.dirname(__file__) + "/config.json") as cfg:
+    configs = json.load(cfg)
+print("Config loaded")
+
 app = Flask(__name__)
-cv = SudokuCV(os.path.dirname(__file__) + "/sudokucv/model/handwritten_printed.h5")
+cv = SudokuCV(os.path.dirname(__file__) + configs["model_path"])
+print("CV recognition model loaded")
+print("Initializing Complete")
 
 ## load homepage of flask app
 @app.route("/")
@@ -37,7 +45,7 @@ def upload():
         results = cv.recognize(image, is_file=False, crop_coords = cropCoords)
 
         if (not results.error):
-            board = results.getConfidentResults(0.75)
+            board = results.getConfidentResults(configs["confidence_cutoff"])
             confidence = results.getConfidence()
             image = results.getImage()
             return render_template("upload.html", action=action, inputBoard=board, inputConfidence=confidence, inputImage=image)
@@ -49,9 +57,11 @@ def upload():
         tableJSON = request.form.get('tableJSON')
         board = json.loads(tableJSON)
         solvedCoordinates = getSolvedCoordinates(board)
+        print("start solve")
         success = solve_randomly(board)
         if (not success):
-            error = "The solver was unable to produce a solution for your puzzle. Please check the supplied input digits for correctness."
+            error = configs["errors"]["no_solution"]
+        print("end solve")
         return render_template("upload.html", action=action, error=error, solution=board, indices=solvedCoordinates, success=str(success))
 
     elif action == "play":
@@ -62,9 +72,9 @@ def upload():
         solvedCoordinates = getSolvedCoordinates(board)
         success = solve_randomly(board)
         if (not success):
-            error = "The solver was unable to produce a solution for your puzzle. Please check the supplied input digits for correctness."
+            error = configs["errors"]["no_solution"]
             return render_template("upload.html", action="solve", error=error, solution=board, indices=solvedCoordinates, success=str(success))
-        return render_template("play.html", gameBoard=unsolvedboard, indices=solvedCoordinates)
+        return render_template("play.html", gameBoard=unsolvedboard, indices=solvedCoordinates, difficulty="Uploaded")
 
 ## returns the play game page for the flask app (should have pencil function by revision 1)
 @app.route("/game")
@@ -77,24 +87,20 @@ def play():
     action = request.form.get("action") 
 
     if action == None:
-        hints = request.form.get('hints')
-        board = generateRandomValidBoard(int(hints))
+        difficulty = request.form.get('difficulty')
+        board = generateRandomValidBoard(configs["difficulties"][difficulty])
         givenCoordinates = getSolvedCoordinates(board)
-        return render_template("play.html", gameBoard=board, indices=givenCoordinates)
+        return render_template("play.html", gameBoard=board, indices=givenCoordinates, difficulty=difficulty)
 
-    elif action == "solve":
-        tableJSON = request.form.get('tableJSON2')
-        board = json.loads(tableJSON)
-        solvedCoordinates = getSolvedCoordinates(board)
-        success = solve_randomly(board)
-        return render_template("success.html", action=action, solution=board, indices=solvedCoordinates, success=str(success))
-    
-    elif action == "submit":
+    else:
+        difficulty = request.form.get('difficulty')
         tableJSON = request.form.get('tableJSON')
         time = request.form.get('time')
         board = json.loads(tableJSON)
         solvedCoordinates = getSolvedCoordinates(board)
-        return render_template("success.html", action=action, solution=board, indices=solvedCoordinates, success="True", time=time)
+        success = (action == "submit") or solve_randomly(board)
+        return render_template("success.html", action=action, solution=board, indices=solvedCoordinates, success=str(success), time=time, difficulty=difficulty)
+
 
 ## runs the flask app
 if __name__ == "__main__":

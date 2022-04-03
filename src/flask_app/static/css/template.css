@@ -182,6 +182,23 @@ body {
   color: white;
 }
 
+.celebration-modal {
+  margin: auto;
+  width: 60%;
+
+  background-color: rgba(50, 50, 50, 0.8);
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.8);
+}
+
+.celebration-modal h5 {
+  color: #eeea11;
+}
+
+.celebration-img {
+  filter: drop-shadow(0px 0px 10px rgb(255, 0, 255));
+}
+
 .modal-header, .modal-footer {
   border-color: #333;
 }
@@ -203,10 +220,12 @@ input[type=number] {
 }
 
 .timer-container {
+  font-family: 'Inconsolata', monospace;
+  font-size: 1.5em;
   width: 100%;
-  margin: 30px auto;
+  max-width: 500px;
   color: white;
-  text-align:center;
+  margin: 0 auto 10px;
 }
   
   #seconds, #tens {
@@ -254,15 +273,30 @@ input[type=number] {
   border-radius: 10px;
 }
 
-#timer {
-  font-family: 'Inconsolata', monospace;
-  font-size: 1.5em;
+#difficultyDisplay {
+  font-weight: bold;
+}
+
+.Easy {
+  color: #198754;
+}
+
+.Medium {
+  color: rgb(255, 193, 7);
+}
+
+.Hard {
+  color: #dc3545
 }
 
 @media only screen and (max-width: 600px) {
 
   .upload-container {
     margin: 1.5rem auto;
+  }
+
+  .timer-container {
+    font-size: medium;
   }
 
   .board-body {

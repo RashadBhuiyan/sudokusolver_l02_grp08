@@ -113,7 +113,6 @@ class SudokuCV:
             img = self.__convertImageColourSpace(self.__orientationCorrection(Image.open(io.BytesIO(image))))
         
         dimensions = img.shape
-        print("dimensions", dimensions)
         if dimensions[0] < self.MIN_IMAGE_HEIGHT or dimensions[1] < self.MIN_IMAGE_WIDTH:
             return self.__error(err.ERR_IMG_TOO_SMALL)
 

@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>SudoCrew: Game</title>
+    <title>Sudoku Suite - Play</title>
   </head>
   <body>
     {% extends "template.html" %}
@@ -13,10 +13,10 @@
       <!-- difficulty selection -->
       <div class="difficulty-container">
           <form id="solveForm" action="play" method="POST" enctype="multipart/form-data">
-            <input type="hidden" id="hints" value="45" name="hints">
-            <button type="submit" class="btn btn-success my-4 solve-button" onclick="hints.value=54;">Easy</button><br>
-            <button type="submit" class="btn  btn-warning my-4 solve-button" onclick="hints.value=40;">Medium</button><br>
-            <button type="submit" class="btn btn-danger my-4 solve-button" onclick="hints.value=28;">Hard</button>
+            <input type="hidden" id="difficulty" value="easy" name="difficulty">
+            <button type="submit" class="btn btn-success my-4 solve-button" onclick="difficulty.value='Easy';">Easy</button><br>
+            <button type="submit" class="btn  btn-warning my-4 solve-button" onclick="difficulty.value='Medium';">Medium</button><br>
+            <button type="submit" class="btn btn-danger my-4 solve-button" onclick="difficulty.value='Hard';">Hard</button>
           </form>
       </div>
     </div>
@@ -24,3 +24,4 @@
     {% endblock %}
   </body>
 </html>
+

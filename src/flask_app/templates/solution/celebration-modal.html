@@ -1,0 +1,28 @@
+<!-- Celebration Modal -->
+<div class="modal fade" id="successModal">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <img class="img-fluid position-absolute top-50 start-50 translate-middle celebration-img"  src="{{ url_for('static',    filename='img/stars.png') }}" alt="">
+        <div class="modal-content celebration-modal">
+
+            <!-- Modal body -->
+            <div class="modal-body text-middle">
+                
+                <div>
+                    <h5>Congratulations!</h5>
+                    <p>You solved this puzzle in <span id="timeDisplay"></span></p>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function (event) {
+        timeDisplay.innerHTML = time
+        let myModal = new bootstrap.Modal(document.getElementById('successModal'));
+        myModal.show()
+    });
+</script>

@@ -142,12 +142,30 @@
     }
 
     function mouseEvents(e) {
+        if (!canvasEnabled) return;
         mouse.x = (e.pageX - borders.left) / canvasWidth;
         mouse.y = (e.pageY - borders.top) / canvasHeight;
         mouse.button =
             e.type === "mousedown"
                 ? true
                 : e.type === "mouseup"
+                ? false
+                : mouse.button;
+        mouse.update = true;
+    }
+
+    function touchEvents(e) {
+        if (!canvasEnabled) return;
+        e.preventDefault();
+        var touch = e.touches[0]
+        if (touch) {
+            mouse.x = (touch.pageX - borders.left) / canvasWidth;
+            mouse.y = (touch.pageY - borders.top) / canvasHeight;
+        }
+        mouse.button =
+            e.type === "touchstart"
+                ? true
+                : e.type === "touchend"
                 ? false
                 : mouse.button;
         mouse.update = true;
@@ -162,7 +180,7 @@
             { x: 0.01, y: 0.99 },
         ],
         draw() {
-            ctx.lineWidth = 2;
+            ctx.lineWidth = 1;
             ctx.strokeStyle = "blue";
             ctx.font = "20px arial";
             ctx.fillStyle = "blue";
@@ -178,7 +196,7 @@
             this.points.forEach((point) => {
                 const realx = point.x * canvasWidth;
                 const realy = point.y * canvasHeight;
-                ctx.rect(realx - 2, realy - 2, 4, 4);
+                ctx.rect(realx - 1, realy - 1, 2, 2);
             });
             ctx.stroke();
             // draw labels
@@ -258,10 +276,13 @@
     }
 
     window.addEventListener("resize", resizeCanvas);
-    
-    window.addEventListener("mousedown", mouseEvents);
-    window.addEventListener("mouseup", mouseEvents);
-    window.addEventListener("mousemove", mouseEvents);
+
+    canvas.addEventListener("mousedown", mouseEvents);
+    canvas.addEventListener("mouseup", mouseEvents);
+    canvas.addEventListener("mousemove", mouseEvents);
+    canvas.addEventListener("touchstart", touchEvents);
+    canvas.addEventListener("touchend", touchEvents);
+    canvas.addEventListener("touchmove", touchEvents);
 
 
     resizeCanvas();
