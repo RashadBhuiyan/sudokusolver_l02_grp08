@@ -1,0 +1,88 @@
+body {
+  background-color: white
+}
+
+.navbar-brand {
+  color: gray !important;
+  font-size: 2rem;
+  position: absolute;
+  left: 20%;
+  top: 20%;
+}
+
+.navbar-toggler {
+  display: none;
+}
+
+.custom-nav-gradient {
+  background-image: none !important;
+  margin: 0;
+}
+
+.board-card {
+  margin: 0;
+}
+
+.shadow {
+  box-shadow: none !important;
+}
+
+.board-body {
+  background: white;
+  padding: 0;
+}
+
+.board-footer {
+  color: black;
+  text-align: left;
+}
+
+.su-cell {
+  padding: 4px;
+  margin: 0;
+  border-width: 1px;
+  border-color: black;
+  border-style: solid;
+}
+
+.su-top {
+  border-top: 4px solid black;
+}
+.su-left {
+  border-left: 4px solid black;
+}
+
+.su-input {
+  font-size: 2rem;
+  background-color: white !important;
+  border-color: white;
+  color: black;
+}
+
+.footer {
+  color: black !important;
+}
+
+.solve-button {
+  Display: none;
+}
+
+.timer-container {
+  Display: none;
+}
+
+.print-button {
+  Display: none;
+}
+
+.round-all-corners {
+  border-radius: 0;
+}
+
+#timer {
+  Display: none;
+}
+
+.info-button {
+  Display: none;
+}

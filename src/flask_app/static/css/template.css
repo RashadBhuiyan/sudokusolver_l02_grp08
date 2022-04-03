@@ -220,6 +220,15 @@ input[type=number] {
   max-width: 500px;
 }
 
+.print-button {
+  color: #AAA;
+  font-size: 1.5rem;
+}
+
+.print-button:hover {
+  color: white;
+}
+
 .splash-img {
   width: 100%;
   transform: rotate(5deg);
