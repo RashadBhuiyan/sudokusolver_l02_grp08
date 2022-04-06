@@ -1,25 +1,67 @@
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[letterpaper, total={6in, 9in}]{geometry}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{hyperref}
+\usepackage{adjustbox,lipsum}
+
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage[normalem]{ulem}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=red,
+    urlcolor=blue
+}
+\usepackage[round]{natbib}
 
 \title{Sudoku Solver: Problem Statement}
-\author{Rashad Bhuiyan (400263180), Kai Zhu (000652034), Stanley Chan (400257827)}
-\date{January 28, 2022}
+\author{Team 08, SudoCrew
+		\\ Rashad A. Bhuiyan (bhuiyr2)
+		\\ Kai Zhu (zhuk2)
+		\\ Stanley Chan (chans67)
+}
+\date{\today}
 
 \begin{document}
 
 \maketitle
 
+\pagenumbering{roman}
+\tableofcontents
+\listoftables
+
+\newpage
+
+\begin{table}[h]
+\caption{\bf Revision History}
+\begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
+\toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
+\midrule
+2022-01-28 & 0.0 & Created Problem Statement\\
+2022-04-06 & 1.0 & Updated Problem Statement; new text in red, deprecated text struck out\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\newpage
+
+\pagenumbering{arabic}
+
 \section{Introduction}
-Sudoku is a popular logic-based game most often played on physical media such as books and 
-newspapers. Aside from its entertainment value, Sudoku is also a problem frequently of interest in computer science, featured in over 33,000 academic articles on Google Scholar. An inconvenience that players face is a lack of timely access to published solutions, resulting in the absence of immediate feedback. Additionally, the process of manually checking for solution correctness is tedious and prone to error. As avid Sudoku lovers and software engineers, we seek to implement an accessible platform capable of providing and validating solutions using minimal manual input such as an uploaded photograph of a puzzle.
+Sudoku is a popular logic-based game most often played on physical media such as books and
+newspapers. Aside from its entertainment value, Sudoku is also a problem frequently of interest in computer science, featured in over 33,000 academic articles on Google Scholar. An inconvenience that players face is a lack of timely access to published solutions, resulting in the absence of immediate feedback. Additionally, the process of manually checking for solution correctness is tedious and prone to error. As avid Sudoku lovers and software engineers, we seek to implement an accessible platform capable of providing and validating solutions using minimal manual input such as an uploaded photograph of a puzzle \textcolor{red}{alongside our own hub to play Sudoku puzzles}.
 
 
 \section{Importance}
-Manually verifying Sudoku solutions on a 9x9 grid is a slow process. Existing Sudoku solvers suffer from an assortment of shortcomings, such as being limited to generate preset or random puzzles instead of accepting custom input, or cumbersome user interface that require manual input of puzzles.
+Manually verifying Sudoku solutions on a 9x9 grid is a slow process. Existing Sudoku solvers suffer from an assortment of shortcomings, such as being limited to generate \textcolor{red}{a} preset or random puzzles instead of accepting custom input, or cumbersome \textcolor{red}{a} user interface that require manual input of puzzles.
 \\
 \\
-Our application addresses these issues by delivering a sleek and intuitive user interface, with multiple modes of input including uploaded photography, as well as options for users to either solve the puzzle in the application or verify their existing solution. Together, these features combine into an attractive, accessible, and flexible platform suitable for a wider variety of audiences.
+Our application addresses these issues by delivering a sleek and intuitive user interface, with multiple modes of input including uploaded photography, as well as options for users to either solve the puzzle in the application or verify their existing solution. \textcolor{red}{Furthermore, our application also provides unique Sudoku puzzles of varying difficulties for users to enjoy, as well as simple to understand instructions for all of our functions.} Together, these features combine into an attractive, accessible, and flexible platform suitable for a wider variety of audiences.
 
 \section{Context}
 Stakeholders of this software include the developers and users. The open source nature of the software, combined with an intuitive user interface, should attract different audiences ranging from Sudoku hobbyists of all ages, to computer science enthusiasts and professionals who may be interested in the technical details such as algorithms. Furthermore, we intend to implement the program as a web application, therefore offering a greater environment by access from any location with Internet access and through any platform that supports common modern web technology such as HTML5, including Windows, Linux, MacOS, iOS, and Android.
