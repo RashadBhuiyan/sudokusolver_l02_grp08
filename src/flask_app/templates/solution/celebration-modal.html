@@ -1,0 +1,31 @@
+<!-- Celebration Modal -->
+<div class="modal fade" id="successModal">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <img class="img-fluid position-absolute top-50 start-50 translate-middle celebration-img"  src="{{ url_for('static',    filename='img/stars.png') }}" alt="">
+        <div class="modal-content celebration-modal">
+
+            <!-- Modal body -->
+            <div class="modal-body text-middle">
+                
+                <div>
+                    <h5>Congratulations!</h5>
+                    {% if time is defined %}
+                        <p>You solved this <span class="badge bg-dark {{ difficulty }}">{{ difficulty }}</span> puzzle in <span id="timeDisplay">{{ time }}</span></p>
+                    {% else %}
+                        <p>Your uploaded solution is CORRECT!</p>
+                    {% endif %}
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function (event) {
+        let myModal = new bootstrap.Modal(document.getElementById('successModal'));
+        myModal.show()
+    });
+</script>

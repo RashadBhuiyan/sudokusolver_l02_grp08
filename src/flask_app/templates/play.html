@@ -2,16 +2,17 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Sudoku Suite</title>
+    <title>Sudoku Suite - Play</title>
   </head>
   <body>
     {% extends "template.html" %}
     {% block content %}
 
     <div class="main-container">
+
       <!-- stopwatch -->
-      <div class="timer-container m-3 text-center">
-        <span id="timer">00 : 00 : 00</span>
+      <div class="d-flex justify-content-between timer-container">
+        <div class="text-nowrap">Difficulty: <span id="difficultyDisplay" class="{{ difficulty }}">{{ difficulty }}</span></div><div class="text-nowrap"><span id="timer">00 : 00 : 00</span></div>
       </div> 
       
 
@@ -27,16 +28,16 @@
         </div>
       </div>
         <!-- submitting solution -->
-        <form id="submitForm" action="solver3" method="POST" onsubmit="return parseTable2();" enctype="multipart/form-data">
-          <input type="hidden" id="tableJSON2" value="" name="tableJSON">
-          <button type="submit" class="btn btn-success solve-button">Submit</button>
+        <form id="submitForm" action="" method="POST" onsubmit="return parseTable(actionField.value==='submit');" enctype="multipart/form-data">
+          <input type="hidden" value="submit" name="action" id="actionField">
+          <input type="hidden" id="time" value="" name="time">
+          <input type="hidden" id="tableJSON" value="" name="tableJSON">
+          <input type="hidden" id="difficulty" value="{{ difficulty }}" name="difficulty">
+          <button type="submit" class="btn btn-success solve-button" onclick="actionField.value='submit'">Submit</button><br>
+          <button type="submit" class="btn btn-secondary solve-button" onclick="actionField.value='solve'">See Solution</button>
         </form>
 
-        <!-- giving up -->
-        <form id="giveupForm" action="solver3" method="POST" onsubmit="parseTable()" enctype="multipart/form-data">
-          <input type="hidden" id="tableJSON" value="" name="tableJSON">
-          <button type="submit" class="btn btn-secondary solve-button">See Solution</button>
-        </form>
+        <i title="print" class="fa-solid fa-print print-button" onclick="print()"></i>
     </div>
 
     <script>
@@ -44,9 +45,6 @@
   
         var elapsed_ten_ms = 0
         var timerElement = document.getElementById("timer")
-        var buttonStart = document.getElementById('button-start');
-        var buttonStop = document.getElementById('button-stop');
-        var buttonReset = document.getElementById('button-reset');
         var Interval ;
     
         clearInterval(Interval);
@@ -64,6 +62,14 @@
       var original = {{ gameBoard }}
       var board = {{ gameBoard }}
       var given = {{ indices }}
+
+      function validateInput(keyCode)
+      {
+        if (keyCode > 57 || keyCode < 49) {
+            event.preventDefault();
+            return false;
+        }
+      }
 
       function showErrorToast(msg) {
           document.getElementById('errorMessage').innerHTML = msg;
@@ -89,14 +95,14 @@
               if (inputValue == "") {
                 let cellContent = `
                             <div class="${className + colClass}"> 
-                              <input type="number" class="form-control su-input" id="su-input-${id}" onchange="updateBoard(${id})" name="fname" value = "${inputValue}" onKeyPress="if(this.value.length==1) return false;" min="1"> 
+                              <input type="text" class="form-control su-input" id="su-input-${id}" onchange="updateBoard(${id})" name="fname" value = "${inputValue}" onclick="this.select()" onKeyPress="validateInput(event.keyCode)" maxlength="1"> 
                             </div>`;
                 tableHTML += cellContent;
               }
               else {
                 let cellContent = `
                             <div class="${className + colClass}"> 
-                              <input type="number" class="form-control su-input" id="su-input-${id}" onchange="updateBoard(${id})" name="fname" value = "${inputValue}" onKeyPress="if(this.value.length==1) return false;" min="1" disabled> 
+                              <input type="number" class="form-control su-input" id="su-input-${id}" name="fname" value = "${inputValue}" disabled> 
                             </div>`;
                 tableHTML += cellContent;
               }
@@ -117,13 +123,52 @@
         board[row][col] = inputbox.value == "" ? 0 : parseInt(inputbox.value)
       }
 
-      function parseTable() {
-        let boardJSON = JSON.stringify(original);
+      function clearUserInputs(id) {
+        // updates the changes in an input box to the board array
+        let inputbox = document.getElementById("su-input-" + String(id))
+        let col = id % 9;
+        let row = Math.floor(id / 9);
+        if(!inputbox.disabled) {
+          board[row][col] = 0;
+        }
+      }
+
+      function parseTable(complete) {
+        if(complete) {
+          for (let i = 0; i < 81; i++) updateBoard(i);
+          // check for incompletion
+          for(let row = 0; row < 9; row++) {
+            for(let col = 0; col < 9; col++) {
+              if(board[row][col] === 0){
+                let id = row * 9 + col;
+                let errorCell = document.getElementById('su-input-' + id);
+                showErrorToast("Please fill in all the blanks!");
+                errorCell.classList.add("input-error");
+              
+                setTimeout(function(){
+                  errorCell.classList.remove("input-error");
+                }, 3000);
+
+              }
+            }
+          }
+
+          if(findInvalidCoordinates()) {
+            showErrorToast("The Sudoku board is invalid. Please fix any errors before submitting!");
+            return false;
+          }
+        }else{
+          for(let i = 0; i < 81; i++) clearUserInputs(i);
+        }
+        let boardJSON = JSON.stringify(board);
         document.getElementById('tableJSON').value = boardJSON;
+        document.getElementById('time').value = document.getElementById("timer").innerHTML;
+        return true;
+        
       }
 
       function findInvalidCoordinates() {
-        let foundInvalidCoordiante = false;
+        let foundInvalidCoordinate = false;
         for(let row = 0; row < 9; row++) {
            for(let col = 0; col < 9; col++) {
               var invalid = false;
@@ -175,35 +220,6 @@
           }
         }
         return foundInvalidCoordinate;
-      }
-
-      function parseTable2() {
-        // check for incompletion
-        for(let row = 0; row < 9; row++) {
-          for(let col = 0; col < 9; col++) {
-            if(board[row][col] === 0){
-              let id = row * 9 + col;
-              let errorCell = document.getElementById('su-input-' + id);
-              showErrorToast("Please fill in all the blanks!");
-              errorCell.classList.add("input-error");
-              
-              setTimeout(function(){
-                errorCell.classList.remove("input-error");
-              }, 3000);
-
-              return false;
-            }
-          }
-        }
-
-        if(findInvalidCoordinates()) {
-          showErrorToast("The Sudoku board is invalid. Please fix any errors before submitting!");
-          return false;
-        }
-
-        let boardJSON = JSON.stringify(board);
-        document.getElementById('tableJSON2').value = boardJSON;
-        return true
       }
 
       generateSudokuBoard(board);

@@ -1,3 +1,9 @@
+<!-- Time Taken -->
+<div class="d-flex justify-content-between timer-container">
+  <div class="text-nowrap">Difficulty: <span id="difficultyDisplay" class="{{ difficulty }}">{{ difficulty }}</span></div><div class="text-nowrap"><span id="timer">{{ time }}</span></div>
+</div> 
+
+<!-- Solved Board -->
 <div class="board-container">
     <div class="board-card">
         <div id="input-board" class="board-body shadow"></div>
@@ -7,13 +13,11 @@
     </div>
 </div>
 
-<button class="btn btn-secondary solve-button" onclick="history.back()">Back</button>
-
 <script>
     var board = {{ solution }};
     var indices = {{ indices }};
     var success = '{{ success }}'
-
+    var time = '{{ time }}'
    
     function populateSudokuBoard(board) {
       let board_container = document.getElementById('input-board');
@@ -51,5 +55,6 @@
     if (success == "True") {
       colorSolved()
     }
+    confetti();
     
   </script>

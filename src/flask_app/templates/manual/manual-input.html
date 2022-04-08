@@ -1,0 +1,76 @@
+<div class="separator">
+  <div class="section-title">Or</div>
+</div>
+
+<div class="board-container">
+    <div class="board-card" >
+
+      <div id="input-board" class="board-body shadow"></div>
+      <div class="board-footer shadow position-relative">
+        Manual Input
+        {% include "manual/manual-info.html" %}
+      </div>
+    </div>
+</div>
+  
+<!-- form for submitting to solver -->
+<form id="solveForm" action="" method="POST" onsubmit="parseTable()" enctype="multipart/form-data">
+  <input type="hidden" value="solve" name="action">
+  <input type="hidden" id="tableJSON" value="" name="tableJSON">
+  <button type="submit" class="btn btn-success solve-button">Get Solution</button>
+</form>
+
+<script>
+    var board = [[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],
+                 [0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],
+                 [0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0]];
+
+    // blocks non-numeric input
+    function validateInput(keyCode)
+    {
+        if (keyCode > 57 || keyCode < 49) {
+            event.preventDefault();
+            return false;
+        }
+    }
+    
+    function generateSudokuBoard(board) {
+      let board_container = document.getElementById('input-board');
+      let tableHTML = ''
+      for(let row = 0; row < 9; row++) {
+        tableHTML += '<div class="su-row">';
+        let className = 'su-cell'
+        if (row > 0 && row % 3 == 0) className +=' su-top'
+        for(let col = 0; col < 9; col++) {
+            let colClass = ''
+            let id = row * 9 + col;
+            if (col > 0 && col % 3 == 0) colClass = ' su-left'
+
+            let inputValue = board[row][col] > 0 ? board[row][col] : "";
+            let cellContent = `
+                          <div class="${className + colClass}"> 
+                            <input type="text" class="form-control su-input" id="su-input-${id}" onchange="updateBoard(${id})" onclick="this.select()" name="fname" maxlength="1" value = "${inputValue}" onKeyPress="validateInput(event.keyCode)"> 
+                          </div>`;
+            tableHTML += cellContent;
+        }
+        tableHTML += '</div>';
+      }
+      board_container.innerHTML = tableHTML;
+    }
+
+    function updateBoard(id) {
+        // updates the changes in an input box to the board array
+        let inputbox = document.getElementById("su-input-" + String(id))
+        let col = id % 9;
+        let row = Math.floor(id / 9);
+        board[row][col] = inputbox.value == "" ? 0 : parseInt(inputbox.value)
+    }
+
+    function parseTable() {
+      for (let i = 0; i < 81; i++) updateBoard(i);
+      let boardJSON = JSON.stringify(board);
+      document.getElementById('tableJSON').value = boardJSON;
+    }
+
+    generateSudokuBoard(board);
+</script>

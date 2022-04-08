@@ -1,0 +1,59 @@
+<i
+    class="fa-solid fa-circle-question position-absolute end-0 px-3 pt-1 info-button align-middle"
+    data-bs-toggle="modal"
+    data-bs-target="#manualModal"
+></i>
+
+<!-- Instructions Modal -->
+<div class="modal fade" id="manualModal">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Manual Input Instructions</h4>
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                ></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body text-start">
+                <h5><span class="badge bg-success">Step 1</span> Manual Input</h5>
+                <p>
+                    Edit the cells of the board so that it reflects the desired
+                    Sudoku board you wish to be solved.
+                </p>
+                <hr class="paraSolid" />
+                <h5><span class="badge bg-success">Step 2</span> Verification</h5>
+                <p>
+                    Please ensure that a valid Sudoku board is being submitted as 
+                    an invalid board would require edits to make it valid.
+                </p>
+                <p>
+                  Press the 'Solve' button to submit the puzzle for automatic
+                  solving.
+                </p>   
+                <hr class="paraSolid" />
+                <h5><span class="badge bg-success">Step 3</span> Solution</h5>
+                <p>Voila! You can now view the solution.</p>
+                <p>
+                    If a solution is not available, click 'Back' to double check
+                    the puzzle to ensure that the puzzle is solvable.
+                </p>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button
+                    type="button"
+                    class="btn btn-danger"
+                    data-bs-dismiss="modal"
+                >
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -2,35 +2,26 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>SudoCrew: Game</title>
+    <title>Sudoku Suite - Play</title>
   </head>
   <body>
     {% extends "template.html" %}
     {% block content %}
 
     <div class="main-container">
+
       <!-- difficulty selection -->
       <div class="difficulty-container">
           <form id="solveForm" action="play" method="POST" enctype="multipart/form-data">
-            <input type="hidden" id="hints" value="60" name="hints">
-            <button type="submit" class="btn btn-success my-4 solve-button">Easy</button>
+            <input type="hidden" id="difficulty" value="easy" name="difficulty">
+            <button type="submit" class="btn btn-success my-4 solve-button" onclick="difficulty.value='Easy';">Easy</button><br>
+            <button type="submit" class="btn  btn-warning my-4 solve-button" onclick="difficulty.value='Medium';">Medium</button><br>
+            <button type="submit" class="btn btn-danger my-4 solve-button" onclick="difficulty.value='Hard';">Hard</button>
           </form>
-          <form id="solveForm" action="play" method="POST" enctype="multipart/form-data">
-            <input type="hidden" id="hints" value="45" name="hints">
-            <button type="submit" class="btn  btn-warning my-4 solve-button">Medium</button>
-          </form>
-          <form id="solveForm" action="play" method="POST" enctype="multipart/form-data">
-            <input type="hidden" id="hints" value="30" name="hints">
-            <button type="submit" class="btn btn-danger my-4 solve-button">Hard</button>
-          </form>
-
-    <script>
-      function showErrorModal() {
-          let myModal = new bootstrap.Modal(document.getElementById('FailureModal'));
-          myModal.show()
-      }
-    </script>
+      </div>
+    </div>
       
     {% endblock %}
   </body>
 </html>
+

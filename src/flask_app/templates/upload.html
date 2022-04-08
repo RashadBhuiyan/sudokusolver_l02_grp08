@@ -11,8 +11,6 @@
   {% block content %}
 
   <div class="main-container">
-    {% include "upload/upload-info.html" %}
-
     {% include "upload/upload-box.html" %}
 
     {% include "upload/upload-loadscreen.html" %}
@@ -23,7 +21,13 @@
       {% include "upload/upload-recogboards.html" %}
     {% elif action == 'solve' %}
       {% include "solution/solution-table.html" %}
+      {% if indices | length == 0 and error == '' %}
+        {% include "solution/celebration-modal.html" %}
+      {% endif %}
+    {% elif action == '' %}
+      {% include "manual/manual-input.html" %}
     {% endif %}
+    
   </div>
 
   {% endblock %}
