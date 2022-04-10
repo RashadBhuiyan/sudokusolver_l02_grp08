@@ -9,6 +9,7 @@
 \usepackage{float}
 \usepackage{tabularx}
 \usepackage{hyperref}
+\usepackage[normalem]{ulem}
 \hypersetup{
     colorlinks,
     citecolor=black,
@@ -50,6 +51,7 @@
 2022-02-07 & 0.0 & Drafted section 1\\
 2022-02-09 & 0.1 & Completed sections 1, 2, and 4\\
 2022-02-10 & 0.2 & Completed section 3 and Appendix\\
+2022-04-06 & 1.0 & Updated SRS; new text in red, deprecated text struck out\\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -125,7 +127,7 @@ CSS & Cascading style sheets, used to style HTML files to make the application l
 JavaScript & Primary language used for scripting and functionality of the web application. \\
 Git & The primary system for version control and code collaboration.\\
 OpenCV & An open source computer vision library, and serves as the main Python library that will be used to detect Sudoku boards. \\
-Pytest & A Python library designed to help create tests for Python code. \\
+\sout{Pytest} & \sout{A Python library designed to help create tests for Python code.} \\
 Pydoc & A Python library used to generate documentation for Python code. \\
 Flask & A micro web framework for Python, and will mainly be used to create our web application and handle requests from the web.\\
 \bottomrule
@@ -137,7 +139,7 @@ Flask & A micro web framework for Python, and will mainly be used to create our 
 
 \begin{enumerate}
     \item The original repository for the existing Sudoku solver has approximately 500 lines of code spread across 3 Python files.
-    \item The existing implementation solves only contains a single static Sudoku board and displays the solution as a plain-text output.
+    \item The existing implementation \sout{solves} only contains a single static Sudoku board and displays the solution as a plain-text output.
 \end{enumerate}
 
 \subsubsection{Assumptions}
@@ -218,29 +220,31 @@ The use case diagram above shows the various ways a user can interact with our w
         \item [FR4.] The system shall display a loading indicator to the user to show that their picture is being uploaded and solved.
         \item [FR5.] The system shall attempt to interpret the uploaded picture as a 9x9 Sudoku board modelled as an array.
         \item [FR6.] If the system fails to interpret a 9x9 Sudoku board from the uploaded image, the system must inform the user that the picture could not be interpreted.
-        \item [FR7.] The system shall input the 9x9 array into the Sudoku solver algorithm to solve the Sudoku board.
-        \item [FR8.] If the system finds a solution to the Sudoku board, the system shall display the solution in the user interface.
-        \item [FR9.] If the system does not find a solution, the system must notify the user that the Sudoku board is invalid.
+        \item [\textcolor{red}{FR7.}]\textcolor{red}{The system shall allow the user to edit the interpreted 9x9 Sudoku board before submission.}
+        \item [\sout{FR7.}\textcolor{red}{FR8.}] The system shall input the 9x9 array into the Sudoku solver algorithm to solve the Sudoku board.
+        \item [\sout{FR8.}\textcolor{red}{FR9.}] If the system finds a solution to the Sudoku board, the system shall display the solution in the user interface.
+        \item [\sout{FR9.}\textcolor{red}{FR10.}] If the system does not find a solution, the system must notify the user that the Sudoku board is invalid.
     \end{enumerate}
     \item [BE3.] The user uploads a Sudoku board through manual input
     \begin{enumerate}
-        \item [FR10.] The system shall display an empty Sudoku grid
-        \item [FR11.] The system must allow the user to type numbers 1 to 9 into the grid.
-        \item [FR12.] The system must immediately notify the user of invalid input, including repeated numbers in a row, column, or subgrid.
+        \item [\sout{FR10.}\textcolor{red}{FR11.}] The system shall display an empty Sudoku grid
+        \item [\sout{FR11.}\textcolor{red}{FR12.}] The system must allow the user to type numbers 1 to 9 into the grid.
+        \item [\sout{FR12.}] \sout{The system must immediately notify the user of invalid input, including repeated numbers in a row, column, or subgrid.}
         \item [FR13.] The system shall attempt to solve an outwardly valid board.
-        \item [FR14.] If the system fails to find a solution to the input board, it must inform the user that the puzzle has no solution.
+        \item [FR14.] If the system fails to find a solution to the input board, it must inform the user that the puzzle has no solution \textcolor{red}{or that there was an error upon board entry}.
         \item [FR15.] If the system finds a solution, it must display the solution to the user through the user interface.
     \end{enumerate}
-    \item [BE4.] The user starts a game of Sudoku
+    \item [BE4.] The user starts a game of Sudoku \textcolor{red}{of a specified difficulty level}
     \begin{enumerate}
-        \item [FR16.] The system must generate a random valid Sudoku board.
+        \item [FR16.] The system must generate a random valid Sudoku board  \textcolor{red}{based on the difficulty level selected}.
         \item [FR17.] The system must output the generated Sudoku board to the user through the user interface.
         \item [FR18.] The system shall allow the user to print the generated puzzle.
         \item [FR19.] The system shall allow the user to type numbers into empty cells on the Sudoku board.
-        \item [FR20.] The system must reject invalid user input (non-digits, repeated numbers on row, column, or subgrid) and notify user of the error.
+        \item [FR20.] The system must reject invalid user input (non-digits, repeated numbers on row, column, or subgrid) and notify user of the error \textcolor{red}{upon submission}.
         \item [FR21.] The system shall allow the user to submit the puzzle once all grid cells are filled.
-        \item [FR22.] The system shall validate the submitted solution and display whether the solution is correct.
+        \item [FR22.] The system shall validate the submitted solution and display \sout{whether the solution is correct} \textcolor{red}{the solution}.
         \item [FR23.] The system shall display a timer to track the duration from puzzle generation to the submission of a correct solution.
+        \item [\textcolor{red}{FR24.}] \textcolor{red}{The system shall display a celebration screen with the time duration upon successful submission of a puzzle.}
     \end{enumerate}
 \end{enumerate}
 
@@ -259,7 +263,7 @@ The use case diagram above shows the various ways a user can interact with our w
 
 \begin{enumerate} % fill in the look/feel requirement number (LF#.)
     \item [LF3.] The system shall have a sleek and non-cluttered user interface.
-    \item [LF4.] The user interface shall have colours that are appealing and are accessible to people with potential colour blindness.
+    \item [LF4.] The user interface shall have colours that are \textcolor{red}{distinct and} appealing. \sout{and are accessible to people with potential colour blindness.}
 \end{enumerate}
 
 \subsection{Usability and Humanity Requirements}
@@ -282,9 +286,9 @@ The use case diagram above shows the various ways a user can interact with our w
 \subsubsection{Accessibility Requirements}
 
 \begin{enumerate}
-    \item [UH5.] The colour palette must be accessible to users with colour blindness.
+    \item [\sout{UH5.}] \sout{The colour palette must be accessible to users with colour blindness.}
     
-    \item [UH6.] The game instructions shall be written in the English language using the British English standard.
+    \item [\sout{UH6.}\textcolor{red}{UH5.}] The game instructions shall be written in the English language using the British English standard.
 \end{enumerate}
 
 \subsection{Performance Requirements}
@@ -384,7 +388,7 @@ N/A
 \subsection{Open Issues}
 Sudoku recognition with computer vision may constitute a major challenge due to the large variety of factors that can affect image recognition, such as photo resolution, sharpness, exposure, angle, and colour balance. 
 
-The image upload feature may also expose the system to potential attacks in the form of malicious file content.
+\noindent The image upload feature may also expose the system to potential attacks in the form of malicious file content.
 
 \subsection{Off-the-Shelf Solutions}
 OpenCV provides a suite of image processing functions such as adaptive thresholding and colour conversion that can be used to preprocess uploaded photos and improve their recognizability. 
@@ -396,7 +400,7 @@ Higher traffic to the web application and the increased calls to the image recog
 Task schedules and delegated responsibilities are outlined in the project \href{https://gitlab.cas.mcmaster.ca/bhuiyr2/sudokusolver_l02_grp08/-/blob/main/ProjectSchedule/Gantt_Sudoku.pdf}{Gantt Chart}.
 
 \subsection{Migration to the New Product}
-The project will initially be hosted on GitLab and migrate to a hosting service such as Heroku for deployment of the proof-of-concept and final product.
+The project will initially be hosted on GitLab and migrate to a hosting service such as Heroku \textcolor{red}{or Microsoft Azure} for deployment of the proof-of-concept and final product.
 
 \subsection{Risks}
 The application does not collect user information and so does not expose users to data security risks. As a web application, the main risk to the system are higher-than-expected traffic overwhelming the system through high processing load, or malicious attacks including denial-of-service and viral uploads.
@@ -416,6 +420,7 @@ Additional quality-of-life features, given extra development time, may include:
 \begin{enumerate}
     \item Account system that saves player statistics such as solved puzzles and past uploads.
     \item Multiplayer challenge system that pits two players against each other on the same puzzle to improve the fun, competitive aspect of the game.
+    \item \textcolor{red}{Improvements to the Machine Learning model for better image recognition and faster recognition times.}
 \end{enumerate}
 
 
@@ -435,7 +440,7 @@ N/A
 The definition of the requirements will likely call for SYMBOLIC\_CONSTANTS.
 Their values are defined in this section for easy maintenance.\\
 
-\noindent \emph{MAX\_UPLOAD\_TIME} = 3\\
-\emph{MAX\_SOLUTION\_TIME} = 2
+\noindent \emph{MAX\_UPLOAD\_TIME} = \sout{3} \textcolor{red}{8}\\
+\emph{MAX\_SOLUTION\_TIME} = \sout{2} \textcolor{red}{5}
 
 \end{document}

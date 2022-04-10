@@ -23,6 +23,8 @@ cabal.config
 *.nav
 *.out
 *.snm
+*.fls
+*.fdb_latexmk
 tempCodeRunnerFile.py
 /Physics Engine Families/Papers
 /src/flask_app/sudokuCV/dataset
