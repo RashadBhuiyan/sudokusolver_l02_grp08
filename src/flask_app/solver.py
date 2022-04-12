@@ -125,7 +125,7 @@ def validateBoard(board):
     """
     Checks board for invalid filled squares before attempting to solve.
     :param board: input board
-    :returns: boolean value indicating if solvable or not
+    :returns: boolean value indicating if solvable or not or returns a boolean value if the board is completed or not.
     """
     completed = True
     for row in range(9):
