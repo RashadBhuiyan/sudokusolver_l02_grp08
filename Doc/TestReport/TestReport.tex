@@ -1,6 +1,13 @@
-\documentclass[12pt, titlepage]{article}
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[letterpaper, total={6in, 9in}]{geometry}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{hyperref}
+\usepackage{adjustbox,lipsum}
+\usepackage{graphicx}
 
 \usepackage{booktabs}
+\usepackage{float}
 \usepackage{tabularx}
 \usepackage{hyperref}
 \hypersetup{
@@ -12,17 +19,19 @@
 }
 \usepackage[round]{natbib}
 
-\title{SE 3XA3: Test Report\\Title of Project}
+\graphicspath{ {Assets/} }
 
-\author{Team \#, Team Name
-		\\ Student 1 name and macid
-		\\ Student 2 name and macid
-		\\ Student 3 name and macid
+\title{SE 3XA3: Test Report\\Sudoku Solver}
+
+\author{Team 08, SudoCrew
+		\\ Rashad A. Bhuiyan (bhuiyr2)
+		\\ Kai Zhu (zhuk2)
+		\\ Stanley Chan (chans67)
 }
 
 \date{\today}
 
-\input{../Comments}
+% \input{../Comments}
 
 \begin{document}
 
@@ -33,13 +42,15 @@
 \listoftables
 \listoffigures
 
-\begin{table}[bp]
+\newpage
+
+\begin{table}[H]
 \caption{\bf Revision History}
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
+2022-04-04 & 0.0 & Created Test Report\\
+2022-04-12 & 1.0 & Finished Test Report\\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -48,36 +59,384 @@ Date 2 & 1.1 & Notes\\
 
 \pagenumbering{arabic}
 
-This document ...
+This document describes the results of completing all of the tests listed in the Test Plan. This ensures that any person who reads this document is successfully able to reproduce the results of the test cases.
 
 \section{Functional Requirements Evaluation}
+Description: The purpose of these tests are to ensure that the user is able to use the software according to the specified functional requirements documentation. These tests include the following business events: arrival at the homepage where all pages load correctly, accurate results from an image upload, accurate results from manual input, and board generation for user to play a game of Sudoku.
+
+\begin{enumerate}
+    \item \textbf{Test Suite Name: FRH}\\
+            Results: The user is able to view the homepage and all other pages without any issue.
+            
+    \item \textbf{Test Suite Name: FRIU}\\
+            Results: The user is able to upload a valid image and get a solution.
+    
+    \item \textbf{Test Suite Name: FRMI}\\
+            Results: The user is able to manually input a valid board and get a solution.
+            
+    \item \textbf{Test Suite Name: FRP}\\
+            Results: The user is able to play a game of Sudoku at the specified difficulty level.
+\end{enumerate}
 
 \section{Nonfunctional Requirements Evaluation}
 
-\subsection{Usability}
-		
-\subsection{Performance}
+\subsection{Look and Feel}
+Description: The overall look and feel of the web application was tested by having a small group of McMaster students from streams outside of Software Engineering. This group of users better represent the wide array of our potential users. They were given simple feedback questions in 1-on-1 interviews where their responses were recorded.
 
-\subsection{etc.}
+\paragraph{Homepage Display Testing}
+\begin{enumerate}
+    \item \textbf{Test Name: SS-HD-1}\\
+    Results: Users gave feedback on button positions and were able to successfully access the desired web page based on the button clicked. Any flaws in connection were noted and changes were applied.
+    
+    \item \textbf{Test Name: SS-HD-2}\\
+    Results: The web application was able to be clearly loaded and understood when users changed the browser size or loaded the web application on smaller screens.
+\end{enumerate}
+
+\paragraph{User Interface Design Testing}
+\begin{enumerate}
+    \item \textbf{Test Name: SS-UID-1}\\
+    Results: The users gave feedback on the overall design of the web application, giving a rating out of 10 based on the visual appeal and accessibility of the web page.
+\end{enumerate}
+		
+\subsection{Usability and Humanity}
+Description: The usability of the web application was tested by having a small group of users of varying technological backgrounds and ages, ranging from a middle school student to a professional engineer, attempt to use the functions of the web application without any prior explanation. Afterwards, each participant was interviewed 1-on-1 and feedback was noted about the overall usability of the web application.
+
+\paragraph{Ease of Use Testing}
+\begin{enumerate}
+    \item \textbf{Test Name: SS-EU-1}\\
+    Results: Users were able to successfully upload an image to get a Sudoku board solution as well as manually input a board for a solution. Feedback was noted about the overall instructions behind each function and relevant changes were made to make it easier to use and understand.
+    
+    \item \textbf{Test Name: SS-EU-2}\\
+    Results: Users were able to successfully complete a game of Sudoku of their chosen difficulty level and submit their answer. The difficulty level selected was based on their prior experience playing Sudoku.
+\end{enumerate}
+
+\paragraph{Ease of Learning Testing}
+\begin{enumerate}
+    \item \textbf{Test Name: SS-EL-1}\\
+    Results: Users were able to successfully understand the rules of Sudoku and play a game of Sudoku. Clarity of instructions were changed based on feedback given by novice Sudoku players.
+\end{enumerate}
+
+\subsection{Performance}
+Description: The overall performance of the web application was tested by having a small group of software engineering students from McMaster time the overall execution of various functions. These times were noted and compared to the maximum time allowed and changed were made to ensure that functions are completed within the time limit.
+
+\paragraph{Speed Testing}
+\begin{enumerate}
+    \item \textbf{Test Name: SS-S-1}\\
+    Results: Users were able to successfully time the upload of an image within the specified time frame. No changes were necessary.
+    
+    \item \textbf{Test Name: SS-S-2}\\
+    Results: Users were able to successfully time the submission of a Sudoku board, however some users experienced a larger wait time than others. Minor changes were made in order to optimise the submission time.
+\end{enumerate}
+
+\paragraph{Capacity Testing}
+\begin{enumerate}
+    \item \textbf{Test Name: SS-C-1}\\
+    Results: Users were able to successfully upload an image of a Sudoku board. Upon submission, users noted that the image was not stored anywhere locally.
+\end{enumerate}
+
+\subsection{Security}
+Description: The security of the web application was tested by having a small group of software engineering students from McMaster upload images and change entries of the Sudoku board to check if users can cause harm to the web application.
+
+\paragraph{File Integrity Testing}
+\begin{enumerate}
+    \item \textbf{Test Name: SS-FI-1}\\
+    Results: Users were presented with an error message after attempting to upload an image that was either too large or too small.
+\end{enumerate}
+
+\paragraph{Access, Privacy, and Immunity Testing}
+\begin{enumerate}
+    \item \textbf{Test Name: SS-AP-1}\\
+    Results: Users were unable to edit the existing numbers when playing a game of Sudoku, or when checking the solution to a given image or manual submission.
+\end{enumerate}
 	
 \section{Comparison to Existing Implementation}	
+There were 4 test reports that associated to the existing implementation of the program, which are noted as follows:
 
-This section will not be appropriate for every project.
+\begin{itemize}
+    \item FRIU in Functional Requirements Evaluation
+    \item FRMI in Functional Requirements Evaluation
+    \item FRP in Functional Requirements Evaluation
+    \item SS-S-2 in Nonfunctional Requirements Evaluation
+\end{itemize}
 
-\section{Unit Testing}
+After completion of each test, the existing implementation was refactored in order to meet the performance requirement. Correctness and validity of outputs were verified using manual and automated testing.
 
 \section{Changes Due to Testing}
+There were no changes required for completion of the functional requirements. Minor changes were made to the button layout and color scheme based on feedback given by the test group. Furthermore, changes to the Sudoku board generation and solution algorithm were implemented in order to decrease wait time for users. Finally, most of the changes were made to the instructions for each of the web-pages in order to be much more accessible to those with a less technological background.
 
 \section{Automated Testing}
+Automated testing was minimally used, focussing on the Sudoku board generation and solution verification. Most of the testing was completed manually as there was a focus on the user interface as well as use of machine learning. Automated testing for machine learning is currently out of our scope while the user interface can most accurately be tested through walkthroughs and exploratory testing by users.
+
+\section{System Tests}
+
+\subsection{Functional Requirement Testing}
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{p{5cm}X}
+\hline
+\textbf{Test Name}       &  FRH\\ \hline
+\textbf{Initial State}   &  Homepage of Sudoku Solver\\ \hline
+\textbf{Input}           &  Button clicks to other pages\\ \hline
+\textbf{Expected Output} &  Each button redirects user to the relevant webpage\\ \hline
+\end{tabularx}
+\caption{Test for FRH}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{p{5cm}X}
+\hline
+\textbf{Test Name}       &  FRIU\\ \hline
+\textbf{Initial State}   &  Image upload page of Sudoku Solver\\ \hline
+\textbf{Input}           &  Button clicks to upload image\\ \hline
+\textbf{Expected Output} &  Successful submission of an image where the solution is then provided\\ \hline
+\end{tabularx}
+\caption{Test for FRIU}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{p{5cm}X}
+\hline
+\textbf{Test Name}       &  FRMI\\ \hline
+\textbf{Initial State}   &  Manual input page of Sudoku Solver\\ \hline
+\textbf{Input}           &  Button clicks to submit Sudoku board\\ \hline
+\textbf{Expected Output} &  Successful submission of a Sudoku board manually where the solution is then provided\\ \hline
+\end{tabularx}
+\caption{Test for FRMI}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{p{5cm}X}
+\hline
+\textbf{Test Name}       &  FRP\\ \hline
+\textbf{Initial State}   &  Play page of Sudoku Solver\\ \hline
+\textbf{Input}           &  Button clicks to select difficulty\\ \hline
+\textbf{Expected Output} &  Arrival at gameplay page where users can play a game of Sudoku at the specified difficulty\\ \hline
+\end{tabularx}
+\caption{Test for FRP}
+\end{table}
+
+\subsection{Homepage Display Testing}
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{p{5cm}X}
+\hline
+\textbf{Test Name}       &  SS-HD-1\\ \hline
+\textbf{Initial State}   &  Homepage of the Sudoku solver Flask app\\ \hline
+\textbf{Input}           &  Users from testing group will view the homepage\\ \hline
+\textbf{Expected Output} &  Users will give feedback on button layout\\ \hline
+\end{tabularx}
+\caption{Test for SS-HD-1}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{p{5cm}X}
+\hline
+\textbf{Test Name}       &  SS-HD-2\\ \hline
+\textbf{Initial State}   &  Homepage of the Sudoku solver Flask app\\ \hline
+\textbf{Input}           &  Users from the test group will change the browser size\\ \hline
+\textbf{Expected Output} &  The Homepage scales accordingly, making UI changes based on the dimensions of the window\\ \hline
+\end{tabularx}
+\caption{Test for SS-HD-2}
+\end{table}
+
+\subsection{User Interface Design Testing}
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{p{5cm}X}
+\hline
+\textbf{Test Name}       &  SS-UID-1\\ \hline
+\textbf{Initial State}   &  Homepage of the Sudoku solver Flask app\\ \hline
+\textbf{Input}           &  Users from the test group view the web app\\ \hline
+\textbf{Expected Output} &  Users give feedback on the overall UI\\ \hline
+\end{tabularx}
+\caption{Test for SS-UID-1}
+\end{table}
+
+\subsection{Ease of Use Testing}
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{p{5cm}X}
+\hline
+\textbf{Test Name}       &  SS-EU-1\\ \hline
+\textbf{Initial State}   &  Manual input page or Image Upload page\\ \hline
+\textbf{Input}           &  Users from test group follow instructions of respective page\\ \hline
+\textbf{Expected Output} &  System accepts provided Sudoku board\\ \hline
+\end{tabularx}
+\caption{Test for SS-EU-1}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{p{5cm}X}
+\hline
+\textbf{Test Name}       &  SS-EU-2\\ \hline
+\textbf{Initial State}   &  Sudoku gameplay page\\ \hline
+\textbf{Input}           &  Users from test group start playing the game\\ \hline
+\textbf{Expected Output} &   Users play Sudoku and are given solution at the end\\ \hline
+\end{tabularx}
+\caption{Test for SS-EU-2}
+\end{table}
+
+\subsection{Ease of Learning Testing}
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{p{5cm}X}
+\hline
+\textbf{Test Name}       &  SS-EL-1\\ \hline
+\textbf{Initial State}   &  How to Play Sudoku page\\ \hline
+\textbf{Input}           &  Users from the test group read the page\\ \hline
+\textbf{Expected Output} &  Users understand rules of Sudoku\\ \hline
+\end{tabularx}
+\caption{Test for SS-EL-1}
+\end{table}
+
+\subsection{Speed Testing}
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{p{5cm}X}
+\hline
+\textbf{Test Name}       &  SS-S-1\\ \hline
+\textbf{Initial State}   &  Upload image page\\ \hline
+\textbf{Input}           &  User from test group submits an image\\ \hline
+\textbf{Expected Output} &  Loading icon will take MAX\_UPLOAD\_TIME to upload\\ \hline
+\end{tabularx}
+\caption{Test for SS-S-1}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{p{5cm}X}
+\hline
+\textbf{Test Name}       &  SS-S-2\\ \hline
+\textbf{Initial State}   &  Verify upload page\\ \hline
+\textbf{Input}           &  User from test group submits an image\\ \hline
+\textbf{Expected Output} &  Loading icon will take MAX\_SOLUTION\_TIME to upload\\ \hline
+\end{tabularx}
+\caption{Test for SS-S-2}
+\end{table}
+
+\subsection{Capacity Testing}
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{p{5cm}X}
+\hline
+\textbf{Test Name}       &  SS-C-1\\ \hline
+\textbf{Initial State}   &  Upload Image page\\ \hline
+\textbf{Input}           &  User from test group uploads image\\ \hline
+\textbf{Expected Output} &  Image is not stored locally\\ \hline
+\end{tabularx}
+\caption{Test for SS-C-1}
+\end{table}
+
+\subsection{File Integrity Testing}
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{p{5cm}X}
+\hline
+\textbf{Test Name}       &  SS-FI-1\\ \hline
+\textbf{Initial State}   &  Upload Image page\\ \hline
+\textbf{Input}           &  User from test group uploads image that is too large\\ \hline
+\textbf{Expected Output} &  Error is given about file size \\ \hline
+\end{tabularx}
+\caption{Test for SS-FI-1}
+\end{table}
+
+\subsection{Access, Privacy, and Immunity Testing}
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{p{5cm}X}
+\hline
+\textbf{Test Name}       &  SS-AP-1\\ \hline
+\textbf{Initial State}   &  Solution of Sudoku board\\ \hline
+\textbf{Input}           &  User from test group attempts to edit shown solution\\ \hline
+\textbf{Expected Output} &  User cannot edit solution\\ \hline
+\end{tabularx}
+\caption{Test for SS-AP-1}
+\end{table}
 		
 \section{Trace to Requirements}
+\begin{table}[H]
+\centering
+\begin{tabular}{p{0.2\textwidth} p{0.6\textwidth}}
+\toprule
+\textbf{Test} & \textbf{Requirements}\\
+\midrule
+\multicolumn{2}{c}{Functional Requirements Testing}\\
+\midrule
+FRH &  FR1-3\\
+FRIU &  FR4-10\\
+FRMI &  FR11-15\\
+FRP &  FR16-24\\
+\midrule
+\multicolumn{2}{c}{Nonfunctional Requirements Testing}\\
+\midrule
+SS-HD-1 &  LF1, PR6\\
+SS-HD-2 &  LF2\\
+SS-UID-1 &  LF3, LF4, CR1\\
+SS-EU-1 &  UH1\\
+SS-EU-2 &  UH2\\
+SS-EL-1 &  UH3, UH4, UH5\\
+SS-S-1 &  PR1\\
+SS-S-2 &  PR2, PR3, PR4\\
+SS-C-1 &  PR5, SR4\\
+SS-FI-1 &  SR1, SR2\\
+SS-AP-1 &  SR3\\
+\bottomrule
+\end{tabular}
+\caption{Trace Between Tests and Requirements}
+\label{TblNFRT}
+\end{table}
 		
-\section{Trace to Modules}		
+\section{Trace to Modules}
+\begin{table}[H]
+\centering
+\begin{tabular}{p{0.2\textwidth} p{0.6\textwidth}}
+\toprule
+\textbf{Test} & \textbf{Requirements}\\
+\midrule
+\multicolumn{2}{c}{Functional Requirements Testing}\\
+\midrule
+FRH &  M8\\
+FRIU &  M3, M4, M5, M6, M7, M8\\
+FRMI &  M3, M7, M8\\
+FRP &  M2, M7, M8\\
+\midrule
+\multicolumn{2}{c}{Nonfunctional Requirements Testing}\\
+\midrule
+SS-HD-1 &  M7, M8\\
+SS-HD-2 &  M8\\
+SS-UID-1 &  M8\\
+SS-EU-1 &  M7\\
+SS-EU-2 &  M1\\
+SS-EL-1 &  M7, M8\\
+SS-S-1 &  M4, M7\\
+SS-S-2 &  M3, M4, M5, M6, M7\\
+SS-C-1 &  M4, M7, M8\\
+SS-FI-1 &  M7, M8\\
+SS-AP-1 &  M3, M5, M7, M8\\
+\bottomrule
+\end{tabular}
+\caption{Trace Between Tests and Modules}
+\label{TblNFRT}
+\end{table}
 
 \section{Code Coverage Metrics}
+The team of behind the Sudoku Solver web application was able to produce roughly 98\% of code coverage metrics. These metrics were realized through the use of the testing plan. This number was approximated based on the results of testing and how each output can be traced to a specified requirement and module. Please refer to both the Requirements documentation and Module documentation for the relevant requirements and modules. This clearly shows the traceability between the testing plan, results of testing, requirements of the program, and the module guide.
 
 \bibliographystyle{plainnat}
 
-\bibliography{SRS}
+\section{Appendix}
+
+\subsection{Symbolic Parameters}
+
+The definition of the requirements will likely call for SYMBOLIC\_CONSTANTS.
+Their values are defined in this section for easy maintenance.\\
+
+\noindent \emph{MAX\_UPLOAD\_TIME} = 8\\
+\emph{MAX\_SOLUTION\_TIME} = 5
 
 \end{document}
