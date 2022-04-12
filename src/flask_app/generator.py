@@ -12,37 +12,6 @@ def hasSolution(board):
         return True
     return False
 
-# def checkRowAndColumn(num, row, column, board):
-#     for i in range(len(board)):
-#         if board[row][i] == num and column != i:
-#             return False
-    
-#     for i in range(len(board)):
-#         if board[i][column] == num and row != i:
-#             return False
-    
-#     return True
-
-# def hasUniqueSolution(board, attempts=5):
-#     """
-#     Function that checks if the inputted board is unique (i.e. has only one solution)
-#     :param board: The input board
-#     :param attempts: Attempts the function makes to find another solution
-#     :return: board
-#     """
-#     if not hasSolution(board):
-#         raise Exception("The inputted board does not have a solution.")
-#     solutions = []
-#     copy = [x[:] for x in board]
-#     solve_randomly(copy)
-#     solutions.append(copy) # initial solution
-#     for _ in range(attempts):
-#         copy = [x[:] for x in board]
-#         solve_randomly(copy)
-#         if copy not in solutions: # checking if the solution of the board has not been found before
-#             return False
-#     return True
-
 def __hasUniqueSolutionsAux(bo, solutions):
     find = find_empty(bo)
     if not find:
@@ -131,24 +100,4 @@ def generateRandomValidBoard(hints):
         if numsRemoved == 81 - hints:
             generatedBoard = True
     return board
-
-# solve(board3)
-# for row in board3:
-#     print(row)
-
-# print(isBoardValid(board3))
-
-# print(isBoardValid(valid_board))
-
-# testing if board is valid
-# board = generateRandomValidBoard(21)
-# count = 0
-# while isBoardValid(board):
-#     board = generateRandomValidBoard(21)
-#     print(str(isBoardValid(board)) + " " + str(count))
-#     count += 1
-
-# print("not valid")
-# for row in board:
-#     print(row)
 
