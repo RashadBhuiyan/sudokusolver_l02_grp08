@@ -42,6 +42,7 @@ def hasUniqueSolution(bo):
     """
     Checks if the inputted board is unique.
     :param bo: 2d list of ints
+    :raises Exception: If the board does not have a solution, an exception is raised.
     :return: boolean
     """
     if not hasSolution(bo):

@@ -4,6 +4,7 @@
 \usepackage[table,xcdraw]{xcolor}
 \usepackage{hyperref}
 \usepackage{adjustbox,lipsum}
+\usepackage[normalem]{ulem}
 
 \usepackage{enumitem}
 \setlist{nolistsep}
@@ -340,7 +341,10 @@
 			solve & 2D int[] & boolean &  \\
 			valid & 2D int[], int[], int & boolean & INVALID\_POSITION, INVALID\_NUM \\ 
 			find\_empty & 2D int[] & int[] &  \\ 
-			getSolvedCoordinates & 2D int[] & int[] & \\
+			\sout{getSolvedCoordinates} & & & \\ 
+			\textcolor{red}{getUnfilledCoordinates} & 2D int[] & int[] & \\
+			\textcolor{red}{solve\_randomly} & \textcolor{red}{2D int[]} & \textcolor{red}{boolean} & \\
+			\textcolor{red}{validateBoard} & \textcolor{red}{2D int[]} & \textcolor{red}{boolean} & \\
 			\hline
 			
 		\end{tabular}
@@ -407,7 +411,7 @@
 		    N/A
 		\end{itemize}
 		
-		\item \textbf{getSolvedCoordinates(board)}
+		\item \textbf{\sout{getSolvedCoordinates} \textcolor{red}{getUnfilledCoordinates}(board)}
 		\begin{itemize}
 		    \item[] \textit{Input: } 
 		    \begin{itemize}
@@ -421,6 +425,36 @@
 		    N/A
 		\end{itemize}
 		
+		\item \textbf{\textcolor{red}{\textcolor{red}{solve\_randomly(board)}}}
+		\begin{itemize}
+		    \item[] \textit{\textcolor{red}{Input: }}
+			\begin{itemize}
+		        \item \textcolor{red}{board: 2D 9x9 integer list containing digits 0 to 9, where 0 represents empty space}
+		    \end{itemize}	    
+		    
+		    \item[] \textit{\textcolor{red}{Transition-Output:}} 
+		    \begin{itemize}
+		        \item \textcolor{red}{If solvable, the board is solved in place, where all 0s in the array are replaced by randomly selected solution digits. The method returns True.}
+		        \item \textcolor{red}{Returns false if the board is not solvable.}
+		    \end{itemize}
+		    \item[] \textit{\textcolor{red}{Exceptions:}} \textcolor{red}{N/A}
+		\end{itemize} 
+		
+		\item \textbf{\textcolor{red}{validateBoard(board)}}
+		\begin{itemize}
+		    \item[] \textit{\textcolor{red}{Input: }}
+			\begin{itemize}
+		        \item \textcolor{red}{board: 2D 9x9 integer list containing digits 0 to 9, where 0 represents empty space}
+		    \end{itemize}	    
+		    
+		    \item[] \textit{\textcolor{red}{Transition-Output:} }
+		    \begin{itemize}
+		        \item \textcolor{red}{Returns true if the board is completed. Also returns true if the board is incomplete but still has a solution, and solves it accordingly.}
+		        \item \textcolor{red}{Returns false if the board is invalid.}
+		    \end{itemize}
+		    \item[] \textit{\textcolor{red}{Exceptions:}} \textcolor{red}{N/A}
+		\end{itemize} 
+		
     \end{itemize}
     
 % ===================================================================================
@@ -433,8 +467,8 @@
 			\hline
 			%	\label
 			\textbf{Name}& \textbf{Inputs} & \textbf{Outputs} & \textbf{Exceptions} \\ \hline
-			generateRandomValidBoard & int, int & 2D int[] & LOW\_HINT \\ 
-			hasUniqueSolution & 2D int[], int & boolean & INVALID\_BOARD \\ 
+			generateRandomValidBoard & int\sout{, int} & 2D int[] & LOW\_HINT \\ 
+			hasUniqueSolution & 2D int[]\sout{, int} & boolean & INVALID\_BOARD \\ 
 			\hline
 			
 		\end{tabular}
@@ -451,12 +485,12 @@
 		
 		\subsubsection{Semantics of Exported Routines}
 		\begin{itemize}
-		    \item \textbf{generateRandomValidBoard(hints, uniquenessLikelihood)}
+		    \item \textbf{generateRandomValidBoard(hints\sout{, uniquenessLikelihood})}
 		\begin{itemize}
 		    \item[] \textit{Input: }
 			\begin{itemize}
 		        \item hints: integer; number of hint digits to include in the output puzzle
-		        \item uniquenessLikelihood: optional integer (default = 5); number of iterations to check for non-unique solutions. Higher values increase uniqueness of possible solutions.
+		        \item \sout{uniquenessLikelihood: optional integer (default = 5); number of iterations to check for non-unique solutions. Higher values increase uniqueness of possible solutions.}
 		    \end{itemize}	    
 		    
 		    \item[] \textit{Output}: 
@@ -469,16 +503,16 @@
 		    \end{itemize}	    
 		\end{itemize}
 		
-	    \item \textbf{hasUniqueSolution(board, attempts)}
+	    \item \textbf{hasUniqueSolution(board\sout{, attempts})}
 		\begin{itemize}
 		    \item[] \textit{Input: } 
 		    \begin{itemize}
 		        \item board: 2D 9x9 integer list representing the cells on the game board
-		        \item attempts: optional integer (default = 5); number of attempts to search for a different solution.
+		        \item \sout{attempts: optional integer (default = 5); number of attempts to search for a different solution.}
 		    \end{itemize}	  
 		    \item[] \textit{Output}: 
 		    \begin{itemize}
-		        \item True, if non-unique solutions are not discovered after specified number of attempts
+		        \item True, if \sout{non-unique solutions are not discovered after specified number of attempts} \textcolor{red}{the Sudoku board only has one unique solution}.
 		        \item False, if otherwise
 		    \end{itemize}
 		    \item[] \textit{Exceptions}:
@@ -582,10 +616,11 @@
 		    \begin{itemize}
 		        \item url = "/" renders home HTML
 		        \item url = "/upload" renders upload HTML
-		        \item url = "/recognize" renders recognize HTML
-		        \item url = "/solver" renders solutions HTML
+		        \item \textcolor{red}{url = "/game" renders difficulty selection HTML}
+		        \item \sout{url = "/recognize" renders recognize HTML}
+		        \item \sout{url = "/solver" renders solutions HTML}
 		        \item url = "/play" renders play HTML
-		        \item url = "/instructions" renders instructions HTML
+		        \item \sout{url = "/instructions" renders instructions HTML}
 		    \end{itemize}
 		    \item[] \textit{Exceptions}:
 		    \begin{itemize}
@@ -600,7 +635,8 @@
 \section{Major Revision History}
 March 15, 2022 - Rough draft of sections\\
 March 17, 2022 - Added MIS for SudokuCV, CVError, and CVResult \\
-March 18, 2022 - Revision 0 complete
+March 18, 2022 - Revision 0 complete \\
+April 12, 2022 - Revision 1 complete, red text is new additions and strikeout text is deprecated.
 
 			
 \end{document}
