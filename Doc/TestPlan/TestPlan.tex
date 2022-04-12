@@ -9,6 +9,7 @@
 \usepackage{float}
 \usepackage{tabularx}
 \usepackage{hyperref}
+\usepackage[normalem]{ulem}
 \hypersetup{
     colorlinks,
     citecolor=black,
@@ -51,6 +52,7 @@
 2022-02-28 & 0.0 & Created Test Plan; started on General Information\\
 2022-03-09 & 0.1 & Updated Plan and Appendix, started System Test Description\\
 2022-03-11 & 0.2 & Updated Sections 3-6\\
+2022-04-12 & 1.0 & Updated Test Plan; new text in red, deprecated text struck out\\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -88,7 +90,7 @@ Unit Test & Testing that focusses on individual functions and methods\\
 System Test & Testing the entire system as a whole rather than individual components\\
 UI     & User interface, the interface that allows for user interaction with the system. \\
 PyTest & A Python library designed to help create tests for Python code. \\
-Mocha & A JavaScript test framework. \\
+\sout{Mocha} & \sout{A JavaScript test framework.} \\
 MNIST & A Modified National Institute of Standards and Technology data set with a large number of images of handwritten digits.\\
 \bottomrule
 \end{tabularx}
@@ -108,10 +110,10 @@ The purpose of this software application is to provide a comprehensive suite of 
 The team responsible for testing consists of Rashad Bhuiyan, Stanley Chan, and Kai Zhu.
 
 \subsection{Automated Testing Approach}
-Automated unit testing will be performed using PyTest and Mocha for the Flask and JavaScript components of the application, respectively. Additionally, the number recognition system uses a trained neural network model, which can be automatically tested against a test data set for prediction accuracy.
+Automated unit testing will be performed using PyTest \sout{and Mocha for the Flask and JavaScript components of the application, respectively} \textcolor{red}{for the sudoku generator algorithm}. Additionally, the number recognition system uses a trained neural network model, which can be automatically tested against a test data set for prediction accuracy.
 
 \subsection{Testing Tools}
-PyTest will be used for the unit test of the Flask back-end application. Mocha will be used for the unit test of front-end JavaScript.
+PyTest will be used for the unit test of the \sout{Flask back-end application} \textcolor{red}{sudoku generation algorithm.} \sout{Mocha will be used for the unit test of front-end JavaScript.}
 
 \subsection{Testing Schedule}
 		
@@ -149,21 +151,21 @@ Initial State: Looking at homepage of Flask app
 					
 Input: Click play a game button
 					
-Output: Sudoku game for user to play will be loaded
+Output: \sout{Sudoku game for user to play will be loaded} \textcolor{red}{Difficulty levels will be shown}
 					
-How test will be performed: The button that says 'Play a Game' will be pressed to check and see if it will redirect the user to a separate page where they may play a game of Sudoku.
+How test will be performed: The button that says 'Play a Game' will be pressed to check and see if it will redirect the user to a separate page where they may \sout{play a game of Sudoku} \textcolor{red}{select a difficulty level of the Sudoku game to play}.
 
 \item{FS-DB-3\\}
 
 Type: Functional, Dynamic, Manual
 					
-Initial State: Old browser
+Initial State: \sout{Old browser} \textcolor{red}{Looking at difficulty selection page of Flask app}
 					
-Input: Enter Sudoku Solver website path
+Input: \sout{Enter Sudoku Solver website path} \textcolor{red}{Select difficulty level}
 					
-Output: Error message stating browser mismatch
+Output: \sout{Error message stating browser mismatch} \textcolor{red}{Sudoku board of specified difficulty level shown}
 					
-How test will be performed: The website will attempt to be launched using an old and/or deprecated browser, such as Internet Explorer, where an error message will be shown stating a mismatch of browser and website.
+How test will be performed: \sout{The website will attempt to be launched using an old and/or deprecated browser, such as Internet Explorer, where an error message will be shown stating a mismatch of browser and website.} \textcolor{red}{One of the buttons that dictate the difficulty level will be pressed to check and see if it will redirect the user to a separate page where they may play a game of Sudoku of the specified difficulty level.}
 
 \end{enumerate}
 
@@ -311,7 +313,7 @@ How test will be performed: The manual input will be tested to see whether it ca
 
 Type: Functional, Dynamic, Manual
 					
-Initial State: Semi-populated board
+Initial State: \sout{Semi-populated} \textcolor{red}{Fully populated} board
 					
 Input: Submit button
 					
@@ -357,11 +359,11 @@ Type: Functional, Dynamic, Manual
 					
 Initial State: Sudoku Gameplay page
 					
-Input: Click button to start game
+Input: \sout{Click button to start game} \textcolor{red}{Select difficulty level to start game}
 					
-Output: Loading symbol shown
+Output: \sout{Loading symbol shown} \textcolor{red}{Board of specified difficulty level shown}
 					
-How test will be performed: Ensure that when the user presses the button, the website displays a loading symbol.
+How test will be performed: Ensure that when the user presses the button, the website displays \sout{a loading symbol} \textcolor{red}{the Sudoku board of the specified difficulty level}.
 					
 \item{FS-BG-2\\}
 
@@ -523,17 +525,17 @@ Output: Users give feedback on the overall UI
 					
 How test will be performed: The users from the testing group will each load the Homepage on their own device and explore the web app on their own, taking note of each UI element and whether it is appropriate.
 					
-\item{SS-UID-2\\}
+\item{\sout{SS-UID-2\\}}
 
-Type: Non-Functional, Static, Manual
+\sout{Type: Non-Functional, Static, Manual}
 					
-Initial State: Homepage of the Sudoku solver Flask app
+\sout{Initial State: Homepage of the Sudoku solver Flask app}
 					
-Input: Users with mild forms of colour-blindness view the web app
+\sout{Input: Users with mild forms of colour-blindness view the web app}
 					
-Output: Users give feedback on the accessibility of the web app
+\sout{Output: Users give feedback on the accessibility of the web app}
 					
-How test will be performed: The users officially diagnosed with some forms of colour-blindness will load the Homepage on their own device and explore the web app on their own, taking note of whether every page is accessible and appealing to them.
+\sout{How test will be performed: The users officially diagnosed with some forms of colour-blindness will load the Homepage on their own device and explore the web app on their own, taking note of whether every page is accessible and appealing to them.}
 
 \end{enumerate}
 
@@ -802,7 +804,7 @@ For each test, the results from the existing implementation is compared with tho
 \section{Unit Testing Plan}
 		
 \subsection{Unit testing of internal functions}
-The internal functions of the system mostly include the Sudoku solver algorithm itself, the Sudoku board generator, and the image recognition functions. To test such functions, it is simple enough to give these functions an input and ensure that the output is what is to be expected from that given input. Since most of the internal functions is written in Python and JavaScript, we will be utilizing the PyTest and Mocha automatic testing frameworks for each programming language respectively. Since the board generator creates random boards, it is impractical generate and test every possible board. Therefore, unit testing for Sudoku board generation will create a reasonably sized set of boards, between 100 to 200. Individual functions that check for solvability and uniqueness will be called upon these generated boards to confirm the reliability and validity of the generation system. 
+The internal functions of the system mostly include the Sudoku solver algorithm itself, the Sudoku board generator, and the image recognition functions. To test such functions, it is simple enough to give these functions an input and ensure that the output is what is to be expected from that given input. Since most of the internal functions is written in Python \sout{and JavaScript}, we will be utilizing the PyTest \sout{and Mocha} automatic testing frameworks for \sout{each programming language respectively} \textcolor{red}{Python}. Since the board generator creates random boards, it is impractical \textcolor{red}{to} generate and test every possible board. Therefore, unit testing for Sudoku board generation will create a reasonably sized set of boards, between 100 to 200. Individual functions that check for solvability and uniqueness will be called upon these generated boards to confirm the reliability and validity of the generation system. 
 		
 \subsection{Unit testing of output files}		
 Unit testing the output files of the system will be performed by inputting various Sudoku boards via images (or manual input) into the web application, and ensuring that the outputted solution follows the Sudoku rules and is complete. The outputted Sudoku boards can be scraped from the web application, transformed into an array format, and be used as an input into a function that tests whether a complete Sudoku board follows the Sudoku rules. 
@@ -820,7 +822,7 @@ Unit testing the output files of the system will be performed by inputting vario
 The definition of the requirements will likely call for SYMBOLIC\_CONSTANTS.
 Their values are defined in this section for easy maintenance.\\
 
-\noindent \emph{MAX\_UPLOAD\_TIME} = 3\\
-\emph{MAX\_SOLUTION\_TIME} = 2
+\noindent \emph{MAX\_UPLOAD\_TIME} = \sout{3} \textcolor{red}{8}\\
+\emph{MAX\_SOLUTION\_TIME} = \sout{2} \textcolor{red}{5}
 
 \end{document}
