@@ -59,7 +59,7 @@
 			%	\label
 			\textbf{Name}& \textbf{Inputs} & \textbf{Outputs} & \textbf{Exceptions} \\ \hline
 			\_\_init\_\_ & string &  & NO\_MODEL\\ 
-			recognize & image, boolean, boolean & CVResult & NO\_GRID, GRID\_SMALL, IMG\_SMALL\\
+			recognize & image, boolean, boolean, \textcolor{red}{2D int[]} & CVResult & NO\_GRID, GRID\_SMALL, IMG\_SMALL\\
 			\hline
 			
 		\end{tabular}
@@ -97,13 +97,14 @@
 		\end{itemize}
 		
 		
-		\item \textbf{recognize(image, is\_file, show\_image)}
+		\item \textbf{recognize(image, is\_file, show\_image\textcolor{red}{, crop\_coords)}}
 		\begin{itemize}
 		    \item[] \textit{Input: }
 			\begin{itemize}
 		        \item image: a source image file path or buffer string, depending on is\_file
 		        \item is\_file: optional boolean (default=True), indicates whether source is file or buffer data
 		        \item show\_image: optional boolean (default=False), displays intermediary processed images for debugging
+		        \item \textcolor{red}{crop\_coords: optional two dimensional integer array (default=None), an array of x-y coordinates that represent cropping points on the image}
 		    \end{itemize}	    
 		    
 		    \item[] \textit{Output}: 
